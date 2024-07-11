@@ -1,7 +1,7 @@
 ---
-name: "[Fix]"
-about: 요청 사항
-title: "[Request]"
+name: "[Test]"
+about: 테스트 진행
+title: "[Test]"
 labels: ''
 assignees: ''
 
