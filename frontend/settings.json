@@ -1,0 +1,14 @@
+{
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "javascript.preferences.importModuleSpecifier": "non-relative",
+  "path-autocomplete.extensionOnImport": true,
+
+  "path-autocomplete.pathMappings": {
+    "@app": "${workspace}/src/app",
+    "@assets": "${workspace}/src/assets",
+    "@components": "${workspace}/src/components",
+    "@features": "${workspace}/src/features",
+    "@pages": "${workspace}/src/pages",
+    "@shared": "${workspace}/src/shaerd"
+  }
+}
