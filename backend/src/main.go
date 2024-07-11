@@ -1,7 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"github.com/labstack/echo/v4"
+)
 
+//export PATH=$PATH:~/go/bin
 func main() {
-	fmt.Println("test")
+	e := echo.New()
+
+	e.Logger.Fatal(e.Start(":8080"))
 }
