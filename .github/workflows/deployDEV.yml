@@ -3,7 +3,7 @@ name: backend deploy DEV
 on:
   workflow_dispatch:
     branches:
-      - be/dev
+      - dev
 
 jobs:
   test:
