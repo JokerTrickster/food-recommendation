@@ -1,6 +1,6 @@
 ---
 name: "[Discussion]"
-about: 토론 
+about: 논의 세부 정보
 title: "[Discussion]"
 labels: ''
 assignees: ''
