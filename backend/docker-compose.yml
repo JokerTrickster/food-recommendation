@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    hostname: hostname-mysql
+    ports:
+      - "3309:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: asdasd123
+      MYSQL_DATABASE: dev_food
+      MYSQL_USER: food
+      MYSQL_PASSWORD: asdasd123
+    volumes:
+      - mysql_data:/var/lib/mysql
+      
+volumes:
+  mysql_data:
+
+
