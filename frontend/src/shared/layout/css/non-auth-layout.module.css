@@ -6,6 +6,8 @@
 
   width: 100%;
   height: 100vh;
+
+  animation: fadeIn 0.5s;
 }
 
 .main .main__null {
@@ -70,5 +72,14 @@
   .main .main__image-container img {
     width: 100%;
     height: 100%;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

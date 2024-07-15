@@ -3,6 +3,8 @@ import { lazy } from 'react';
 import Landing from '@pages/home/landing';
 import NonAuthLayout from '@shared/layout/non-auth-layout';
 
+const Register = lazy(() => import('@pages/auth/register'));
+
 export const NON_AUTH = [
   {
     path: '/',
@@ -14,7 +16,7 @@ export const NON_AUTH = [
       },
       {
         path: '/register',
-        element: lazy(() => import('@pages/auth/register')),
+        element: <Register />,
       },
     ],
   },

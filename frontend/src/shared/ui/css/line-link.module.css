@@ -1,0 +1,36 @@
+.line-like {
+  position: relative;
+  display: inline-block;
+}
+
+.line-like::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background-color: #111;
+  transition: width 0.5s ease-in-out;
+}
+
+.line-like:hover::after {
+  width: 100%;
+}
+
+.line-like strong {
+  font-weight: 600;
+}
+
+.container__password {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -1,7 +1,5 @@
-import { Link } from 'react-router-dom';
-
 import { useValidationInput } from '@shared/hooks';
-import { Button, Input, ValidationText } from '@shared/ui';
+import { Button, Input, LineLink, ValidationText } from '@shared/ui';
 
 import classes from './css/login-form.module.css';
 
@@ -51,7 +49,17 @@ export default function LoginForm() {
           onValidation={emailValidationHandler}
         />
 
-        <ValidationText condition={isEmailValid} type="warning" message="이메일을 입력해주세요." />
+        <ValidationText
+          condition={isEmailValid && emailValue === ''}
+          type="warning"
+          message="이메일을 입력해주세요."
+        />
+
+        <ValidationText
+          condition={isEmailValid && emailValue !== ''}
+          type="warning"
+          message="이메일이 유효하지 않습니다."
+        />
       </section>
 
       {!isEmailValid && emailValue !== '' && (
@@ -76,9 +84,9 @@ export default function LoginForm() {
       <Button type="submit">로그인</Button>
 
       <nav className={classes.nav}>
-        <Link to="/signup">
+        <LineLink to="/register">
           아이디가 없으신가요? <strong>회원가입하기</strong>
-        </Link>
+        </LineLink>
       </nav>
     </form>
   );
