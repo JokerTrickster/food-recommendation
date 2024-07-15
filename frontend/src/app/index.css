@@ -138,3 +138,8 @@ a {
   text-decoration: none;
   color: #000;
 }
+
+:root {
+  --color-gray: #999999;
+  --color-blue: #1e90ff;
+}

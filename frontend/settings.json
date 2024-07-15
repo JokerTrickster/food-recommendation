@@ -6,9 +6,9 @@
   "path-autocomplete.pathMappings": {
     "@app": "${workspace}/src/app",
     "@assets": "${workspace}/src/assets",
-    "@components": "${workspace}/src/components",
+    "@entities": "${workspace}/src/entities",
     "@features": "${workspace}/src/features",
     "@pages": "${workspace}/src/pages",
-    "@shared": "${workspace}/src/shaerd"
+    "@shared": "${workspace}/src/shared"
   }
 }
