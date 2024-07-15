@@ -1,14 +1,11 @@
+import { Outlet } from 'react-router';
+
 import avocado from '@assets/icon/avocado.svg';
 
 import classes from './css/non-auth-layout.module.css';
+import { Suspense } from 'react';
 
-type NonAuthLayoutProps = {
-  children: React.ReactNode;
-};
-
-export default function NonAuthLayout(props: NonAuthLayoutProps) {
-  const { children } = props;
-
+export default function NonAuthLayout() {
   return (
     <main className={classes.main}>
       <div className={classes.main__null} />
@@ -19,7 +16,9 @@ export default function NonAuthLayout(props: NonAuthLayoutProps) {
             오늘 뭐먹지.
           </h1>
 
-          {children}
+          <Suspense fallback={<div>Loading...</div>}>
+            <Outlet />
+          </Suspense>
         </article>
       </section>
 

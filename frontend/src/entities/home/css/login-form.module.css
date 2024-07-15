@@ -43,3 +43,16 @@
 .nav a strong {
   font-weight: 600;
 }
+
+.container__password {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -3,23 +3,17 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 1fr;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px; */
+
   width: 100%;
   height: 100vh;
 }
 
 .main .main__null {
-  /* grid-area: 1 / 1 / 2 / 2; */
   width: 33%;
   height: 33%;
 }
 
 .main .main__section {
-  /* grid-area: 1 / 2 / 2 / 3; */
   position: relative;
   width: 100%;
   height: 33%;
@@ -46,7 +40,6 @@
 }
 
 .main .main__image-container {
-  /* grid-area: 1 / 3 / 2 / 4; */
   position: relative;
   width: 33%;
   height: 33%;

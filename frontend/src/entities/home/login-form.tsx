@@ -54,22 +54,24 @@ export default function LoginForm() {
         <ValidationText condition={isEmailValid} type="warning" message="이메일을 입력해주세요." />
       </section>
 
-      <section>
-        <Input
-          id="password"
-          type="password"
-          label="패스워드"
-          className={classes.login__input}
-          value={passwordValue}
-          onChange={getPasswordValue}
-          onValidation={passwordValidationHandler}
-        />
-        <ValidationText
-          condition={isPasswordValid}
-          type="warning"
-          message="비밀번호를 입력해주세요."
-        />
-      </section>
+      {!isEmailValid && emailValue !== '' && (
+        <section className={classes['container__password']}>
+          <Input
+            id="password"
+            type="password"
+            label="패스워드"
+            className={classes.login__input}
+            value={passwordValue}
+            onChange={getPasswordValue}
+            onValidation={passwordValidationHandler}
+          />
+          <ValidationText
+            condition={isPasswordValid}
+            type="warning"
+            message="비밀번호를 입력해주세요."
+          />
+        </section>
+      )}
 
       <Button type="submit">로그인</Button>
 
