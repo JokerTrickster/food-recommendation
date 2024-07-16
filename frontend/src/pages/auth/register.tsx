@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { Button, Input, LineLink } from '@shared/ui';
 
 import classes from './css/register.module.css';
@@ -14,7 +13,7 @@ export default function Register(): JSX.Element {
 
         <Button>회원가입</Button>
         <nav className={classes.nav}>
-          <LineLink to="/" span="이미 회원이신가요?" strong="로그인하기" />
+          <LineLink to="/login" span="이미 회원이신가요?" strong="로그인하기" />
         </nav>
       </form>
     </Container>
