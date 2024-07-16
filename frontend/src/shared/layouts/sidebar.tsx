@@ -35,6 +35,7 @@ export default function Sidebar() {
       </div>
 
       <main className={classes.layout__chat}>
+        {isSidebarVisible && <header className={classes.chat__header}></header>}
         {!isSidebarVisible && (
           <header className={classes.chat__header}>
             <Button className={classes.header__button} onClick={handleToggleSidebar}>
@@ -48,8 +49,9 @@ export default function Sidebar() {
             <h1>오늘 뭐먹지?</h1>
           </header>
         )}
-
-        <Outlet />
+        <main className={classes['chat-container']}>
+          <Outlet />
+        </main>
       </main>
     </div>
   );

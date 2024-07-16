@@ -4,11 +4,10 @@
 }
 
 .layout__sidebar {
+  height: 100vh;
   transition: transform 0.3s ease;
   background: #fff;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  height: 100vh;
-  padding: 0 20px;
 }
 
 .layout__sidebar.visible {
@@ -16,6 +15,7 @@
 }
 
 .layout__sidebar.hidden {
+  position: absolute;
   transform: translateX(-100%);
 }
 
@@ -26,8 +26,7 @@
 }
 
 .header__button:hover {
-  background-color: #f0f0f0;
-  color: #f0f0f0;
+  background-color: var(--color-gray);
 }
 
 .header__button {
@@ -43,15 +42,14 @@
 
 .layout__chat {
   flex-grow: 1;
-  padding: 20px;
 }
 
-.chat__header {
-  position: absolute;
-  left: 0;
+.chat__header,
+.chat__opacity {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
   width: 300px;
   height: 50px;
   padding: 0;
@@ -60,6 +58,19 @@
 
 .chat__header h1 {
   font-weight: 600;
+}
+
+.chat__opacity {
+  visibility: hidden;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }
 
 @keyframes fadeIn {
