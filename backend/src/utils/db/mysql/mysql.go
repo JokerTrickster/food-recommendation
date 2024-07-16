@@ -33,7 +33,7 @@ func InitMySQL() error {
 			os.Getenv("MYSQL_DATABASE"),
 		)
 	} else {
-		dbInfos, err := _aws.AwsSsmGetParams([]string{"dev_mysql_user", "dev_mysql_password", "dev_mysql_host", "dev_mysql_port", "dev_mysql_db"})
+		dbInfos, err := _aws.AwsSsmGetParams([]string{"dev_food-recommendation_mysql_user", "dev_food-recommendation_mysql_password", "dev_food-recommendation_mysql_host", "dev_food-recommendation_mysql_port", "dev_food-recommendation_mysql_db"})
 		if err != nil {
 			return err
 		}
