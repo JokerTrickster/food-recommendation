@@ -137,9 +137,24 @@ table {
 a {
   text-decoration: none;
   color: #000;
+  appearance: none;
 }
 
 :root {
+  --color-black: #222;
   --color-gray: #999999;
+  --color-white: #fff;
+  --color-baby-blue: #f8fdff;
   --color-blue: #1e90ff;
+  --color-yellow: #ffe870;
+  --color-red: #ff4d4d;
+  --color-fluorescent: #00ff00;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }

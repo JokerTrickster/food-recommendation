@@ -1,9 +1,10 @@
 import { useValidationInput } from '@shared/hooks';
 import { Button, Input, LineLink, ValidationText } from '@shared/ui';
+import Card from '@shared/ui/card';
 
-import classes from './css/login-form.module.css';
+import classes from './css/login.module.css';
 
-export default function LoginForm() {
+export default function Login() {
   const {
     userValue: emailValue,
     getUserValue: getEmailValue,
@@ -37,32 +38,31 @@ export default function LoginForm() {
   }
 
   return (
-    <form className={classes.login}>
-      <section>
-        <Input
-          id="email"
-          type="email"
-          label="이메일"
-          className={classes.login__input}
-          value={emailValue}
-          onChange={getEmailValue}
-          onValidation={emailValidationHandler}
-        />
+    <Card>
+      <form className={classes.login}>
+        <section>
+          <Input
+            id="email"
+            type="email"
+            label="이메일"
+            className={classes.login__input}
+            value={emailValue}
+            onChange={getEmailValue}
+            onValidation={emailValidationHandler}
+          />
 
-        <ValidationText
-          condition={isEmailValid && emailValue === ''}
-          type="warning"
-          message="이메일을 입력해주세요."
-        />
+          <ValidationText
+            condition={isEmailValid && emailValue === ''}
+            type="warning"
+            message="이메일을 입력해주세요."
+          />
 
-        <ValidationText
-          condition={isEmailValid && emailValue !== ''}
-          type="warning"
-          message="이메일이 유효하지 않습니다."
-        />
-      </section>
-
-      {!isEmailValid && emailValue !== '' && (
+          <ValidationText
+            condition={isEmailValid && emailValue !== ''}
+            type="warning"
+            message="이메일이 유효하지 않습니다."
+          />
+        </section>
         <section className={classes['container__password']}>
           <Input
             id="password"
@@ -79,15 +79,9 @@ export default function LoginForm() {
             message="비밀번호를 입력해주세요."
           />
         </section>
-      )}
-
-      <Button type="submit">로그인</Button>
-
-      <nav className={classes.nav}>
-        <LineLink to="/register">
-          아이디가 없으신가요? <strong>회원가입하기</strong>
-        </LineLink>
-      </nav>
-    </form>
+        <Button type="submit">로그인</Button>
+        <LineLink to="/register" span="아이디가 없으신가요?" strong="회원가입하기"></LineLink>
+      </form>
+    </Card>
   );
 }

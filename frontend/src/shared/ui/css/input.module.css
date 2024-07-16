@@ -1,6 +1,7 @@
 .input-container {
   position: relative;
   width: 100%;
+  margin: 0.5rem;
 }
 
 .input-container label {
@@ -11,13 +12,10 @@
 
 .input-container input {
   width: 100%;
-  padding: 10px;
+  padding: 20px 10px;
   height: 60px;
   border-radius: 5px;
   border: 1px solid var(--color-gray);
-  margin-top: 10px;
-  margin-bottom: 10px;
-  outline: none;
 }
 
 .input-container .not-focus {
@@ -29,7 +27,7 @@
 
 .input-container .focus {
   font-size: 0.8rem;
-  top: 15px;
+  top: 5px;
   left: 10px;
   color: var(--color-gray);
 }

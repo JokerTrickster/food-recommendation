@@ -1,19 +1,20 @@
 import { lazy } from 'react';
 
 import Landing from '@pages/home/landing';
-import NonAuthLayout from '@shared/layout/non-auth-layout';
-
+import Layout from '@shared/layout/layout';
+const Login = lazy(() => import('@pages/auth/login'));
 const Register = lazy(() => import('@pages/auth/register'));
 
-export const NON_AUTH = [
+export const AUTH_ROUTES = [
   {
     path: '/',
-    element: <NonAuthLayout />,
+    element: <Landing />,
     children: [
       {
-        index: true,
-        element: <Landing />,
+        path: '/login',
+        element: <Login />,
       },
+
       {
         path: '/register',
         element: <Register />,
