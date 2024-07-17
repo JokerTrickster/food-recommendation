@@ -30,7 +30,7 @@ CREATE TABLE foods (
     time_id INT,
     type_id INT,
     scenario_id INT,
-    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
   
 -- 메타 데이터 테이블
@@ -40,7 +40,7 @@ CREATE TABLE foods (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP NULL DEFAULT NULL,
     table_name VARCHAR(255) NOT NULL UNIQUE,
-    table_description VARCHAR(255),
+    table_description VARCHAR(255)
 );
 
 
@@ -72,4 +72,14 @@ CREATE TABLE scenarios (
     deleted_at TIMESTAMP NULL DEFAULT NULL,
     name VARCHAR(50) NOT NULL UNIQUE,
     description VARCHAR(255)
+);
+
+CREATE TABLE user_auths (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL DEFAULT NULL,
+    auth_code VARCHAR(255),
+    email VARCHAR(255),
+    type VARCHAR(100)
 );

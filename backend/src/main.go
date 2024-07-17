@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
+	"main/features"
 	"main/middleware"
 	"main/utils"
 
 	swaggerDocs "main/docs"
-	"main/features"
 
 	"github.com/labstack/echo/v4"
 	echoSwagger "github.com/swaggo/echo-swagger"
