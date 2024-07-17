@@ -6,6 +6,7 @@ import { Button } from '@shared/ui';
 import classes from './css/chat.module.css';
 import RadioButton from '@shared/ui/radio-button';
 import { useState } from 'react';
+import { Survey } from '@entities/chat/survey';
 
 const radioButtons = [
   { id: 'radio1', name: 'group1', title: 'Option 1' },
@@ -16,12 +17,19 @@ const radioButtons = [
 export default function Chat() {
   const [selectedId, setSelectedId] = useState('');
 
-  const handleChange = id => {
+  const [isSurvey, setIsSurvey] = useState(true);
+
+  const selectedGenderHandler = (id: string) => {
     setSelectedId(id);
   };
 
+  function surveyClose() {
+    setIsSurvey(false);
+  }
+
   return (
     <section className={classes.background}>
+      {isSurvey && <Survey onClose={surveyClose} />}
       <main className={classes['chat__message-container']}></main>
 
       <section className={classes['chat__form-container']}>
@@ -35,7 +43,7 @@ export default function Chat() {
                   name={radio.name}
                   title={radio.title}
                   checked={radio.id === selectedId}
-                  onChange={handleChange}
+                  onChange={() => selectedGenderHandler(radio.id)}
                 />
               ))}
             </div>

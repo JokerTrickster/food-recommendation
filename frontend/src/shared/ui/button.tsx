@@ -10,7 +10,7 @@ export function Button(props: ButtonProps) {
   const { children, className } = props;
 
   return (
-    <button className={`${classes.button} ${className}`} {...props}>
+    <button className={`${className} ${classes.button} `} {...props}>
       {children}
     </button>
   );

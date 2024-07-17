@@ -3,9 +3,10 @@
 }
 
 .radio-container label {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0.5rem 1rem;
-  margin: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
@@ -13,6 +14,15 @@
 }
 
 .radio-container .checked {
-  background-color: #111;
-  color: #fff;
+  color: #249dff;
+  border: 1px solid #249dff;
+  transition: 1s all;
+}
+
+.radio-container .checked path:first-child {
+  stroke: #249dff;
+}
+
+.radio-container .checked path:last-child {
+  fill: #249dff;
 }

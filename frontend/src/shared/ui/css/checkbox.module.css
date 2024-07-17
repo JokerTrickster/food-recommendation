@@ -13,8 +13,8 @@
 .path {
   fill: none;
   stroke: var(--color-fluorescent);
-  stroke-width: 6;
-  stroke-linecap: round;
+  strokewidth: 6;
+  strokelinecap: round;
   stroke-linejoin: round;
   transition: stroke-dasharray 0.5s ease, stroke-dashoffset 0.5s ease;
   stroke-dasharray: 241 9999999;
