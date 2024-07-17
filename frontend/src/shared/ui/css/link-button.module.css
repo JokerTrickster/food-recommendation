@@ -1,0 +1,17 @@
+.link-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+  padding: 20px;
+  border-radius: 15px;
+  width: 100%;
+  height: 50px;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  transition: 1s all;
+}
+
+.link-button:hover {
+  background-color: var(--color-gray);
+}
