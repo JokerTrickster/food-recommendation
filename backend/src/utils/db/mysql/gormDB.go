@@ -12,48 +12,48 @@ type Tokens struct {
 
 type Users struct {
 	gorm.Model
-	Name     string `json:"name" gorm:"column:name"`
-	Email    string `json:"email" gorm:"uniqueIndex;column:email"`
+	Email    string `json:"email" gorm:"column:email"`
 	Password string `json:"password" gorm:"column:password"`
-	Score    int    `json:"score" gorm:"column:score"`
-	State    string `json:"state" gorm:"column:state"` //logout, wait, play
-	RoomID   int    `json:"roomID" gorm:"column:room_id"`
+	Birth    string `json:"birth" gorm:"column:birth"`
+	Sex      string `json:"sex" gorm:"column:sex"`
 	Provider string `json:"provider" gorm:"column:provider"`
 }
 
-type Rooms struct {
+type Foods struct {
 	gorm.Model
-	CurrentCount int    `json:"currentCount" gorm:"column:current_count"`
-	MaxCount     int    `json:"maxCount" gorm:"column:max_count"`
-	MinCount     int    `json:"minCount" gorm:"column:min_count"`
-	Name         string `json:"name" gorm:"column:name"`
-	Password     string `json:"password" gorm:"column:password"`
-	State        string `json:"state" gorm:"column:state"` //wait, play, end
-	OwnerID      int    `json:"ownerID" gorm:"column:owner_id"`
+	Name       string `json:"name" gorm:"column:name"`
+	UserID     int    `json:"userID" gorm:"column:user_id"`
+	ScenarioID int    `json:"scenarioID" gorm:"column:scenario_id"`
+	TimeID     int    `json:"timeID" gorm:"column:time_id"`
+	TypeID     int    `json:"typeID" gorm:"column:type_id"`
 }
 
-type RoomUsers struct {
+type MetaTables struct {
 	gorm.Model
-	UserID         int    `json:"userID" gorm:"column:user_id"`
-	RoomID         int    `json:"roomID" gorm:"column:room_id"`
-	Score          int    `json:"score" gorm:"column:score"`
-	OwnedCardCount int    `json:"ownedCardCount" gorm:"column:owned_card_count"`
-	PlayerState    string `json:"playerState" gorm:"column:player_state"` // wait(대기중), ready(준비 완료), play(플레이할 차례), play_wait(다음 차례 대기)
-	TurnNumber     int    `json:"turnNumber" gorm:"column:turn_number"`   // 1, 2, 3, 4 ....
+	TableName        string `json:"tableName" gorm:"column:table_name"`
+	TableDescription string `json:"tableDescription" gorm:"column:table_description"`
 }
 
-type Cards struct {
+type Scenarios struct {
 	gorm.Model
-	RoomID int    `json:"roomID" gorm:"column:room_id"`
-	UserID int    `json:"userID" gorm:"column:user_id"`
-	Name   string `json:"name" gorm:"column:name"`   // 1, 2, 3, 4, 5, 6, 7, 8, 9, 중, 발
-	Color  string `json:"color" gorm:"column:color"` // red, green, normal
-	State  string `json:"state" gorm:"column:state"` // owned, discard, none
+	Name        string `json:"name" gorm:"column:name"`
+	Description string `json:"description" gorm:"column:description"`
 }
 
-type Chats struct {
+type Times struct {
 	gorm.Model
-	UserID int    `json:"userID" gorm:"column:user_id"`
-	Name   string `json:"name" gorm:"column:name"`
-	Secret string `json:"secret" gorm:"column:secret"`
+	Name        string `json:"name" gorm:"column:name"`
+	Description string `json:"description" gorm:"column:description"`
+}
+
+type Types struct {
+	gorm.Model
+	Name        string `json:"name" gorm:"column:name"`
+	Description string `json:"description" gorm:"column:description"`
+}
+type UserAuths struct {
+	gorm.Model
+	Email    string `json:"email" gorm:"column:email"`
+	AuthCode string `json:"authCode" gorm:"column:auth_code"`
+	Type     string `json:"type" gorm:"column:type"`
 }
