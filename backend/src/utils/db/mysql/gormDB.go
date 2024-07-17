@@ -51,3 +51,9 @@ type Types struct {
 	Name        string `json:"name" gorm:"column:name"`
 	Description string `json:"description" gorm:"column:description"`
 }
+type UserAuths struct {
+	gorm.Model
+	Email    string `json:"email" gorm:"column:email"`
+	AuthCode string `json:"authCode" gorm:"column:auth_code"`
+	Type     string `json:"type" gorm:"column:type"`
+}

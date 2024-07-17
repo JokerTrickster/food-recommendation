@@ -50,29 +50,13 @@ const (
 	ErrPartner        = ErrType("PARTNER")
 )
 
-// game error
-const (
-	ErrNotAllUsersReady = ErrType("NOT_ALL_USERS_READY")
-	ErrNotOwner         = ErrType("NOT_OWNER")
-	ErrNotFirstPlayer   = ErrType("NOT_FIRST_PLAYER")
-	ErrNotLoanCard      = ErrType("NOT_LOAN_CARD")
-	ErrNotEnoughCard    = ErrType("NOT_ENOUGH_CARD")
-	ErrNotEnoughCond    = ErrType("NOT_ENOUGH_CONDITION")
-)
-
-// room error
-const (
-	ErrUserNotFound       = ErrType("USER_NOT_FOUND")
-	ErrInvalidAccessToken = ErrType("INVALID_ACCESS_TOKEN")
-	ErrUserAlreadyExisted = ErrType("USER_ALREADY_EXISTED")
-	ErrBadRequest         = ErrType("BAD_REQUEST")
-	ErrRoomNotFound       = ErrType("ROOM_NOT_FOUND")
-	ErrRoomFull           = ErrType("ROOM_FULL")
-	ErrPlayerStateFailed  = ErrType("PLAYER_STATE_CHANGE_FAILED")
-	ErrRoomUserNotFound   = ErrType("ROOM_USER_NOT_FOUND")
-)
-
 // auth error
+const (
+	ErrCodeNotFound       = ErrType("CODE_NOT_FOUND")
+	ErrUserNotFound       = ErrType("USER_NOT_FOUND")
+	ErrUserAlreadyExisted = ErrType("USER_ALREADY_EXISTED")
+	ErrInvalidAccessToken = ErrType("INVALID_ACCESS_TOKEN")
+)
 
 // basic , game, room, auth error mapping
 var ErrHttpCode = map[string]int{
