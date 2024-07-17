@@ -54,6 +54,7 @@ const (
 const (
 	ErrCodeNotFound       = ErrType("CODE_NOT_FOUND")
 	ErrUserNotFound       = ErrType("USER_NOT_FOUND")
+	ErrProfileNotFount    = ErrType("PROFILE_NOT_FOUND")
 	ErrUserAlreadyExisted = ErrType("USER_ALREADY_EXISTED")
 	ErrInvalidAccessToken = ErrType("INVALID_ACCESS_TOKEN")
 )
@@ -70,6 +71,7 @@ var ErrHttpCode = map[string]int{
 	"ROOM_NOT_FOUND":       http.StatusBadRequest,
 	"ROOM_USER_NOT_FOUND":  http.StatusBadRequest,
 	"USER_NOT_FOUND":       http.StatusBadRequest,
+	"PROFILE_NOT_FOUND":    http.StatusBadRequest,
 	"ROOM_FULL":            http.StatusBadRequest,
 	"NOT_LOAN_CARD":        http.StatusBadRequest,
 	"NOT_ENOUGH_CARD":      http.StatusBadRequest,
