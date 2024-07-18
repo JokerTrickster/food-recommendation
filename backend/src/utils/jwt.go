@@ -10,7 +10,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-type JwtCustomClaims struct {
+ type JwtCustomClaims struct {
 	CreateTime int64  `json:"createTime"`
 	UserID     uint   `json:"userID"`
 	Email      string `json:"email"`
