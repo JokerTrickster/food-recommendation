@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"fmt"
 	"main/features/food/model/entity"
 	_interface "main/features/food/model/interface"
 	"time"
@@ -19,6 +20,7 @@ func NewRecommendFoodUseCase(repo _interface.IRecommendFoodRepository, timeout t
 func (d *RecommendFoodUseCase) Recommend(c context.Context, entity entity.RecommendFoodEntity) error {
 	ctx, cancel := context.WithTimeout(c, d.ContextTimeout)
 	defer cancel()
+	fmt.Println(ctx)
 	// 유저 정보를 가져온다.
 
 	//데이터 가공
