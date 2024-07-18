@@ -42,8 +42,6 @@ definitions:
     properties:
       email:
         type: string
-      name:
-        type: string
       password:
         type: string
     type: object
