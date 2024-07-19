@@ -2,17 +2,16 @@ definitions:
   request.ReqRecommendFood:
     properties:
       scenario:
-        items:
-          type: string
-        type: array
+        description: 전체 , 혼밥, 가족, 친구들
+        example: 혼밥
+        type: string
       time:
-        items:
-          type: string
-        type: array
+        example: 점심
+        type: string
       type:
-        items:
-          type: string
-        type: array
+        description: 전체, 양식, 한식, 중식 등
+        example: 중식
+        type: string
     type: object
   request.ReqReissue:
     properties:
@@ -70,6 +69,13 @@ definitions:
         type: string
       sex:
         type: string
+    type: object
+  response.ResRecommendFood:
+    properties:
+      foodNames:
+        items:
+          type: string
+        type: array
     type: object
   response.ResReissue:
     properties:
@@ -322,7 +328,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: boolean
+            $ref: '#/definitions/response.ResRecommendFood'
         "400":
           description: Bad Request
           schema: {}
@@ -331,7 +337,7 @@ paths:
           schema: {}
       summary: 음식 추천 받기
       tags:
-      - user
+      - food
   /v0.1/users/check:
     get:
       description: |-

@@ -1,5 +1,5 @@
 package response
 
 type ResRecommendFood struct {
-	FoodName string `json:"foodName"`
+	FoodNames []string `json:"foodNames"`
 }

@@ -10,7 +10,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
- type JwtCustomClaims struct {
+type JwtCustomClaims struct {
 	CreateTime int64  `json:"createTime"`
 	UserID     uint   `json:"userID"`
 	Email      string `json:"email"`
@@ -22,8 +22,8 @@ var RefreshTokenSecretKey []byte
 var JwtConfig middleware.JWTConfig
 
 const (
-	AccessTokenExpiredTime  = 3 //hours
-	RefreshTokenExpiredTime = 5 //hours
+	AccessTokenExpiredTime  = 10 //hours
+	RefreshTokenExpiredTime = 60 //hours
 )
 
 func InitJwt() error {

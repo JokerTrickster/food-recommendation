@@ -2,9 +2,13 @@ package utils
 
 import (
 	"fmt"
+	"main/utils/aws"
 	_aws "main/utils/aws"
 	"main/utils/db/mysql"
+	"os"
 )
+
+var GeminiID string
 
 func InitServer() error {
 	if err := InitEnv(); err != nil {
@@ -30,6 +34,19 @@ func InitServer() error {
 		return err
 	}
 
+	if Env.IsLocal {
+		var ok bool
+		GeminiID, ok = os.LookupEnv("GEMINI_ID")
+		if !ok {
+			fmt.Println("GEMINI_ID not found")
+		}
+	} else {
+		var err error
+		GeminiID, err = aws.AwsSsmGetParam("food_gemini_id")
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
 
 	return nil
 }
