@@ -254,7 +254,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "user"
+                    "food"
                 ],
                 "summary": "음식 추천 받기",
                 "parameters": [
@@ -279,7 +279,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "boolean"
+                            "$ref": "#/definitions/response.ResRecommendFood"
                         }
                     },
                     "400": {
@@ -382,22 +382,18 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "scenario": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "description": "전체 , 혼밥, 가족, 친구들",
+                    "type": "string",
+                    "example": "혼밥"
                 },
                 "time": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "type": "string",
+                    "example": "점심"
                 },
                 "type": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "description": "전체, 양식, 한식, 중식 등",
+                    "type": "string",
+                    "example": "중식"
                 }
             }
         },
@@ -486,6 +482,17 @@ const docTemplate = `{
                 },
                 "sex": {
                     "type": "string"
+                }
+            }
+        },
+        "response.ResRecommendFood": {
+            "type": "object",
+            "properties": {
+                "foodNames": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },
