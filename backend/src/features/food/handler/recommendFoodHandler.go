@@ -1,10 +1,10 @@
 package handler
 
 import (
-	"fmt"
 	"main/features/food/model/entity"
 	_interface "main/features/food/model/interface"
 	"main/features/food/model/request"
+	"main/features/food/model/response"
 
 	mw "main/middleware"
 	"main/utils"
@@ -41,13 +41,12 @@ func NewRecommendFoodHandler(c *echo.Echo, useCase _interface.IRecommendFoodUseC
 // @Param tkn header string true "accessToken"
 // @Param type body request.ReqRecommendFood true "type"
 // @Produce json
-// @Success 200 {object} bool
+// @Success 200 {object} response.ResRecommendFood
 // @Failure 400 {object} error
 // @Failure 500 {object} error
-// @Tags user
+// @Tags food
 func (d *RecommendFoodHandler) Recommend(c echo.Context) error {
 	ctx, uID, _ := utils.CtxGenerate(c)
-	fmt.Println(ctx, uID)
 	req := &request.ReqRecommendFood{}
 	if err := utils.ValidateReq(c, req); err != nil {
 		return err
@@ -61,10 +60,14 @@ func (d *RecommendFoodHandler) Recommend(c echo.Context) error {
 		UserID:   uID,
 	}
 
-	err := d.UseCase.Recommend(ctx, entity)
+	data, err := d.UseCase.Recommend(ctx, entity)
 	if err != nil {
 		return err
 	}
 
-	return c.JSON(http.StatusOK, true)
+	res := response.ResRecommendFood{
+		FoodNames: data,
+	}
+
+	return c.JSON(http.StatusOK, res)
 }
