@@ -30,3 +30,7 @@ type IRequestPasswordAuthUseCase interface {
 type IValidatePasswordAuthUseCase interface {
 	ValidatePassword(c context.Context, entity entity.ValidatePasswordAuthEntity) error
 }
+
+type ICheckEmailAuthUseCase interface {
+	CheckEmail(c context.Context, email string) error
+}

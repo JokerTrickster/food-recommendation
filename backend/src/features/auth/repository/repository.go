@@ -33,3 +33,6 @@ type RequestPasswordAuthRepository struct {
 type ValidatePasswordAuthRepository struct {
 	GormDB *gorm.DB
 }
+type CheckEmailAuthRepository struct {
+	GormDB *gorm.DB
+}
