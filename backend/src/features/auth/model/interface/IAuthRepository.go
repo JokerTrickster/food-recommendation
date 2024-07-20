@@ -35,3 +35,7 @@ type IValidatePasswordAuthRepository interface {
 	UpdatePassword(ctx context.Context, user mysql.Users) error
 	DeleteAuthCode(ctx context.Context, email string) error
 }
+
+type ICheckEmailAuthRepository interface {
+	CheckEmail(ctx context.Context, email string) error
+}
