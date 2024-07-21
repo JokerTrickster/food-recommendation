@@ -7,6 +7,33 @@ import (
 	"strings"
 )
 
+func CreateSelectFoodDTO(e entity.SelectFoodEntity) *mysql.Foods {
+	typeID, err := mysql.GetTypeID(e.Type)
+	if err != nil {
+		fmt.Println(err)
+	}
+	timeID, err := mysql.GetTimeID(e.Time)
+	if err != nil {
+		fmt.Println(err)
+	}
+	secnarioID, err := mysql.GetScenarioID(e.Scenario)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return &mysql.Foods{
+		TypeID:     typeID,
+		TimeID:     timeID,
+		ScenarioID: secnarioID,
+		Name:       e.Name,
+	}
+}
+func CreateFoodHistoryDTO(foodID, userID uint) *mysql.FoodHistory {
+	return &mysql.FoodHistory{
+		FoodID: foodID,
+		UserID: userID,
+	}
+}
+
 func CreateRecommendFoodDTO(entity entity.RecommendFoodEntity, foodName string) *mysql.Foods {
 	typeID, err := mysql.GetTypeID(entity.Type)
 	if err != nil {
