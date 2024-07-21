@@ -10,4 +10,5 @@ import (
 
 func NewFoodHandler(c *echo.Echo) {
 	NewRecommendFoodHandler(c, usecase.NewRecommendFoodUseCase(repository.NewRecommendFoodRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
+	NewSelectFoodHandler(c, usecase.NewSelectFoodUseCase(repository.NewSelectFoodRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 }

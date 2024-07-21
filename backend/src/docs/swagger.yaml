@@ -13,7 +13,7 @@ definitions:
         type: string
       type:
         description: 전체, 양식, 한식, 중식 등
-        example: 중식
+        example: 한식
         type: string
     type: object
   request.ReqReissue:
@@ -29,6 +29,23 @@ definitions:
         type: string
     required:
     - email
+    type: object
+  request.ReqSelectFood:
+    properties:
+      name:
+        example: 김치찌개
+        type: string
+      scenario:
+        description: 전체 , 혼밥, 가족, 친구들
+        example: 혼밥
+        type: string
+      time:
+        example: 중식
+        type: string
+      type:
+        description: 전체, 양식, 한식, 중식 등
+        example: 한식
+        type: string
     type: object
   request.ReqSignin:
     properties:
@@ -373,6 +390,46 @@ paths:
           description: Internal Server Error
           schema: {}
       summary: 음식 추천 받기
+      tags:
+      - food
+  /v0.1/foods/select:
+    post:
+      description: |-
+        ■ errCode with 400
+        PARAM_BAD : 파라미터 오류
+        USER_NOT_EXIST : 유저가 존재하지 않음
+        USER_ALREADY_EXISTED : 유저가 이미 존재
+
+        ■ errCode with 500
+        INTERNAL_SERVER : 내부 로직 처리 실패
+        INTERNAL_DB : DB 처리 실패
+        PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+      parameters:
+      - description: accessToken
+        in: header
+        name: tkn
+        required: true
+        type: string
+      - description: type
+        in: body
+        name: type
+        required: true
+        schema:
+          $ref: '#/definitions/request.ReqSelectFood'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: boolean
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: 음식 선택하기
       tags:
       - food
   /v0.1/users/check:
