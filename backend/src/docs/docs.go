@@ -418,6 +418,10 @@ const docTemplate = `{
         "request.ReqRecommendFood": {
             "type": "object",
             "properties": {
+                "previousAnswer": {
+                    "type": "string",
+                    "example": "김치찌개 떡볶이 치킨"
+                },
                 "scenario": {
                     "description": "전체 , 혼밥, 가족, 친구들",
                     "type": "string",
@@ -425,7 +429,7 @@ const docTemplate = `{
                 },
                 "time": {
                     "type": "string",
-                    "example": "점심"
+                    "example": "중식"
                 },
                 "type": {
                     "description": "전체, 양식, 한식, 중식 등",
