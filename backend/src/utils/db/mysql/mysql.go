@@ -99,3 +99,27 @@ func TimeStringToEpoch(t string) int64 {
 func TimeToEpoch(t time.Time) int64 {
 	return t.Unix()
 }
+
+func GetScenarioID(name string) (int, error) {
+	id, exists := ScenarioMap[name]
+	if !exists {
+		return 0, fmt.Errorf("시나리오 이름을 찾을 수 없습니다: %s", name)
+	}
+	return id, nil
+}
+
+func GetTimeID(name string) (int, error) {
+	id, exists := TimeMap[name]
+	if !exists {
+		return 0, fmt.Errorf("시간 이름을 찾을 수 없습니다: %s", name)
+	}
+	return id, nil
+}
+
+func GetTypeID(name string) (int, error) {
+	id, exists := TypeMap[name]
+	if !exists {
+		return 0, fmt.Errorf("음식 종류 이름을 찾을 수 없습니다: %s", name)
+	}
+	return id, nil
+}

@@ -38,6 +38,7 @@ const (
 	ErrFromAwsS3    = IErrFrom("aws_s3")
 	ErrFromAwsSsm   = IErrFrom("aws_ssm")
 	ErrFromNaver    = IErrFrom("naver")
+	ErrFromGemini   = IErrFrom("gemini")
 )
 
 // basic error
@@ -58,6 +59,8 @@ const (
 	ErrUserAlreadyExisted = ErrType("USER_ALREADY_EXISTED")
 	ErrInvalidAccessToken = ErrType("INVALID_ACCESS_TOKEN")
 )
+
+
 
 // basic , game, room, auth error mapping
 var ErrHttpCode = map[string]int{
