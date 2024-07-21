@@ -1,12 +1,15 @@
 definitions:
   request.ReqRecommendFood:
     properties:
+      previousAnswer:
+        example: 김치찌개 떡볶이 치킨
+        type: string
       scenario:
         description: 전체 , 혼밥, 가족, 친구들
         example: 혼밥
         type: string
       time:
-        example: 점심
+        example: 중식
         type: string
       type:
         description: 전체, 양식, 한식, 중식 등

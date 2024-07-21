@@ -59,6 +59,9 @@ func (d *RecommendFoodHandler) Recommend(c echo.Context) error {
 		Time:     req.Time,
 		UserID:   uID,
 	}
+	if req.PreviousAnswer != "" {
+		entity.PreviousAnswer = req.PreviousAnswer
+	}
 
 	data, err := d.UseCase.Recommend(ctx, entity)
 	if err != nil {
