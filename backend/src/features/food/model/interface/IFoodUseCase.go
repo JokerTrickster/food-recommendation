@@ -6,5 +6,8 @@ import (
 )
 
 type IRecommendFoodUseCase interface {
-	Recommend(c context.Context, entity entity.RecommendFoodEntity) ([]string,error)
+	Recommend(c context.Context, entity entity.RecommendFoodEntity) ([]string, error)
+}
+type ISelectFoodUseCase interface {
+	Select(c context.Context, entity entity.SelectFoodEntity) error
 }
