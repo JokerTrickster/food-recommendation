@@ -1,0 +1,51 @@
+.gpt {
+  display: flex;
+  width: 100%;
+}
+
+.gpt__profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  padding: 10px;
+  overflow: hidden;
+  border-radius: 50px;
+  background-color: transparent;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.user-container {
+  display: flex;
+  justify-content: end;
+}
+
+.gpt__profile-container img {
+  overflow: hidden;
+}
+
+.container__user-message,
+.container__gpt-message,
+.container__recommend {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: inherit;
+  margin: 1rem;
+  padding: 20px;
+  border-radius: 15px;
+  max-width: 400px;
+  height: 35.5px;
+  height: auto;
+  color: var(--color-baby-blue);
+  background-color: var(--color-blue);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  text-align: left;
+}
+
+.container__gpt-message,
+.container__recommend {
+  background-color: var(--color-baby-blue);
+  color: var(--color-black);
+}
