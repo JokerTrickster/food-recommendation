@@ -9,3 +9,7 @@ type RecommendFoodRepository struct {
 type SelectFoodRepository struct {
 	GormDB *gorm.DB
 }
+
+type HistoryFoodRepository struct {
+	GormDB *gorm.DB
+}
