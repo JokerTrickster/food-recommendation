@@ -1,87 +1,87 @@
+import { useNavigate } from 'react-router';
+
 import { useValidationInput } from '@shared/hooks';
 import { Button, Input, LineLink, ValidationText } from '@shared/ui';
-import Card from '@shared/ui/card';
+
+import { emailRegex, passwordRegex } from '@features/auth/constants';
 
 import classes from './css/login.module.css';
+import { END_POINT } from '@shared/constants';
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const {
     userValue: emailValue,
     getUserValue: getEmailValue,
     isValid: isEmailValid,
-    setIsValid: setIsEmailValid,
-  } = useValidationInput();
+  } = useValidationInput(emailRegex);
 
   const {
     userValue: passwordValue,
     getUserValue: getPasswordValue,
     isValid: isPasswordValid,
-    setIsValid: setIsPasswordValid,
-  } = useValidationInput();
+  } = useValidationInput(passwordRegex);
 
-  function emailValidationHandler(): void {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  async function loginHandler(e: React.FormEvent): Promise<void> {
+    e.preventDefault();
 
-    if (emailRegex.test(emailValue)) {
-      setIsEmailValid(false);
-    } else {
-      setIsEmailValid(true);
-    }
-  }
+    try {
+      const response = await fetch(END_POINT + '/auth/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: emailValue, password: passwordValue }),
+      });
 
-  function passwordValidationHandler() {
-    if (passwordValue.trim() !== '') {
-      setIsPasswordValid(false);
-    } else {
-      setIsPasswordValid(true);
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('token', data.token);
+        navigate('/chat');
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 
   return (
-    <Card>
-      <form className={classes.login}>
-        <section>
-          <Input
-            id="email"
-            type="email"
-            label="이메일"
-            className={classes.login__input}
-            value={emailValue}
-            onChange={getEmailValue}
-            onValidation={emailValidationHandler}
-          />
+    <form className={classes.login} onSubmit={loginHandler}>
+      <section>
+        <Input
+          id="email"
+          type="email"
+          label="이메일"
+          className={classes.login__input}
+          value={emailValue}
+          onChange={getEmailValue}
+        />
 
-          <ValidationText
-            condition={isEmailValid && emailValue === ''}
-            type="warning"
-            message="이메일을 입력해주세요."
-          />
-
-          <ValidationText
-            condition={isEmailValid && emailValue !== ''}
-            type="warning"
-            message="이메일이 유효하지 않습니다."
-          />
-        </section>
-        <section className={classes['container__password']}>
-          <Input
-            id="password"
-            type="password"
-            label="패스워드"
-            className={classes.login__input}
-            value={passwordValue}
-            onChange={getPasswordValue}
-            onValidation={passwordValidationHandler}
-          />
-          <ValidationText
-            condition={isPasswordValid}
-            type="warning"
-            message="비밀번호를 입력해주세요."
-          />
-        </section>
-        <Button type="submit">로그인</Button>
-        <LineLink to="/register" span="아이디가 없으신가요?" strong="회원가입하기"></LineLink>
-      </form>
-    </Card>
+        <ValidationText
+          condition={!isEmailValid && emailValue !== ''}
+          type="warning"
+          message="이메일이 유효하지 않습니다."
+        />
+      </section>
+      <section className={classes['container__password']}>
+        <Input
+          id="password"
+          type="password"
+          label="패스워드"
+          className={classes.login__input}
+          value={passwordValue}
+          onChange={getPasswordValue}
+        />
+        <ValidationText
+          condition={!isPasswordValid}
+          type="warning"
+          message="암호가 유효하지 않습니다."
+        />
+      </section>
+      <Button type="submit">로그인</Button>
+      <LineLink to="/register" span="아이디가 없으신가요?" strong="회원가입하기"></LineLink>
+    </form>
   );
 }

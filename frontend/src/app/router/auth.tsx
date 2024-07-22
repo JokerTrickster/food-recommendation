@@ -1,8 +1,7 @@
 import { lazy } from 'react';
 
-import Landing from '@pages/home/landing';
-import Layout from '@shared/layout/layout';
-const Login = lazy(() => import('@pages/auth/login'));
+import Landing from '@shared/layouts/landing';
+import Login from '@pages/auth/login';
 const Register = lazy(() => import('@pages/auth/register'));
 
 export const AUTH_ROUTES = [
@@ -11,7 +10,7 @@ export const AUTH_ROUTES = [
     element: <Landing />,
     children: [
       {
-        path: '/login',
+        index: true,
         element: <Login />,
       },
 
