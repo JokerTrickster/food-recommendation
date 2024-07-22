@@ -3,6 +3,7 @@ package _interface
 import (
 	"context"
 	"main/features/food/model/entity"
+	"main/features/food/model/response"
 )
 
 type IRecommendFoodUseCase interface {
@@ -10,4 +11,8 @@ type IRecommendFoodUseCase interface {
 }
 type ISelectFoodUseCase interface {
 	Select(c context.Context, entity entity.SelectFoodEntity) error
+}
+
+type IHistoryFoodUseCase interface {
+	History(c context.Context, userID uint) (response.ResHistoryFood, error)
 }

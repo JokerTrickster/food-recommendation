@@ -60,6 +60,13 @@ var TypeMap = map[string]int{
 	"분식": TypeSnack,
 }
 
+
+// 반대 맵 정의 (int -> string)
+var ScenarioReverseMap = make(map[int]string)
+var TimeReverseMap = make(map[int]string)
+var TypeReverseMap = make(map[int]string)
+
+
 type Tokens struct {
 	gorm.Model
 	UserID           uint   `json:"userID" gorm:"column:user_id"`

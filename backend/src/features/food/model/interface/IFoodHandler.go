@@ -8,3 +8,7 @@ type IRecommendFoodHandler interface {
 type ISelectFoodHandler interface {
 	Select(c echo.Context) error
 }
+
+type IHistoryFoodHandler interface {
+	History(c echo.Context) error
+}

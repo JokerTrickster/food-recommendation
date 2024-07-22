@@ -70,6 +70,7 @@ func InitMySQL() error {
 
 	// gen 패키지를 사용하여 쿼리를 생성할 때 사용할 DB를 설정
 	// SetDefault(GormMysqlDB)
+	InitMeta()
 
 	return nil
 }
@@ -122,4 +123,32 @@ func GetTypeID(name string) (int, error) {
 		return 0, fmt.Errorf("음식 종류 이름을 찾을 수 없습니다: %s", name)
 	}
 	return id, nil
+}
+
+// 맵에서 키에 해당하는 값을 가져오는 함수
+func GetScenarioKey(val int) (string, bool) {
+	key, ok := ScenarioReverseMap[val]
+	return key, ok
+}
+
+func GetTimeKey(val int) (string, bool) {
+	key, ok := TimeReverseMap[val]
+	return key, ok
+}
+
+func GetTypeKey(val int) (string, bool) {
+	key, ok := TypeReverseMap[val]
+	return key, ok
+}
+
+func InitMeta() {
+	for k, v := range ScenarioMap {
+		ScenarioReverseMap[v] = k
+	}
+	for k, v := range TimeMap {
+		TimeReverseMap[v] = k
+	}
+	for k, v := range TypeMap {
+		TypeReverseMap[v] = k
+	}
 }
