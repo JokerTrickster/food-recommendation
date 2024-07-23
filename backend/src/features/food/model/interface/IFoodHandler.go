@@ -12,3 +12,7 @@ type ISelectFoodHandler interface {
 type IHistoryFoodHandler interface {
 	History(c echo.Context) error
 }
+
+type IMetaFoodHandler interface {
+	Meta(c echo.Context) error
+}

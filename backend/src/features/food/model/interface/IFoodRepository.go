@@ -17,3 +17,9 @@ type IHistoryFoodRepository interface {
 	FindAllFoodHistory(ctx context.Context, userID uint) ([]mysql.FoodHistory, error)
 	FindOneFood(ctx context.Context, foodID uint) (*mysql.Foods, error)
 }
+
+type IMetaFoodRepository interface {
+	FindAllTypeMeta(ctx context.Context) ([]mysql.Types, error)
+	FindAllTimeMeta(ctx context.Context) ([]mysql.Times, error)
+	FindAllScenarioMeta(ctx context.Context) ([]mysql.Scenarios, error)
+}

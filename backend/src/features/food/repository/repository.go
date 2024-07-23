@@ -13,3 +13,6 @@ type SelectFoodRepository struct {
 type HistoryFoodRepository struct {
 	GormDB *gorm.DB
 }
+type MetaFoodRepository struct {
+	GormDB *gorm.DB
+}
