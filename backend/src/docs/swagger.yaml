@@ -96,6 +96,21 @@ definitions:
       type:
         type: string
     type: object
+  response.MetaData:
+    properties:
+      scenarios:
+        items:
+          type: string
+        type: array
+      times:
+        items:
+          type: string
+        type: array
+      types:
+        items:
+          type: string
+        type: array
+    type: object
   response.ResGetUser:
     properties:
       birth:
@@ -109,6 +124,11 @@ definitions:
         items:
           $ref: '#/definitions/response.HistoryFood'
         type: array
+    type: object
+  response.ResMetaData:
+    properties:
+      metaData:
+        $ref: '#/definitions/response.MetaData'
     type: object
   response.ResRecommendFood:
     properties:
@@ -404,6 +424,34 @@ paths:
           description: Internal Server Error
           schema: {}
       summary: 음식 히스토리 가쟈오기
+      tags:
+      - food
+  /v0.1/foods/meta:
+    get:
+      description: |-
+        ■ errCode with 400
+        PARAM_BAD : 파라미터 오류
+        USER_NOT_EXIST : 유저가 존재하지 않음
+        USER_ALREADY_EXISTED : 유저가 이미 존재
+
+        ■ errCode with 500
+        INTERNAL_SERVER : 내부 로직 처리 실패
+        INTERNAL_DB : DB 처리 실패
+        PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ResMetaData'
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: 메타 데이터 가져오기
       tags:
       - food
   /v0.1/foods/recommend:

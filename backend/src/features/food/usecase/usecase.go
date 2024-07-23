@@ -3,9 +3,26 @@ package usecase
 import (
 	"fmt"
 	"main/features/food/model/entity"
+	"main/features/food/model/response"
 	"main/utils/db/mysql"
 	"strings"
 )
+
+func CreateResMetaData(typeDTO []mysql.Types, timeDTO []mysql.Times, scenarioDTO []mysql.Scenarios) response.ResMetaData {
+	var res response.ResMetaData
+	var metaData response.MetaData
+	for _, t := range typeDTO {
+		metaData.Types = append(metaData.Types, t.Name)
+	}
+	for _, t := range timeDTO {
+		metaData.Times = append(metaData.Times, t.Name)
+	}
+	for _, t := range scenarioDTO {
+		metaData.Scenarios = append(metaData.Scenarios, t.Name)
+	}
+	res.MetaData = metaData
+	return res
+}
 
 func CreateSelectFoodDTO(e entity.SelectFoodEntity) *mysql.Foods {
 	typeID, err := mysql.GetTypeID(e.Type)

@@ -16,3 +16,7 @@ type ISelectFoodUseCase interface {
 type IHistoryFoodUseCase interface {
 	History(c context.Context, userID uint) (response.ResHistoryFood, error)
 }
+
+type IMetaFoodUseCase interface {
+	Meta(c context.Context) (response.ResMetaData, error)
+}
