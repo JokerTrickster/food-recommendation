@@ -17,7 +17,14 @@ export default function RadioButton(props: RadioButtonProps) {
         {children}
         {title}
       </label>
-      <input type="radio" name={name} id={id} checked={checked} onChange={() => onChange(id!)} />
+      <input
+        type="radio"
+        name={name}
+        id={id}
+        checked={checked}
+        onChange={() => onChange(id!)}
+        value={id}
+      />
     </div>
   );
 }

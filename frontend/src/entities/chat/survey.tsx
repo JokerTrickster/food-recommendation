@@ -1,4 +1,4 @@
-import { ChangeEvent, ChangeEventHandler, ReactNode, useEffect, useState } from 'react';
+import { ChangeEvent, ChangeEventHandler, FormEvent, ReactNode, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import doughnut from '@assets/icon/doughnut.svg';
@@ -20,7 +20,6 @@ export function Survey(props: SurveyProps) {
   const [selectedId, setSelectedId] = useState<string>('g1');
 
   const [bornValue, setBornValue] = useState<string>('');
-  const [genderValue, setGenderValue] = useState<number>(1);
 
   function bornHandler(e: ChangeEvent) {
     const target = e.target as HTMLInputElement;
@@ -33,6 +32,14 @@ export function Survey(props: SurveyProps) {
 
   const isDisabled = !bornValue || !selectedId;
 
+  function surveySubmitHandler(e: FormEvent) {
+    e.preventDefault();
+
+    const formData = new FormData();
+    console.log(formData);
+    // formData.append('birth', bornValue);
+  }
+
   return createPortal(
     <>
       <div className={classes.overlay} />
@@ -44,7 +51,7 @@ export function Survey(props: SurveyProps) {
           </p>
         </header>
 
-        <form className={classes.survey__form}>
+        <form className={classes.survey__form} onSubmit={surveySubmitHandler}>
           <section>
             <label htmlFor="born" className={classes.form__label}>
               생년월일

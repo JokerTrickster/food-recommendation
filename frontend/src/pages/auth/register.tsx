@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router';
 import { useState } from 'react';
 
 export default function Register(): JSX.Element {
-  const [isCheck, setIsCheck] = useState<boolean>(true);
+  const [isCheck, setIsCheck] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -54,23 +54,22 @@ export default function Register(): JSX.Element {
     }
   }
 
-  async function duplicationHandler(e: React.MouseEvent): void {
+  async function duplicationHandler(e: React.MouseEvent): Promise<void> {
     e.preventDefault();
 
     try {
-      const response = await fetch(END_POINT + '/auth/check', {
-        method: 'POST',
+      const response = await fetch(`END_POINT/auth/email/check?email=${emailValue}`, {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          email: emailValue,
-        }),
       });
 
       if (response.ok) {
-        setIsCheck(false);
+        setIsCheck(true);
       }
+
+      console.log(response);
     } catch (error) {
       console.error('중복 확인 실패', error);
     }
@@ -97,6 +96,13 @@ export default function Register(): JSX.Element {
           </Button>
         </div>
 
+        {isCheck && (
+          <ValidationText
+            condition={isCheck}
+            type="success"
+            message="사용할 수 있는 이메일입니다."
+          />
+        )}
         <ValidationText
           condition={!isEmailValid && emailValue !== ''}
           type="warning"
@@ -112,7 +118,7 @@ export default function Register(): JSX.Element {
         />
         <Input
           id="password-check"
-          type="password-check"
+          type="password"
           label="패스워드"
           className={classes.login__input}
           value={passwordValueCheck}

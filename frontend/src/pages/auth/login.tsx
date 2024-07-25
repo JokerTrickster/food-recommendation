@@ -7,9 +7,12 @@ import { emailRegex, passwordRegex } from '@features/auth/constants';
 
 import classes from './css/login.module.css';
 import { END_POINT } from '@shared/constants';
+import useAuthStore from '@app/store/user';
 
 export default function Login() {
   const navigate = useNavigate();
+  const setAccessToken = useAuthStore(state => state.setAccessToken);
+  const setUser = useAuthStore(state => state.setUser);
 
   const {
     userValue: emailValue,
@@ -37,12 +40,13 @@ export default function Login() {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('token', data.token);
+        setAccessToken(data.accessToken);
+        setUser(data.accessToken);
         navigate('/chat');
       }
     } catch (error) {
       if (error instanceof Error) {
-        throw new Error(error.message);
+        console.error(error.message);
       }
     }
   }
