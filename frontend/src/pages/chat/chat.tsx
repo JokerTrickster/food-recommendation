@@ -89,10 +89,12 @@ export default function Chat() {
         }),
       });
 
+      console.log(previousAnswer);
+
       if (response.ok) {
         const data = await response.json();
-        console.log(data.foodNames);
         setAnswerList(data.foodNames);
+        setPreviousAnswer(() => data.foodNames.join(', '));
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -172,7 +174,7 @@ export default function Chat() {
 
           <div className={classes.form__wrap}>
             <Button className={classes.form__submit}>
-              <img src={send} alt="메시지 전송" />
+              <img src={send} alt="추천 받기" />
             </Button>
           </div>
         </form>
