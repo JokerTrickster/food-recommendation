@@ -6,6 +6,7 @@ type InputProps = {
   className?: string;
   label?: string;
   onValidation?: () => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 export function Input(props: InputProps) {
