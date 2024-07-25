@@ -41,6 +41,7 @@ export default function Login() {
       if (response.ok) {
         const data = await response.json();
         setAccessToken(data.accessToken);
+        localStorage.setItem('accessToken', data.accessToken);
         setUser(data.accessToken);
         navigate('/chat');
       }

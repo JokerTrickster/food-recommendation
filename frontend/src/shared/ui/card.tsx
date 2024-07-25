@@ -9,7 +9,7 @@ type CardProps = {
 const Card = memo(function Card(props: CardProps) {
   const { children } = props;
 
-  return <section className={classes.card}>{children}</section>;
+  return <li className={classes.card}>{children}</li>;
 });
 
 export default Card;

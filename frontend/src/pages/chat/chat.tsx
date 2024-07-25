@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { Survey } from '@entities/chat/survey';
 import { END_POINT } from '@shared/constants';
 import useAuthStore from '@app/store/user';
+import Card from '@shared/ui/card';
 
 export default function Chat() {
   const [selectedScenario, setSelectedScenario] = useState(')전체0');
@@ -19,13 +20,16 @@ export default function Chat() {
   const [times, setTimes] = useState<string[]>([]);
   const [types, setTypes] = useState<string[]>([]);
 
+  const [previousAnswer, setPreviousAnswer] = useState<string>('');
+  const [answerList, setAnswerList] = useState<string[]>([]);
+
   const [isSurvey, setIsSurvey] = useState(false);
 
   function surveyClose() {
     setIsSurvey(false);
   }
 
-  const token = useAuthStore(state => state.accessToken);
+  const token = useAuthStore(state => state.accessToken) || localStorage.getItem('accessToken');
   const user = useAuthStore(state => state.user);
 
   useEffect(() => {
@@ -63,14 +67,50 @@ export default function Chat() {
     setIsSurvey(true);
   }, [token]);
 
-  console.log(token);
+  async function submitHandler(e: React.FormEvent) {
+    e.preventDefault();
+
+    if (!token) {
+      throw new Error('토큰이 없습니다');
+    }
+
+    try {
+      const response = await fetch(END_POINT + '/foods/recommend', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          tkn: token,
+        },
+        body: JSON.stringify({
+          previousAnswer,
+          scenario: selectedScenario,
+          time: selectedTime,
+          type: selectedType,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.foodNames);
+        setAnswerList(data.foodNames);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
+    }
+  }
 
   return (
     <section className={classes.background}>
       {isSurvey && <Survey onClose={surveyClose} />}
 
+      <main className={classes['answer-list']}>
+        {answerList && answerList.map((food, index) => <Card key={'_' + index}>{food}</Card>)}
+      </main>
+
       <section className={classes['chat__form-container']}>
-        <form className={classes.chat__form}>
+        <form className={classes.chat__form} onSubmit={submitHandler}>
           <section>
             <strong>상황</strong>
 
@@ -83,8 +123,8 @@ export default function Chat() {
                       id={')' + scenario + index}
                       name="scenario"
                       title={scenario}
-                      checked={')' + scenario + index === selectedScenario}
-                      onChange={() => setSelectedScenario(')' + scenario + index)}
+                      checked={scenario === selectedScenario}
+                      onChange={() => setSelectedScenario(scenario)}
                     />
                   );
                 })}
@@ -103,8 +143,8 @@ export default function Chat() {
                       id={'-' + time + index}
                       name="times"
                       title={time}
-                      checked={'-' + time + index === selectedTime}
-                      onChange={() => setSelectedTime('-' + time + index)}
+                      checked={time === selectedTime}
+                      onChange={() => setSelectedTime(time)}
                     />
                   );
                 })}
@@ -122,8 +162,8 @@ export default function Chat() {
                       id={'+' + type + index}
                       name="types"
                       title={type}
-                      checked={'+' + type + index === selectedType}
-                      onChange={() => setSelectedType('+' + type + index)}
+                      checked={type === selectedType}
+                      onChange={() => setSelectedType(type)}
                     />
                   );
                 })}
