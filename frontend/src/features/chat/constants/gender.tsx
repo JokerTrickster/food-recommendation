@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 import male from '@assets/icon/male.svg';
 import female from '@assets/icon/female.svg';
 
@@ -12,7 +10,7 @@ export interface Gender {
   group: 'gender';
   type: '남성' | '여성' | '기타';
   value: number;
-  Component?: ReactNode;
+  Component?: React.ReactNode;
 }
 
 export const GENDER_CODE: Gender[] = [

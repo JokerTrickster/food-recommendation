@@ -1,5 +1,4 @@
 import send from '@assets/icon/send.svg';
-import stop from '@assets/icon/stop.svg';
 
 import { Button } from '@shared/ui';
 

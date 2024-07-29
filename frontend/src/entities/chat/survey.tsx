@@ -1,4 +1,4 @@
-import { ChangeEvent, ChangeEventHandler, FormEvent, ReactNode, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import doughnut from '@assets/icon/doughnut.svg';
@@ -71,7 +71,7 @@ export function Survey(props: SurveyProps) {
             </label>
             <ul>
               {GENDER_CODE.map((type: Gender) => {
-                const Component: ReactNode = type.Component!;
+                const Component: React.ReactNode = type.Component!;
 
                 return (
                   <RadioButton

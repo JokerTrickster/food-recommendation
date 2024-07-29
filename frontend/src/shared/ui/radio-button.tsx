@@ -1,10 +1,8 @@
-import { ReactNode } from 'react';
-
 import classes from './css/radio-button.module.css';
 
 type RadioButtonProps = {
   title: string;
-  children?: ReactNode;
+  children?: React.ReactNode;
   onChange: (id: string) => void;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 

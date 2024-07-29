@@ -19,11 +19,8 @@ export default function Register(): JSX.Element {
     isValid: isEmailValid,
   } = useValidationInput(emailRegex);
 
-  const {
-    userValue: passwordValue,
-    getUserValue: getPasswordValue,
-    isValid: isPasswordValid,
-  } = useValidationInput(passwordRegex);
+  const { userValue: passwordValue, getUserValue: getPasswordValue } =
+    useValidationInput(passwordRegex);
 
   const {
     userValue: passwordValueCheck,
@@ -96,13 +93,7 @@ export default function Register(): JSX.Element {
           </Button>
         </div>
 
-        {isCheck && (
-          <ValidationText
-            condition={isCheck}
-            type="success"
-            message="사용할 수 있는 이메일입니다."
-          />
-        )}
+        <ValidationText condition={isCheck} type="success" message="사용할 수 있는 이메일입니다." />
         <ValidationText
           condition={!isEmailValid && emailValue !== ''}
           type="warning"
