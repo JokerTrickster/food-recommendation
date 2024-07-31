@@ -1,7 +1,14 @@
+import { useEffect } from 'react';
 import classes from './css/landing.module.css';
 import { Outlet } from 'react-router';
 
 export default function Landing() {
+  const token = localStorage.getItem('accessToken');
+
+  useEffect(() => {
+    token && window.location.replace('/chat');
+  }, []);
+
   return (
     <main className={classes.main}>
       <section className={classes.main__section}>

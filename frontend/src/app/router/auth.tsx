@@ -2,6 +2,8 @@ import { lazy } from 'react';
 
 import Landing from '@shared/layouts/landing';
 import Login from '@pages/auth/login';
+import Logout from '@pages/auth/logout';
+
 const Register = lazy(() => import('@pages/auth/register'));
 
 export const AUTH_ROUTES = [
@@ -19,5 +21,10 @@ export const AUTH_ROUTES = [
         element: <Register />,
       },
     ],
+  },
+
+  {
+    path: '/logout',
+    element: <Logout />,
   },
 ];

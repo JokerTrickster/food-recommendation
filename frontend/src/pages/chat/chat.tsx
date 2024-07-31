@@ -9,11 +9,21 @@ import { Survey } from '@entities/chat/survey';
 import { END_POINT } from '@shared/constants';
 import useAuthStore from '@app/store/user';
 import Card from '@shared/ui/card';
+import { Link } from 'react-router-dom';
+import { fetchToken } from '@features/chat/utils/token';
 
 export default function Chat() {
   const [selectedScenario, setSelectedScenario] = useState(')전체0');
   const [selectedTime, setSelectedTime] = useState('-전체0');
   const [selectedType, setSelectedType] = useState('+전체0');
+
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [refreshToken, setRefreshToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    setAccessToken(localStorage.getItem('accessToken'));
+    setRefreshToken(localStorage.getItem('refreshToken'));
+  }, []);
 
   const [scenarios, setScenarios] = useState<string[]>([]);
   const [times, setTimes] = useState<string[]>([]);
@@ -24,6 +34,8 @@ export default function Chat() {
 
   const [isSurvey, setIsSurvey] = useState(false);
 
+  const setUser = useAuthStore(state => state.setUser);
+
   function surveyClose() {
     setIsSurvey(false);
   }
@@ -33,7 +45,7 @@ export default function Chat() {
 
   useEffect(() => {
     if (!token) {
-      throw new Error('토큰이 없습니다');
+      window.location.replace('/');
     }
   }, [token]);
 
@@ -56,7 +68,7 @@ export default function Chat() {
 
   useEffect(() => {
     if (!token) {
-      throw new Error('토큰이 없습니다');
+      token && window.location.replace('/');
     }
 
     if (user.sex && user.birth) {
@@ -69,7 +81,7 @@ export default function Chat() {
   async function submitHandler(e: React.FormEvent) {
     e.preventDefault();
 
-    if (!token) {
+    if (!accessToken || !refreshToken) {
       throw new Error('토큰이 없습니다');
     }
 
@@ -78,7 +90,7 @@ export default function Chat() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          tkn: token,
+          tkn: accessToken!,
         },
         body: JSON.stringify({
           previousAnswer,
@@ -88,7 +100,51 @@ export default function Chat() {
         }),
       });
 
-      console.log(previousAnswer);
+      console.log('accessToken:', accessToken);
+      console.log('refreshToken:', refreshToken);
+
+      if (response.status === 401 || response.status === 403) {
+        console.log('토큰 갱신');
+
+        try {
+          const newTokens = await fetchToken(accessToken, refreshToken);
+
+          console.log(newTokens);
+
+          if (!newTokens.accessToken || !newTokens.refreshToken) {
+            throw new Error('토큰이 정의되지 않았습니다.');
+          }
+
+          console.log('newTokens', newTokens);
+          setAccessToken(newTokens.accessToken);
+          setRefreshToken(newTokens.refreshToken);
+          setUser(newTokens.accessToken);
+
+          // 새 토큰으로 요청 재시도
+          const newResponse = await fetch(END_POINT + '/foods/recommend', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              tkn: newTokens.accessToken,
+            },
+            body: JSON.stringify({
+              previousAnswer,
+              scenario: selectedScenario,
+              time: selectedTime,
+              type: selectedType,
+            }),
+          });
+
+          if (newResponse.ok) {
+            const data = await newResponse.json();
+            setAnswerList(data.foodNames);
+            setPreviousAnswer(() => data.foodNames.join(', '));
+          }
+        } catch (error) {
+          console.error('토큰 갱신 실패:', error);
+          throw new Error('토큰 갱신에 실패했습니다.');
+        }
+      }
 
       if (response.ok) {
         const data = await response.json();
@@ -178,6 +234,8 @@ export default function Chat() {
           </div>
         </form>
       </section>
+
+      <Link to="/logout">로그아웃</Link>
     </section>
   );
 }
