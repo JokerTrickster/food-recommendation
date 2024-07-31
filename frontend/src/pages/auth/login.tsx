@@ -8,23 +8,19 @@ import { emailRegex, passwordRegex } from '@features/auth/constants';
 import classes from './css/login.module.css';
 import { END_POINT } from '@shared/constants';
 import useAuthStore from '@app/store/user';
+import { useState } from 'react';
 
 export default function Login() {
   const navigate = useNavigate();
   const setAccessToken = useAuthStore(state => state.setAccessToken);
   const setUser = useAuthStore(state => state.setUser);
 
-  const {
-    userValue: emailValue,
-    getUserValue: getEmailValue,
-    isValid: isEmailValid,
-  } = useValidationInput(emailRegex);
+  const { userValue: emailValue, getUserValue: getEmailValue } = useValidationInput(emailRegex);
 
-  const {
-    userValue: passwordValue,
-    getUserValue: getPasswordValue,
-    isValid: isPasswordValid,
-  } = useValidationInput(passwordRegex);
+  const { userValue: passwordValue, getUserValue: getPasswordValue } =
+    useValidationInput(passwordRegex);
+
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   async function loginHandler(e: React.FormEvent): Promise<void> {
     e.preventDefault();
@@ -40,15 +36,22 @@ export default function Login() {
 
       if (response.ok) {
         const data = await response.json();
+        console.log(data);
+
         setAccessToken(data.accessToken);
-        localStorage.setItem('accessToken', data.accessToken);
         setUser(data.accessToken);
+        localStorage.setItem('accessToken', data.accessToken);
+        localStorage.setItem('refreshToken', data.refreshToken);
         navigate('/chat');
       }
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error(error.message);
+
+      if (response.status === 400) {
+        setIsSuccess(true);
+      } else {
+        setIsSuccess(false);
       }
+    } catch (error) {
+      throw new Error('로그인에 실패했습니다.');
     }
   }
 
@@ -63,12 +66,6 @@ export default function Login() {
           value={emailValue}
           onChange={getEmailValue}
         />
-
-        <ValidationText
-          condition={!isEmailValid && emailValue !== ''}
-          type="warning"
-          message="이메일이 유효하지 않습니다."
-        />
       </section>
       <section className={classes['container__password']}>
         <Input
@@ -79,14 +76,19 @@ export default function Login() {
           value={passwordValue}
           onChange={getPasswordValue}
         />
-        <ValidationText
-          condition={!isPasswordValid}
-          type="warning"
-          message="암호가 유효하지 않습니다."
-        />
       </section>
-      <Button type="submit">로그인</Button>
+
+      <ValidationText
+        condition={isSuccess}
+        type="warning"
+        message="이메일 또는 암호가 유효하지 않습니다."
+      />
+
+      <Button type="submit" disabled={isSuccess}>
+        로그인
+      </Button>
       <LineLink to="/register" span="아이디가 없으신가요?" strong="회원가입하기"></LineLink>
+      <LineLink to="/register" span="" strong="암호를 잊어버리셨나요?"></LineLink>
     </form>
   );
 }

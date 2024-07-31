@@ -19,8 +19,11 @@ export default function Register(): JSX.Element {
     isValid: isEmailValid,
   } = useValidationInput(emailRegex);
 
-  const { userValue: passwordValue, getUserValue: getPasswordValue } =
-    useValidationInput(passwordRegex);
+  const {
+    userValue: passwordValue,
+    getUserValue: getPasswordValue,
+    isValid: isPasswordValid,
+  } = useValidationInput(passwordRegex);
 
   const {
     userValue: passwordValueCheck,
@@ -47,7 +50,9 @@ export default function Register(): JSX.Element {
         navigate('/');
       }
     } catch (error) {
-      console.error('회원가입 실패', error);
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
     }
   }
 
@@ -55,22 +60,29 @@ export default function Register(): JSX.Element {
     e.preventDefault();
 
     try {
-      const response = await fetch(`END_POINT/auth/email/check?email=${emailValue}`, {
+      const response = await fetch(`${END_POINT}/auth/email/check?email=${emailValue}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
       });
 
-      if (response.ok) {
+      if (response.status === 400) {
         setIsCheck(true);
+      } else {
+        setIsCheck(false);
       }
 
-      console.log(response);
+      if (response.ok) {
+        console.log(response.ok);
+        setIsCheck(false);
+      }
     } catch (error) {
-      console.error('중복 확인 실패', error);
+      throw new Error('중복 체크에 실패했습니다.');
     }
   }
+
+  const disabledButton = isEmailValid || isPasswordValid || isPasswordValidCheck;
 
   return (
     <>
@@ -93,12 +105,18 @@ export default function Register(): JSX.Element {
           </Button>
         </div>
 
-        <ValidationText condition={isCheck} type="success" message="사용할 수 있는 이메일입니다." />
+        <ValidationText
+          condition={!isCheck}
+          type="success"
+          message="사용할 수 있는 이메일입니다."
+        />
         <ValidationText
           condition={!isEmailValid && emailValue !== ''}
           type="warning"
           message="이메일이 유효하지 않습니다."
         />
+        <ValidationText condition={isCheck} type="warning" message="중복된 이메일입니다." />
+
         <Input
           id="password"
           type="password"
@@ -107,6 +125,7 @@ export default function Register(): JSX.Element {
           value={passwordValue}
           onChange={getPasswordValue}
         />
+
         <Input
           id="password-check"
           type="password"
@@ -115,13 +134,19 @@ export default function Register(): JSX.Element {
           value={passwordValueCheck}
           onChange={getPasswordValueCheck}
         />
+
         <ValidationText
-          condition={!isPasswordValidCheck}
+          condition={passwordValue.length > 0 && !isPasswordValid}
           type="warning"
           message="암호가 유효하지 않습니다."
         />
+        <ValidationText
+          condition={passwordValueCheck.length > 0 && passwordValue !== passwordValueCheck}
+          type="warning"
+          message="암호가 일치하지 않습니다."
+        />
 
-        <Button>회원가입</Button>
+        <Button disabled={disabledButton}>회원가입</Button>
         <nav className={classes.nav}>
           <LineLink to="/" span="이미 회원이신가요?" strong="로그인하기" />
         </nav>
