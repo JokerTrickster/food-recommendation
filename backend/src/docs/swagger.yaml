@@ -159,7 +159,6 @@ paths:
       description: |-
         ■ errCode with 400
         PARAM_BAD : 파라미터 오류
-        USER_NOT_EXIST : 유저가 존재하지 않음
         USER_ALREADY_EXISTED : 유저가 이미 존재
 
         ■ errCode with 500
