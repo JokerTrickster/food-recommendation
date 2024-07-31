@@ -1,0 +1,28 @@
+.radio-container input {
+  display: none;
+}
+
+.radio-container label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 1s all;
+}
+
+.radio-container .checked {
+  color: #fff;
+  background-color: #111f;
+  transition: 1s all;
+}
+
+.radio-container .checked path:first-child {
+  stroke: #fff;
+}
+
+.radio-container .checked path:last-child {
+  fill: #fff;
+}

@@ -1,0 +1,26 @@
+.paragraph {
+  font-size: 0.8rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  text-align: left;
+  animation: fadeIn 1s;
+}
+
+.warning {
+  color: #ff0000;
+  animation: fadeOut 1s;
+}
+
+.success {
+  color: #00ff00;
+  animation: fadeOut 1s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

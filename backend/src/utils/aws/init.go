@@ -4,12 +4,14 @@ import (
 	"context"
 
 	AwsConfig "github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/service/sesv2"
 	"github.com/aws/aws-sdk-go-v2/service/ssm"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 )
 
 var AwsClientSsm *ssm.Client
+var awsClientSes *sesv2.Client
 
 func InitAws() error {
 	var awsConfig aws.Config
@@ -20,6 +22,12 @@ func InitAws() error {
 		return err
 	}
 	AwsClientSsm = ssm.NewFromConfig(awsConfig)
+	awsClientSes = sesv2.NewFromConfig(awsConfig)
+
+	err = InitAwsSes()
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
