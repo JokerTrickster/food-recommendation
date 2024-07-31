@@ -21,12 +21,11 @@ func (g *CheckEmailAuthRepository) CheckEmail(ctx context.Context, email string)
 	}
 	//이메일 중복 체크
 	result := g.GormDB.WithContext(ctx).Model(&user).Where("email = ?", email).First(&user)
-	if result.Error != nil {
+	if result.Error != gorm.ErrRecordNotFound {
 		return utils.ErrorMsg(ctx, utils.ErrUserNotFound, utils.Trace(), _errors.ErrUserNotFound.Error(), utils.ErrFromClient)
 	}
-	if result.RowsAffected == 0 {
-		return nil
-	} else {
+	if result.RowsAffected == 1 {
 		return utils.ErrorMsg(ctx, utils.ErrUserAlreadyExisted, utils.Trace(), _errors.ErrUserAlreadyExisted.Error(), utils.ErrFromClient)
 	}
+	return nil
 }
