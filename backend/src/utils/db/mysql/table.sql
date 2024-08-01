@@ -106,3 +106,5 @@ INSERT INTO types (name, description) VALUES ('전체', '전체'), ('한식', '�
 
 -- scenarios 테이블에 전체, 혼밥, 친구, 가족, 회식 순으로 저장하는 sql 문 만들어줘
 INSERT INTO scenarios (name, description) VALUES ('전체', '전체'), ('혼밥', '혼밥'), ('친구', '친구'), ('연인','연인') ('가족', '가족'), ('회식', '회식');
+
+INSERT INTO 

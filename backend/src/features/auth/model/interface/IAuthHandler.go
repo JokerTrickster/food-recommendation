@@ -28,3 +28,7 @@ type IValidatePasswordAuthHandler interface {
 type ICheckEmailAuthHandler interface {
 	CheckEmail(c echo.Context) error
 }
+
+type IGuestAuthHandler interface {
+	Guest(c echo.Context) error
+}

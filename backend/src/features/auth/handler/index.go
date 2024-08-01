@@ -16,4 +16,5 @@ func NewAuthHandler(c *echo.Echo) {
 	NewRequestPasswordAuthHandler(c, usecase.NewRequestPasswordAuthUseCase(repository.NewRequestPasswordAuthRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 	NewValidatePasswordAuthHandler(c, usecase.NewValidatePasswordAuthUseCase(repository.NewValidatePasswordAuthRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 	NewCheckEmailAuthHandler(c, usecase.NewCheckEmailAuthUseCase(repository.NewCheckEmailAuthRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
+	NewGuestAuthHandler(c, usecase.NewGuestAuthUseCase(repository.NewGuestAuthRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 }
