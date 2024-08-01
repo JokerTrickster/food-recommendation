@@ -34,3 +34,6 @@ type IValidatePasswordAuthUseCase interface {
 type ICheckEmailAuthUseCase interface {
 	CheckEmail(c context.Context, email string) error
 }
+type IGuestAuthUseCase interface {
+	Guest(c context.Context) (response.ResGuest, error)
+}

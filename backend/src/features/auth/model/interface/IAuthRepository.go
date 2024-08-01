@@ -39,3 +39,7 @@ type IValidatePasswordAuthRepository interface {
 type ICheckEmailAuthRepository interface {
 	CheckEmail(ctx context.Context, email string) error
 }
+type IGuestAuthRepository interface {
+	FindOneAndUpdateUser(ctx context.Context, email, password string) (mysql.Users, error)
+	SaveToken(ctx context.Context, uID uint, accessToken, refreshToken string, refreshTknExpiredAt int64) error
+}
