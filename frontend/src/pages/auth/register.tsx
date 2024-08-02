@@ -25,11 +25,8 @@ export default function Register(): JSX.Element {
     isValid: isPasswordValid,
   } = useValidationInput(passwordRegex);
 
-  const {
-    userValue: passwordValueCheck,
-    getUserValue: getPasswordValueCheck,
-    isValid: isPasswordValidCheck,
-  } = useValidationInput(passwordRegex);
+  const { userValue: passwordValueCheck, getUserValue: getPasswordValueCheck } =
+    useValidationInput(passwordRegex);
 
   async function registerHandler(e: React.FormEvent): Promise<void> {
     e.preventDefault();
@@ -52,6 +49,7 @@ export default function Register(): JSX.Element {
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
+        throw new Error('회원가입에 실패했습니다.');
       }
     }
   }
@@ -68,13 +66,12 @@ export default function Register(): JSX.Element {
       });
 
       if (response.status === 400) {
-        setIsCheck(true);
-      } else {
         setIsCheck(false);
+      } else {
+        setIsCheck(true);
       }
 
       if (response.ok) {
-        console.log(response.ok);
         setIsCheck(false);
       }
     } catch (error) {
@@ -82,7 +79,7 @@ export default function Register(): JSX.Element {
     }
   }
 
-  const disabledButton = isEmailValid || isPasswordValid || isPasswordValidCheck;
+  const disabledButton = isCheck || passwordValue !== passwordValueCheck;
 
   return (
     <>
@@ -111,7 +108,7 @@ export default function Register(): JSX.Element {
           message="사용할 수 있는 이메일입니다."
         />
         <ValidationText
-          condition={!isEmailValid && emailValue !== ''}
+          condition={isEmailValid && emailValue === ''}
           type="warning"
           message="이메일이 유효하지 않습니다."
         />

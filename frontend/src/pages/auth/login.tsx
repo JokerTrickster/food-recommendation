@@ -87,8 +87,8 @@ export default function Login() {
       <Button type="submit" disabled={isSuccess}>
         로그인
       </Button>
-      <LineLink to="/register" span="아이디가 없으신가요?" strong="회원가입하기"></LineLink>
-      <LineLink to="/register" span="" strong="암호를 잊어버리셨나요?"></LineLink>
+      <LineLink to="/register" span="아이디가 없으신가요?" strong="회원가입하기" />
+      <LineLink to="/password" span="" strong="암호를 잊어버리셨나요?" />
     </form>
   );
 }

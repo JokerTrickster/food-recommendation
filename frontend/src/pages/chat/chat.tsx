@@ -17,13 +17,12 @@ export default function Chat() {
   const [selectedTime, setSelectedTime] = useState('-전체0');
   const [selectedType, setSelectedType] = useState('+전체0');
 
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [refreshToken, setRefreshToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    setAccessToken(localStorage.getItem('accessToken'));
-    setRefreshToken(localStorage.getItem('refreshToken'));
-  }, []);
+  const [accessToken, setAccessToken] = useState<string | null>(() =>
+    localStorage.getItem('accessToken')
+  );
+  const [refreshToken, setRefreshToken] = useState<string | null>(() =>
+    localStorage.getItem('refreshToken')
+  );
 
   const [scenarios, setScenarios] = useState<string[]>([]);
   const [times, setTimes] = useState<string[]>([]);
@@ -71,10 +70,6 @@ export default function Chat() {
       token && window.location.replace('/');
     }
 
-    if (user.sex && user.birth) {
-      return setIsSurvey(false);
-    }
-
     setIsSurvey(true);
   }, [token]);
 
@@ -100,16 +95,11 @@ export default function Chat() {
         }),
       });
 
-      console.log('accessToken:', accessToken);
-      console.log('refreshToken:', refreshToken);
-
-      if (response.status === 401 || response.status === 403) {
+      if (response.status === 401) {
         console.log('토큰 갱신');
 
         try {
           const newTokens = await fetchToken(accessToken, refreshToken);
-
-          console.log(newTokens);
 
           if (!newTokens.accessToken || !newTokens.refreshToken) {
             throw new Error('토큰이 정의되지 않았습니다.');
@@ -158,6 +148,34 @@ export default function Chat() {
     }
   }
 
+  useEffect(() => {
+    if (accessToken === null || refreshToken === null) {
+      throw new Error('토큰이 없습니다');
+    }
+
+    (async function getProfile() {
+      try {
+        const response = await fetch(END_POINT + '/users/check', {
+          method: 'GET',
+          headers: {
+            tkn: accessToken!,
+          },
+        });
+
+        const data = await response.json();
+
+        if (data.sex && data.birth) {
+          console.log(data.sex && data.birth);
+          setIsSurvey(false);
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error(error.message);
+        }
+      }
+    })();
+  }, []);
+
   return (
     <section className={classes.background}>
       {isSurvey && <Survey onClose={surveyClose} />}
@@ -179,6 +197,7 @@ export default function Chat() {
                       key={')' + scenario + index}
                       id={')' + scenario + index}
                       name="scenario"
+                      value={scenario}
                       title={scenario}
                       checked={scenario === selectedScenario}
                       onChange={() => setSelectedScenario(scenario)}
@@ -200,6 +219,7 @@ export default function Chat() {
                       id={'-' + time + index}
                       name="times"
                       title={time}
+                      value={time}
                       checked={time === selectedTime}
                       onChange={() => setSelectedTime(time)}
                     />
@@ -218,6 +238,7 @@ export default function Chat() {
                       key={'+' + type + index}
                       id={'+' + type + index}
                       name="types"
+                      value={type}
                       title={type}
                       checked={type === selectedType}
                       onChange={() => setSelectedType(type)}
