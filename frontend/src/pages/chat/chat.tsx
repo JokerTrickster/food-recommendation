@@ -40,7 +40,6 @@ export default function Chat() {
   }
 
   const token = useAuthStore(state => state.accessToken) || localStorage.getItem('accessToken');
-  const user = useAuthStore(state => state.user);
 
   useEffect(() => {
     if (!token) {

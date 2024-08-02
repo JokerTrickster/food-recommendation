@@ -55,6 +55,32 @@ export default function Login() {
     }
   }
 
+  async function guestLoginHandler(): Promise<void> {
+    try {
+      const response = await fetch(END_POINT + '/auth/guest', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+
+        setAccessToken(data.accessToken);
+        setUser(data.accessToken);
+        localStorage.setItem('accessToken', data.accessToken);
+        localStorage.setItem('refreshToken', data.refreshToken);
+        navigate('/chat');
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
+      throw new Error('게스트 로그인에 실패했습니다.');
+    }
+  }
+
   return (
     <form className={classes.login} onSubmit={loginHandler}>
       <section>
@@ -86,6 +112,9 @@ export default function Login() {
 
       <Button type="submit" disabled={isSuccess}>
         로그인
+      </Button>
+      <Button type="button" onClick={guestLoginHandler}>
+        게스트 로그인
       </Button>
       <LineLink to="/register" span="아이디가 없으신가요?" strong="회원가입하기" />
       <LineLink to="/password" span="" strong="암호를 잊어버리셨나요?" />
