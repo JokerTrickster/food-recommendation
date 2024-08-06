@@ -1,4 +1,5 @@
 import { lazy } from 'react';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import Landing from '@shared/layouts/landing';
 import Login from '@pages/auth/login';
@@ -14,7 +15,11 @@ export const AUTH_ROUTES = [
     children: [
       {
         index: true,
-        element: <Login />,
+        element: (
+          <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID}>
+            <Login />
+          </GoogleOAuthProvider>
+        ),
       },
 
       {
