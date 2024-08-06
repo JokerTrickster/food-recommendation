@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import doughnut from '@assets/icon/doughnut.svg';
@@ -9,6 +9,7 @@ import { Button } from '@shared/ui';
 import { GENDER_CODE, Gender } from '@features/chat/constants';
 
 import classes from './css/survey.module.css';
+import { END_POINT } from '@shared/constants';
 
 type SurveyProps = {
   onClose: () => void;
@@ -17,7 +18,9 @@ type SurveyProps = {
 export function Survey(props: SurveyProps) {
   const { onClose } = props;
 
-  const [selectedId, setSelectedId] = useState<string>('g1');
+  const token = localStorage.getItem('accessToken');
+
+  const [sexValue, setSexValue] = useState<string>('g1');
 
   const [bornValue, setBornValue] = useState<string>('');
 
@@ -27,17 +30,31 @@ export function Survey(props: SurveyProps) {
   }
 
   function genderSelectedHandler(id: string) {
-    setSelectedId(id);
+    setSexValue(id);
   }
 
-  const isDisabled = !bornValue || !selectedId;
+  const isDisabled = !bornValue || !sexValue;
 
-  function surveySubmitHandler(e: FormEvent) {
+  async function surveySubmitHandler(e: React.FormEvent) {
     e.preventDefault();
 
-    const formData = new FormData();
-    console.log(formData);
-    // formData.append('birth', bornValue);
+    try {
+      await fetch(END_POINT + '/users/profile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          tkn: token!,
+        },
+        body: JSON.stringify({
+          birth: bornValue,
+          sex: sexValue,
+        }),
+      });
+
+      onClose();
+    } catch (error) {
+      throw new Error('설문조사에 실패했습니다.');
+    }
   }
 
   return createPortal(
@@ -78,7 +95,7 @@ export function Survey(props: SurveyProps) {
                     key={type.id}
                     title={type.type}
                     onChange={() => genderSelectedHandler(type.id)}
-                    checked={selectedId === type.id}
+                    checked={sexValue === type.id}
                     {...type}
                   >
                     {Component}

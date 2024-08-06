@@ -10,28 +10,32 @@ export async function fetchToken(accessToken: string, refreshToken: string): Pro
     throw new Error('토큰이 없습니다');
   }
 
+  console.log('토큰재발급');
   try {
-    const response = await fetch(END_POINT + '/v0.1/auth/token/reissue', {
+    const response = await fetch(END_POINT + '/auth/token/reissue', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        accessToken: accessToken,
-        refreshToken: refreshToken,
+        accessToken,
+        refreshToken,
       }),
     });
 
     console.log(
       JSON.stringify({
-        accessToken: accessToken,
-        refreshToken: refreshToken,
+        accessToken,
+        refreshToken,
       })
     );
 
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(`서버 오류: ${response.status}, ${JSON.stringify(errorData)}`);
+      const errorText = await response.text();
+      console.error('서버 오류 응답:', errorText);
+      console.log(response);
+
+      throw new Error(`서버 오류: ${response.status}, 응답: ${errorText} ${response}`);
     }
 
     const data = await response.json();
