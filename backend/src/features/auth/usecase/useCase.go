@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/rand"
 	"encoding/base64"
+	"fmt"
 	"io/ioutil"
 	"main/features/auth/model/request"
 	"main/utils"
@@ -69,11 +70,11 @@ func GenerateStateOauthCookie(ctx context.Context) string {
 func getGoogleUserInfo(ctx context.Context, accessToken string) ([]byte, error) {
 	token, err := utils.GoogleConfig.Exchange(ctx, accessToken)
 	if err != nil {
-		return nil, err
+		return nil, utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), fmt.Sprintf("bad request %v", err), utils.ErrFromInternal)
 	}
 	resp, err := http.Get("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + token.AccessToken)
 	if err != nil {
-		return nil, err
+		return nil, utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), fmt.Sprintf("bad request google access token %v", err), utils.ErrFromInternal)
 	}
 
 	defer resp.Body.Close()

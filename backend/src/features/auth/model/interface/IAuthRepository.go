@@ -43,3 +43,19 @@ type IGuestAuthRepository interface {
 	FindOneAndUpdateUser(ctx context.Context, email, password string) (mysql.Users, error)
 	SaveToken(ctx context.Context, uID uint, accessToken, refreshToken string, refreshTknExpiredAt int64) error
 }
+
+type IGoogleOauthAuthRepository interface {
+}
+
+type IGoogleOauthCallbackAuthRepository interface {
+	SaveToken(ctx context.Context, uID uint, accessToken, refreshToken string, refreshTknExpiredAt int64) error
+	DeleteToken(ctx context.Context, uID uint) error
+	InsertOneUser(ctx context.Context, user mysql.Users) error
+	FindOneAndUpdateUser(ctx context.Context, email string) (*mysql.Users, error)
+}
+
+type IV02GoogleOauthCallbackAuthRepository interface {
+	SaveToken(ctx context.Context, uID uint, accessToken, refreshToken string, refreshTknExpiredAt int64) error
+	DeleteToken(ctx context.Context, uID uint) error
+	FindOneAndUpdateUser(ctx context.Context, email string) (*mysql.Users, error)
+}
