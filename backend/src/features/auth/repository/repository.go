@@ -40,3 +40,7 @@ type CheckEmailAuthRepository struct {
 type GuestAuthRepository struct {
 	GormDB *gorm.DB
 }
+
+type V02GoogleOauthCallbackAuthRepository struct {
+	GormDB *gorm.DB
+}
