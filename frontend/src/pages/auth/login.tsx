@@ -8,7 +8,7 @@ import { Button, Input, LineLink, ValidationText } from '@shared/ui';
 import { emailRegex, passwordRegex } from '@features/auth/constants';
 
 import classes from './css/login.module.css';
-import { END_POINT } from '@shared/constants';
+import { END_POINT, END_POINT_V2 } from '@shared/constants';
 import useAuthStore from '@app/store/user';
 
 export default function Login() {
@@ -118,8 +118,23 @@ export default function Login() {
 
       <div className={classes.buttons}>
         <GoogleLogin
-          onSuccess={credentialResponse => {
-            console.log(credentialResponse);
+          onSuccess={async credentialResponse => {
+            try {
+              console.log(credentialResponse);
+              const response = await fetch(
+                END_POINT_V2 + '/auth/google/callback?code=' + credentialResponse.credential,
+                {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                }
+              );
+              const data = await response.json();
+              console.log(data);
+            } catch (error) {
+              console.error(error);
+            }
           }}
           onError={() => {
             throw new Error('오류');
