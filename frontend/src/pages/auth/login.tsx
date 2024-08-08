@@ -59,6 +59,7 @@ export default function Login() {
   async function guestLoginHandler(): Promise<void> {
     try {
       const response = await fetch(END_POINT + '/auth/guest', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
