@@ -37,3 +37,16 @@ type ICheckEmailAuthUseCase interface {
 type IGuestAuthUseCase interface {
 	Guest(c context.Context) (response.ResGuest, error)
 }
+
+type IGoogleOauthAuthUseCase interface {
+	GoogleOauth(c context.Context) (string, error)
+}
+
+type IGoogleOauthCallbackAuthUseCase interface {
+	GoogleOauthCallback(c context.Context, code string) (response.GoogleOauthCallbackRes, error)
+}
+
+type IV02GoogleOauthCallbackAuthUseCase interface {
+	V02GoogleOauthCallback(c context.Context, code string) (response.ResV02GoogleOauthCallback, error)
+}
+

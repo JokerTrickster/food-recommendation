@@ -83,6 +83,13 @@ definitions:
       password:
         type: string
     type: object
+  response.GoogleOauthCallbackRes:
+    properties:
+      accessToken:
+        type: string
+      refreshToken:
+        type: string
+    type: object
   response.HistoryFood:
     properties:
       created:
@@ -158,6 +165,15 @@ definitions:
       refreshToken:
         type: string
     type: object
+  response.ResV02GoogleOauthCallback:
+    properties:
+      accessToken:
+        type: string
+      refreshToken:
+        type: string
+      userID:
+        type: integer
+    type: object
 info:
   contact: {}
 paths:
@@ -192,6 +208,60 @@ paths:
           description: Internal Server Error
           schema: {}
       summary: 이메일 중복 체크
+      tags:
+      - auth
+  /v0.1/auth/google:
+    get:
+      description: |-
+        ■ errCode with 400
+        PARAM_BAD : 파라미터 오류
+        USER_NOT_EXIST : 유저가 존재하지 않음
+        USER_ALREADY_EXISTED : 유저가 이미 존재
+
+        ■ errCode with 500
+        INTERNAL_SERVER : 내부 로직 처리 실패
+        INTERNAL_DB : DB 처리 실패
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: boolean
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: google oauth 로그인
+      tags:
+      - auth
+  /v0.1/auth/google/callback:
+    get:
+      description: |-
+        ■ errCode with 400
+        PARAM_BAD : 파라미터 오류
+        USER_NOT_EXIST : 유저가 존재하지 않음
+        USER_ALREADY_EXISTED : 유저가 이미 존재
+
+        ■ errCode with 500
+        INTERNAL_SERVER : 내부 로직 처리 실패
+        INTERNAL_DB : DB 처리 실패
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.GoogleOauthCallbackRes'
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: google oauth 로그인 콜백
       tags:
       - auth
   /v0.1/auth/guest:
@@ -641,4 +711,37 @@ paths:
       summary: 유저 프로필 저장하기
       tags:
       - user
+  /v0.2/auth/google/callback:
+    get:
+      description: |-
+        ■ errCode with 400
+        PARAM_BAD : 파라미터 오류
+        USER_NOT_EXIST : 유저가 존재하지 않음
+        USER_ALREADY_EXISTED : 유저가 이미 존재
+
+        ■ errCode with 500
+        INTERNAL_SERVER : 내부 로직 처리 실패
+        INTERNAL_DB : DB 처리 실패
+      parameters:
+      - description: code
+        in: query
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ResV02GoogleOauthCallback'
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: google oauth 로그인 콜백
+      tags:
+      - auth
 swagger: "2.0"
