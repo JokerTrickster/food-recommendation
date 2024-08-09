@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 
 import { useValidationInput } from '@shared/hooks';
 import { Button, Input, LineLink, ValidationText } from '@shared/ui';
@@ -119,7 +119,7 @@ export default function Login() {
           setUser(data.accessToken);
           localStorage.setItem('accessToken', data.accessToken);
           localStorage.setItem('refreshToken', data.refreshToken);
-          navigate('/chat'); // 로그인 성공 후 /chat 페이지로 이동
+          navigate('/chat');
         } else {
           throw new Error('Access token not received');
         }
@@ -174,6 +174,13 @@ export default function Login() {
   };
 
   useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
+
+    if (accessToken && refreshToken) {
+      navigate('/chat');
+    }
+
     if (code) {
       handleLoginPost(code);
     } else {
