@@ -11,6 +11,8 @@ import classes from './css/login.module.css';
 import { END_POINT, END_POINT_V2 } from '@shared/constants';
 import useAuthStore from '@app/store/user';
 
+import google from '@assets/icon/google.svg';
+
 export default function Login() {
   const navigate = useNavigate();
   const setAccessToken = useAuthStore(state => state.setAccessToken);
@@ -116,9 +118,7 @@ export default function Login() {
           setAccessToken(data.accessToken);
           setUser(data.accessToken);
           localStorage.setItem('accessToken', data.accessToken);
-          if (data.refreshToken) {
-            localStorage.setItem('refreshToken', data.refreshToken);
-          }
+          localStorage.setItem('refreshToken', data.refreshToken);
           navigate('/chat'); // 로그인 성공 후 /chat 페이지로 이동
         } else {
           throw new Error('Access token not received');
@@ -154,11 +154,22 @@ export default function Login() {
         },
       });
 
-      const data = response.json();
+      const data = await response.json();
+      console.log('Server Response:', data);
 
-      console.log(data);
+      if (data.accessToken) {
+        setAccessToken(data.accessToken);
+        setUser(data.accessToken);
+        localStorage.setItem('accessToken', data.accessToken);
+        localStorage.setItem('refreshToken', data.refreshToken);
+
+        navigate('/chat'); // 로그인 성공 후 /chat 페이지로 이동
+      } else {
+        throw new Error('Access token not received');
+      }
     } catch (error) {
-      console.log(error);
+      console.error('Error during Google login:', error);
+      setGoogleLoginError(`Google 로그인 중 오류가 발생했습니다: ${(error as Error).message}`);
     }
   };
 
@@ -203,59 +214,11 @@ export default function Login() {
         로그인
       </Button>
 
-      <Button type="button" onClick={googleLogin}>
-        구글
-      </Button>
-
       <div className={classes.buttons}>
-        <GoogleLogin
-          onSuccess={async credentialResponse => {
-            try {
-              console.log('Google Auth Response:', credentialResponse);
-              console.log('credentialResponse.credential', credentialResponse.credential);
-
-              const response = await fetch(
-                `${END_POINT_V2}/auth/google/callback?code=${
-                  credentialResponse.credential as string
-                }`,
-                {
-                  method: 'GET',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                }
-              );
-
-              const data = await response.json();
-              console.log('Server Response:', data);
-
-              if (!response.ok) {
-                throw new Error(data.message || `HTTP error! status: ${response.status}`);
-              }
-
-              if (data.accessToken) {
-                setAccessToken(data.accessToken);
-                setUser(data.accessToken);
-                localStorage.setItem('accessToken', data.accessToken);
-                if (data.refreshToken) {
-                  localStorage.setItem('refreshToken', data.refreshToken);
-                }
-                navigate('/chat');
-              } else {
-                throw new Error('Access token not received');
-              }
-            } catch (error) {
-              console.error('Error during Google login:', error);
-              setGoogleLoginError(
-                `Google 로그인 중 오류가 발생했습니다: ${(error as Error).message}`
-              );
-            }
-          }}
-          onError={() => {
-            console.error('Google Login Failed');
-            setGoogleLoginError('Google 로그인에 실패했습니다.');
-          }}
-        />
+        <Button className={classes.guest} type="button" onClick={googleLogin}>
+          <img className={classes.google} src={google} alt="구글 로그인" />
+          <span>구글 간편 로그인</span>
+        </Button>
         <Button className={classes.guest} type="button" onClick={guestLoginHandler}>
           게스트 로그인
         </Button>

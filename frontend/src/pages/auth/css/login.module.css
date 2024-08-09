@@ -102,11 +102,18 @@
 }
 
 .guest {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid #d9d9d9;
   background-color: transparent;
   width: 220px;
   padding: 10px;
-  margin: 1rem 0;
+  margin-top: 1rem;
+}
+
+.google {
+  margin-right: 1rem;
 }
 
 @keyframes fadeIn {
