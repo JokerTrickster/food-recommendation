@@ -9,6 +9,8 @@ import Google from '@pages/auth/google';
 
 const Register = lazy(() => import('@pages/auth/register'));
 
+const clientId = import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID;
+
 export const AUTH_ROUTES = [
   {
     path: '/',
@@ -17,7 +19,7 @@ export const AUTH_ROUTES = [
       {
         index: true,
         element: (
-          <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID}>
+          <GoogleOAuthProvider clientId={clientId}>
             <Login />
           </GoogleOAuthProvider>
         ),
