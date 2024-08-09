@@ -28,7 +28,7 @@ func InitGoogleOauth() error {
 		Endpoint:     google.Endpoint,
 	}
 	if !Env.IsLocal {
-		GoogleConfig.RedirectURL = "https://dev-food-api.jokertrickster.com/v0.2/auth/google/callback"
+		GoogleConfig.RedirectURL = "https://food-recommendation.jokertrickster.com"
 	}
 	return nil
 }
