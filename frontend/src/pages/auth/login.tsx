@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 
 import { useValidationInput } from '@shared/hooks';
 import { Button, Input, LineLink, ValidationText } from '@shared/ui';
@@ -22,6 +22,7 @@ export default function Login() {
     useValidationInput(passwordRegex);
 
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [googleLoginError, setGoogleLoginError] = useState<string>('');
 
   async function loginHandler(e: React.FormEvent): Promise<void> {
     e.preventDefault();
@@ -52,7 +53,8 @@ export default function Login() {
         setIsSuccess(false);
       }
     } catch (error) {
-      throw new Error('로그인에 실패했습니다.');
+      console.error('로그인에 실패했습니다:', error);
+      setIsSuccess(true);
     }
   }
 
@@ -79,9 +81,94 @@ export default function Login() {
       if (error instanceof Error) {
         console.error(error.message);
       }
-      throw new Error('게스트 로그인에 실패했습니다.');
+      console.error('게스트 로그인에 실패했습니다.');
     }
   }
+
+  const googleLogin = useGoogleLogin({
+    ux_mode: 'redirect',
+    flow: 'auth-code',
+    redirect_uri: 'https://food-recommendation.jokertrickster.com',
+    onSuccess: async codeResponse => {
+      try {
+        // codeResponse가 제대로 전달되는지 확인
+        if (!codeResponse || !codeResponse.code) {
+          throw new Error('No code received from Google login');
+        }
+
+        console.log('Google Auth Response:', codeResponse);
+
+        // code를 쿼리 파라미터로 전송
+        const response = await fetch(
+          `${END_POINT_V2}/auth/google/callback?code=${encodeURIComponent(codeResponse.code)}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+
+        const data = await response.json();
+        console.log('Server Response:', data);
+
+        if (data.accessToken) {
+          setAccessToken(data.accessToken);
+          setUser(data.accessToken);
+          localStorage.setItem('accessToken', data.accessToken);
+          if (data.refreshToken) {
+            localStorage.setItem('refreshToken', data.refreshToken);
+          }
+          navigate('/chat'); // 로그인 성공 후 /chat 페이지로 이동
+        } else {
+          throw new Error('Access token not received');
+        }
+      } catch (error) {
+        console.error('Error during Google login:', error);
+        setGoogleLoginError(`Google 로그인 중 오류가 발생했습니다: ${(error as Error).message}`);
+      }
+    },
+    onError: error => {
+      console.error('Google Login Failed:', error);
+
+      // 추가로 에러 정보를 더 상세하게 기록
+      if (error.error) {
+        console.error(`Error code: ${error.error}`);
+      }
+
+      setGoogleLoginError('Google 로그인에 실패했습니다.');
+    },
+  });
+
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('code');
+
+  const handleLoginPost = async (code: string) => {
+    console.log(code);
+
+    try {
+      const response = await fetch(END_POINT_V2 + `/auth/google/callback?code=${code}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = response.json();
+
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (code) {
+      handleLoginPost(code);
+    } else {
+      console.log('로그인 재시도하세요.');
+    }
+  }, [code, navigate]);
 
   return (
     <form className={classes.login} onSubmit={loginHandler}>
@@ -116,13 +203,21 @@ export default function Login() {
         로그인
       </Button>
 
+      <Button type="button" onClick={googleLogin}>
+        구글
+      </Button>
+
       <div className={classes.buttons}>
         <GoogleLogin
           onSuccess={async credentialResponse => {
             try {
-              console.log(credentialResponse);
+              console.log('Google Auth Response:', credentialResponse);
+              console.log('credentialResponse.credential', credentialResponse.credential);
+
               const response = await fetch(
-                END_POINT_V2 + '/auth/google/callback?code=' + credentialResponse.credential,
+                `${END_POINT_V2}/auth/google/callback?code=${
+                  credentialResponse.credential as string
+                }`,
                 {
                   method: 'GET',
                   headers: {
@@ -130,20 +225,43 @@ export default function Login() {
                   },
                 }
               );
+
               const data = await response.json();
-              console.log(data);
+              console.log('Server Response:', data);
+
+              if (!response.ok) {
+                throw new Error(data.message || `HTTP error! status: ${response.status}`);
+              }
+
+              if (data.accessToken) {
+                setAccessToken(data.accessToken);
+                setUser(data.accessToken);
+                localStorage.setItem('accessToken', data.accessToken);
+                if (data.refreshToken) {
+                  localStorage.setItem('refreshToken', data.refreshToken);
+                }
+                navigate('/chat');
+              } else {
+                throw new Error('Access token not received');
+              }
             } catch (error) {
-              console.error(error);
+              console.error('Error during Google login:', error);
+              setGoogleLoginError(
+                `Google 로그인 중 오류가 발생했습니다: ${(error as Error).message}`
+              );
             }
           }}
           onError={() => {
-            throw new Error('오류');
+            console.error('Google Login Failed');
+            setGoogleLoginError('Google 로그인에 실패했습니다.');
           }}
         />
         <Button className={classes.guest} type="button" onClick={guestLoginHandler}>
           게스트 로그인
         </Button>
       </div>
+
+      {googleLoginError && <p className={classes.error}>{googleLoginError}</p>}
 
       <LineLink to="/register" span="아이디가 없으신가요?" strong="회원가입하기" />
       <LineLink to="/password" span="" strong="암호를 잊어버리셨나요?" />

@@ -13,9 +13,9 @@ import { Link } from 'react-router-dom';
 import { fetchToken } from '@features/chat/utils/token';
 
 export default function Chat() {
-  const [selectedScenario, setSelectedScenario] = useState(')전체0');
-  const [selectedTime, setSelectedTime] = useState('-전체0');
-  const [selectedType, setSelectedType] = useState('+전체0');
+  const [selectedScenario, setSelectedScenario] = useState('전체');
+  const [selectedTime, setSelectedTime] = useState('전체');
+  const [selectedType, setSelectedType] = useState('전체');
 
   const [accessToken, setAccessToken] = useState<string | null>(() =>
     localStorage.getItem('accessToken')
@@ -95,8 +95,6 @@ export default function Chat() {
       });
 
       if (response.status === 401) {
-        console.log('토큰 갱신');
-
         try {
           const newTokens = await fetchToken(accessToken, refreshToken);
 
@@ -137,6 +135,8 @@ export default function Chat() {
 
       if (response.ok) {
         const data = await response.json();
+        console.log(data);
+
         setAnswerList(data.foodNames);
         setPreviousAnswer(() => data.foodNames.join(', '));
       }
@@ -175,12 +175,47 @@ export default function Chat() {
     })();
   }, []);
 
+  async function selectFoodHandler(food: string) {
+    try {
+      console.log(accessToken);
+
+      const response = await fetch(END_POINT + '/foods/select', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          tkn: accessToken!,
+        },
+        body: JSON.stringify({
+          name: food,
+          scenario: selectedScenario,
+          time: selectedTime,
+          type: selectedType,
+        }),
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.error('Error:', data);
+        throw new Error(data.message || 'Unknown error occurred');
+      }
+
+      console.log('Success:', data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <section className={classes.background}>
       {isSurvey && <Survey onClose={surveyClose} />}
 
       <main className={classes['answer-list']}>
-        {answerList && answerList.map((food, index) => <Card key={'_' + index}>{food}</Card>)}
+        {answerList &&
+          answerList.map((food, index) => (
+            <Card key={'_' + index} onClick={() => selectFoodHandler(food)}>
+              {food}
+            </Card>
+          ))}
       </main>
 
       <section className={classes['chat__form-container']}>
@@ -200,6 +235,7 @@ export default function Chat() {
                       title={scenario}
                       checked={scenario === selectedScenario}
                       onChange={() => setSelectedScenario(scenario)}
+                      onClick={() => {}}
                     />
                   );
                 })}

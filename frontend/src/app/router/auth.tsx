@@ -5,6 +5,7 @@ import Landing from '@shared/layouts/landing';
 import Login from '@pages/auth/login';
 import Logout from '@pages/auth/logout';
 import ForgotPassword from '@pages/auth/forgot-password';
+import Google from '@pages/auth/google';
 
 const Register = lazy(() => import('@pages/auth/register'));
 
@@ -31,6 +32,10 @@ export const AUTH_ROUTES = [
         element: <ForgotPassword />,
       },
     ],
+  },
+  {
+    path: '/google',
+    element: <Google />,
   },
 
   {
