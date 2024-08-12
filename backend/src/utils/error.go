@@ -34,6 +34,7 @@ const (
 	ErrFromInternal = IErrFrom("internal")
 	ErrFromMongoDB  = IErrFrom("mongoDB")
 	ErrFromMysqlDB  = IErrFrom("mysqlDB")
+	ErrFromRedis    = IErrFrom("redis")
 	ErrFromAws      = IErrFrom("aws")
 	ErrFromAwsS3    = IErrFrom("aws_s3")
 	ErrFromAwsSsm   = IErrFrom("aws_ssm")
@@ -59,8 +60,6 @@ const (
 	ErrUserAlreadyExisted = ErrType("USER_ALREADY_EXISTED")
 	ErrInvalidAccessToken = ErrType("INVALID_ACCESS_TOKEN")
 )
-
-
 
 // basic , game, room, auth error mapping
 var ErrHttpCode = map[string]int{

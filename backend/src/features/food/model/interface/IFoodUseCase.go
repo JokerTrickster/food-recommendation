@@ -20,3 +20,7 @@ type IHistoryFoodUseCase interface {
 type IMetaFoodUseCase interface {
 	Meta(c context.Context) (response.ResMetaData, error)
 }
+
+type IRankingFoodUseCase interface {
+	Ranking(c context.Context) (response.ResRankingFood, error)
+}
