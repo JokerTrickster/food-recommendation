@@ -20,6 +20,30 @@ CREATE TABLE users (
     sex varchar(50),
     provider VARCHAR(50)
 );
+
+-- 알레르기 정보 저장
+create table allergies (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL DEFAULT NULL,
+    name VARCHAR(255) UNIQUE -- 알레르기 이름 (예: 'Peanut', 'Gluten', 'Lactose' 등)
+    description VARCHAR(255)
+);
+
+-- 유저 알레르기 정보 저장
+CREATE TABLE user_allergies (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL DEFAULT NULL,
+    user_id INT,
+    allergy_id INT,
+    UNIQUE KEY unique_user_allergy (user_id, allergy_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (allergy_id) REFERENCES allergies(id) ON DELETE CASCADE
+);
+
 -- 음식 선택했을 때 저장해야 된다. user_id = 1, time_id = 1, type_id = 1, scenario_id = 1, name = '김치찌개'
 CREATE TABLE foods (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -107,4 +131,5 @@ INSERT INTO types (name, description) VALUES ('전체', '전체'), ('한식', '�
 -- scenarios 테이블에 전체, 혼밥, 친구, 가족, 회식 순으로 저장하는 sql 문 만들어줘
 INSERT INTO scenarios (name, description) VALUES ('전체', '전체'), ('혼밥', '혼밥'), ('친구', '친구'), ('연인','연인') ('가족', '가족'), ('회식', '회식');
 
-INSERT INTO 
+-- 알레르기 정보 저장
+Insert INTO allergies (name, description) VALUES ('기타', '기타'), ('계란', '계란'), ('우유', '우유'), ('메밀', '메밀'), ('땅콩', '땅콩'), ('대두', '대두'), ('밀', '밀');
