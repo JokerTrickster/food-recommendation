@@ -25,13 +25,15 @@ func InitRedis() error {
 		if err != nil {
 			return err
 		}
+		fmt.Println(dbInfos)
 		connectionString = fmt.Sprintf("redis://%s:%s@%s:%s/%s",
 			dbInfos[4], //user
-			dbInfos[1], //password
-			dbInfos[3], //host
-			dbInfos[2], //port
+			dbInfos[2], //password
+			dbInfos[1], //host
+			dbInfos[3], //port
 			dbInfos[0], //db name
 		)
+		fmt.Println(connectionString)
 	}
 
 	opt, err := redis.ParseURL(connectionString)
