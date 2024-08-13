@@ -5,6 +5,7 @@ import (
 	"main/utils/aws"
 	_aws "main/utils/aws"
 	"main/utils/db/mysql"
+	_redis "main/utils/db/redis"
 	"os"
 )
 
@@ -31,6 +32,10 @@ func InitServer() error {
 	}
 	if err := mysql.InitMySQL(); err != nil {
 		fmt.Sprintf("db 초기화 에러 : %s", err.Error())
+		return err
+	}
+	if err := _redis.InitRedis(); err != nil {
+		fmt.Sprintf("redis 초기화 에러 : %s", err.Error())
 		return err
 	}
 

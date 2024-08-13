@@ -3,7 +3,6 @@ package usecase
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"main/features/food/model/entity"
 
 	_errors "main/features/food/model/errors"
@@ -42,6 +41,7 @@ func (d *RecommendFoodUseCase) Recommend(c context.Context, e entity.RecommendFo
 		genai.Text("너는 맛있는 요리 음식을 알려주는 전문가이다."),
 		genai.Text("내가 질문을 하면 단어로만 대답을 해줘야 된다."),
 		genai.Text("예를 들어서 '매운 음식 추천해줘' 라고 물으면 '김치찌개' 라고 대답을 해줘야 된다."),
+		genai.Text("반드시 음식 이름만 추천해줘"),
 		genai.Text("여러개라면 '김치찌개 떡볶이 치킨' 이렇게 응답해주면 된다. "),
 		genai.Text("지금부터 질문할게 대답해줘"),
 		genai.Text(question),
@@ -61,7 +61,6 @@ func (d *RecommendFoodUseCase) Recommend(c context.Context, e entity.RecommendFo
 		}
 		for _, cad := range *generateResponse.Candidates {
 			if cad.Content != nil {
-				fmt.Println(cad.Content.Parts[0])
 				cleanedString := strings.Trim(cad.Content.Parts[0], "[] \n")
 				res = SplitAndRemoveEmpty(cleanedString)
 			}

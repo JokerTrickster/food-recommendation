@@ -1,13 +1,17 @@
 package repository
 
-import "gorm.io/gorm"
+import (
+	"github.com/redis/go-redis/v9"
+	"gorm.io/gorm"
+)
 
 type RecommendFoodRepository struct {
 	GormDB *gorm.DB
 }
 
 type SelectFoodRepository struct {
-	GormDB *gorm.DB
+	GormDB      *gorm.DB
+	RedisClient *redis.Client
 }
 
 type HistoryFoodRepository struct {
@@ -15,4 +19,9 @@ type HistoryFoodRepository struct {
 }
 type MetaFoodRepository struct {
 	GormDB *gorm.DB
+}
+
+type RankingFoodRepository struct {
+	GormDB      *gorm.DB
+	RedisClient *redis.Client
 }

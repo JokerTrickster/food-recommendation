@@ -22,15 +22,21 @@ func (d *SelectFoodUseCase) Select(c context.Context, e entity.SelectFoodEntity)
 	defer cancel()
 
 	//db에서 조회한다.
-	FoodDTO := CreateSelectFoodDTO(e)
-	foodID, err := d.Repository.FindOneFood(ctx, FoodDTO)
+	foodDTO := CreateSelectFoodDTO(e)
+	foodID, err := d.Repository.FindOneFood(ctx, foodDTO)
 	if err != nil {
 		return err
 	}
+	foodDTO.ID = foodID
 
 	//디비에 저장한다.
 	foodHistoryDTO := CreateFoodHistoryDTO(foodID, e.UserID)
 	if err := d.Repository.InsertOneFoodHistory(ctx, foodHistoryDTO); err != nil {
+		return err
+	}
+
+	//레디스 저장한다.
+	if err := d.Repository.IncrementFoodRanking(ctx, foodDTO.Name, 1); err != nil {
 		return err
 	}
 

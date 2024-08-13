@@ -2,6 +2,17 @@ package mysql
 
 import "gorm.io/gorm"
 
+// 알레르기 상수 정의
+const (
+	AllergyEtc = 1 + iota
+	AllergyEgg
+	AllergyMilk
+	AllergyBuckwheat
+	AllergyPeanut
+	AllergySoybean
+	AllergyWheat
+)
+
 // 시나리오 상수 정의
 const (
 	ScenarioAll = 1 + iota
@@ -32,6 +43,16 @@ const (
 	TypeSnack
 )
 
+var AllergyMap = map[string]int{
+	"기타": AllergyEtc,
+	"계란": AllergyEgg,
+	"우유": AllergyMilk,
+	"메밀": AllergyBuckwheat,
+	"땅콩": AllergyPeanut,
+	"대두": AllergySoybean,
+	"밀":  AllergyWheat,
+}
+
 // 맵 정의
 var ScenarioMap = map[string]int{
 	"전체": ScenarioAll,
@@ -60,12 +81,10 @@ var TypeMap = map[string]int{
 	"분식": TypeSnack,
 }
 
-
 // 반대 맵 정의 (int -> string)
 var ScenarioReverseMap = make(map[int]string)
 var TimeReverseMap = make(map[int]string)
 var TypeReverseMap = make(map[int]string)
-
 
 type Tokens struct {
 	gorm.Model
@@ -128,4 +147,17 @@ type UserAuths struct {
 	Email    string `json:"email" gorm:"column:email"`
 	AuthCode string `json:"authCode" gorm:"column:auth_code"`
 	Type     string `json:"type" gorm:"column:type"`
+}
+
+// 알레르기 정보
+type Allergies struct {
+	gorm.Model
+	Name string `json:"name" gorm:"column:name"`
+}
+
+// 유저 알레르기 정보
+type UserAllergies struct {
+	gorm.Model
+	UserID    uint `json:"userID" gorm:"column:user_id"`
+	AllergyID uint `json:"allergyID" gorm:"column:allergy_id"`
 }
