@@ -8,7 +8,7 @@ import (
 )
 
 type ISignupAuthUseCase interface {
-	Signup(c context.Context, req *request.ReqSignup) error
+	Signup(c context.Context, req *request.ReqSignup) (response.ResSignup, error)
 }
 
 type ISigninAuthUseCase interface {
@@ -49,4 +49,3 @@ type IGoogleOauthCallbackAuthUseCase interface {
 type IV02GoogleOauthCallbackAuthUseCase interface {
 	V02GoogleOauthCallback(c context.Context, code string) (response.ResV02GoogleOauthCallback, error)
 }
-

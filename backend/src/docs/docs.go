@@ -315,7 +315,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "integer"
+                            "$ref": "#/definitions/response.ResSignup"
                         }
                     },
                     "400": {
@@ -927,6 +927,17 @@ const docTemplate = `{
             }
         },
         "response.ResSignin": {
+            "type": "object",
+            "properties": {
+                "accessToken": {
+                    "type": "string"
+                },
+                "refreshToken": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.ResSignup": {
             "type": "object",
             "properties": {
                 "accessToken": {
