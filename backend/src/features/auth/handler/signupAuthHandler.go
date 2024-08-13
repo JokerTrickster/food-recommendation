@@ -36,7 +36,7 @@ func NewSignupAuthHandler(c *echo.Echo, useCase _interface.ISignupAuthUseCase) _
 // @Description INTERNAL_DB : DB 처리 실패
 // @Param json body request.ReqSignup true "이름, 이메일, 비밀번호"
 // @Produce json
-// @Success 200 {object} int
+// @Success 200 {object} response.ResSignup
 // @Failure 400 {object} error
 // @Failure 500 {object} error
 // @Tags auth
@@ -46,9 +46,9 @@ func (d *SignupAuthHandler) Signup(c echo.Context) error {
 	if err := utils.ValidateReq(c, req); err != nil {
 		return err
 	}
-	err := d.UseCase.Signup(ctx, req)
+	res, err := d.UseCase.Signup(ctx, req)
 	if err != nil {
 		return err
 	}
-	return c.JSON(http.StatusCreated, true)
+	return c.JSON(http.StatusCreated, res)
 }

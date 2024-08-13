@@ -172,6 +172,13 @@ definitions:
       refreshToken:
         type: string
     type: object
+  response.ResSignup:
+    properties:
+      accessToken:
+        type: string
+      refreshToken:
+        type: string
+    type: object
   response.ResV02GoogleOauthCallback:
     properties:
       accessToken:
@@ -458,7 +465,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: integer
+            $ref: '#/definitions/response.ResSignup'
         "400":
           description: Bad Request
           schema: {}

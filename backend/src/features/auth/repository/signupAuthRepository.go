@@ -13,6 +13,30 @@ import (
 func NewSignupAuthRepository(gormDB *gorm.DB) _interface.ISignupAuthRepository {
 	return &SignupAuthRepository{GormDB: gormDB}
 }
+
+func (g *SignupAuthRepository) DeleteToken(ctx context.Context, uID uint) error {
+	token := mysql.Tokens{
+		UserID: uID,
+	}
+	result := g.GormDB.Model(&token).Where("user_id = ?", uID).Delete(&token)
+	if result.Error != nil {
+		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), result.Error.Error(), utils.ErrFromInternal)
+	}
+	return nil
+}
+func (g *SignupAuthRepository) SaveToken(ctx context.Context, uID uint, accessToken, refreshToken string, refreshTknExpiredAt int64) error {
+	token := mysql.Tokens{
+		UserID:           uID,
+		AccessToken:      accessToken,
+		RefreshToken:     refreshToken,
+		RefreshExpiredAt: refreshTknExpiredAt,
+	}
+	result := g.GormDB.Model(&token).Create(&token)
+	if result.Error != nil {
+		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), result.Error.Error(), utils.ErrFromInternal)
+	}
+	return nil
+}
 func (g *SignupAuthRepository) UserCheckByEmail(ctx context.Context, email string) error {
 	var user mysql.Users
 	result := g.GormDB.WithContext(ctx).Where("email = ?", email).First(&user)
