@@ -8,6 +8,12 @@ import (
 	"strings"
 )
 
+func CreateResRankingFood(foodList []string) response.ResRankingFood {
+	res := response.ResRankingFood{}
+	res.Foods = foodList
+	return res
+}
+
 func CreateResMetaData(typeDTO []mysql.Types, timeDTO []mysql.Times, scenarioDTO []mysql.Scenarios) response.ResMetaData {
 	var res response.ResMetaData
 	var metaData response.MetaData

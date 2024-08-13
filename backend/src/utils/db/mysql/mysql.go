@@ -3,10 +3,9 @@ package mysql
 import (
 	"database/sql"
 	"fmt"
+	_aws "main/utils/aws"
 	"os"
 	"time"
-
-	_aws "main/utils/aws"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/google/uuid"
