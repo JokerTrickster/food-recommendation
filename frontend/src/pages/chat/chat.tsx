@@ -79,6 +79,8 @@ export default function Chat() {
       throw new Error('토큰이 없습니다');
     }
 
+    console.log('previousAnswer', previousAnswer.replace(/,/g, ''));
+
     try {
       const response = await fetch(END_POINT + '/foods/recommend', {
         method: 'POST',
@@ -87,7 +89,7 @@ export default function Chat() {
           tkn: accessToken!,
         },
         body: JSON.stringify({
-          previousAnswer,
+          previousAnswer: previousAnswer.replace(/,/g, ''),
           scenario: selectedScenario,
           time: selectedTime,
           type: selectedType,
