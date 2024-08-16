@@ -41,4 +41,6 @@ export default function Google() {
       console.log('로그인 재시도하세요.');
     }
   }, [code, navigate]);
+
+  return <></>;
 }
