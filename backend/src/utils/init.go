@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	"log"
 	"main/utils/aws"
 	_aws "main/utils/aws"
 	"main/utils/db/mysql"
@@ -52,6 +53,12 @@ func InitServer() error {
 			fmt.Println(err)
 		}
 	}
+	file, err := os.OpenFile("/var/log/myapp.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.SetOutput(file)
+	log.Println("Server started")
 
 	return nil
 }
