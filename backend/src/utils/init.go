@@ -55,7 +55,8 @@ func InitServer() error {
 	}
 	file, err := os.OpenFile("./myapp.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
-		fmt.Println("Failed to open log file, ", err.Error())
+		fmt.Println("Failed to open log file, ", err)
+		return err
 	}
 	log.SetOutput(file)
 	log.Println("Server started")
