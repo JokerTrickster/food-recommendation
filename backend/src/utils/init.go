@@ -53,7 +53,7 @@ func InitServer() error {
 			fmt.Println(err)
 		}
 	}
-	file, err := os.OpenFile("/var/log/myapp.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	file, err := os.OpenFile("/home/ssm-user", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatal(err)
 	}
