@@ -7,6 +7,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -a -ldflags '-s' -installsuff
 # FINAL STAGE
 FROM alpine:3.15 AS runner
 WORKDIR /app/
+RUN mkdir -p /logs && chmod 755 /logs
 COPY --from=builder /build/main .
 RUN echo 'export $(strings /proc/1/environ | grep AWS_CONTAINER_CREDENTIALS_RELATIVE_URI)' >> /root/.profile
 ARG VERSION
