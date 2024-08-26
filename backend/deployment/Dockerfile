@@ -18,9 +18,11 @@ COPY --from=builder /build/main .
 # 현재 위치와 /app 디렉토리 확인
 RUN echo "Current working directory:" && pwd && echo "Files in /app directory:" && ls -la /app
 RUN mkdir -p /etc/promtail && chmod 755 /etc/promtail
+ENV LOKI_URL=${LOKI_URL}
 COPY ./promtail-config.yaml /etc/promtail/promtail-config.yaml
 RUN chmod 755 /etc/promtail/promtail-config.yaml 
-RUN echo "/etc/promtail/promtail-config.yaml" && ls -la /etc/promtail
+RUN sed -i "s|http://loki:3100/loki/api/v1/push|http://${LOKI_URL}:3100/loki/api/v1/push|" /etc/promtail/promtail-config.yaml
+RUN echo "cat /etc/promtail/promtail-config.yaml"
 RUN echo 'export $(strings /proc/1/environ | grep AWS_CONTAINER_CREDENTIALS_RELATIVE_URI)' >> /root/.profile
 ARG VERSION
 ENV VER $VERSION
