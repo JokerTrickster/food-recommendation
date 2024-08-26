@@ -11,6 +11,7 @@ RUN mkdir -p /logs && chmod 755 /logs
 RUN apk add --no-cache curl unzip \
     && curl -L https://github.com/grafana/loki/releases/download/v3.0.0/promtail-linux-arm64.zip -o /promtail.zip \
     && unzip /promtail.zip -d /usr/local/bin \
+    && mv /usr/local/bin/promtail-linux-arm64 /usr/local/bin/promtail \
     && chmod +x /usr/local/bin/promtail \
     && rm /promtail.zip
 COPY --from=builder /build/main .
