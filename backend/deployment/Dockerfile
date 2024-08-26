@@ -17,7 +17,8 @@ RUN apk add --no-cache curl unzip \
 COPY --from=builder /build/main .
 # 현재 위치와 /app 디렉토리 확인
 RUN echo "Current working directory:" && pwd && echo "Files in /app directory:" && ls -la /app
-RUN mkdir -p /etc/promtail
+RUN mkdir -p /etc/promtail && chmod 755 /etc/promtail
+RUN chmod 755 /etc/promtail/promtail-config.yaml 
 COPY ./promtail-config.yaml /etc/promtail/promtail-config.yaml
 RUN echo "/etc/promtail/promtail-config.yaml" && ls -la /etc/promtail
 RUN echo 'export $(strings /proc/1/environ | grep AWS_CONTAINER_CREDENTIALS_RELATIVE_URI)' >> /root/.profile
