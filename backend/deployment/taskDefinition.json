@@ -107,7 +107,7 @@
             "environment": [],
             "secrets": [
                 {
-                    "name": "LOG_SERVER_IP",
+                    "name": "LOKI_URL",
                     "valueFrom": "arn:aws:ssm:__REGION__:730335282594:parameter/dev_food-recommendation_mysql_host"
                 }
             ],
