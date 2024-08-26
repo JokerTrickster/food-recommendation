@@ -4,6 +4,7 @@ import (
 	"context"
 	"main/features/auth/model/entity"
 	_interface "main/features/auth/model/interface"
+	"main/utils/aws"
 	"main/utils/db/mysql"
 
 	"time"
@@ -44,6 +45,7 @@ func (d *RequestPasswordAuthUseCase) RequestPassword(c context.Context, e entity
 		return "", err
 	}
 	//TODO 4. 추후 이메일 전송
+	aws.EmailSendPassword(e.Email, authCode)
 
 	return authCode, nil
 }

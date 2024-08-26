@@ -14,15 +14,15 @@
 }
 
 .radio-container .checked {
-  color: #249dff;
-  border: 1px solid #249dff;
+  color: #fff;
+  background-color: #111f;
   transition: 1s all;
 }
 
 .radio-container .checked path:first-child {
-  stroke: #249dff;
+  stroke: #fff;
 }
 
 .radio-container .checked path:last-child {
-  fill: #249dff;
+  fill: #fff;
 }

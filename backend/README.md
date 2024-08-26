@@ -17,3 +17,6 @@ This project follows the principles of Clean Architecture. This architectural pa
 <p align="center">
     <img width="990" alt="스크린샷 2022-12-22 오후 7 46 07" src="https://user-images.githubusercontent.com/35329247/209118510-3153c568-0d17-43de-a778-210dd53002c5.png">
 </p>
+
+## DB Schema
+![음식 추천 db](https://github.com/user-attachments/assets/333fa72e-8379-461e-a111-fcfaea260cbc)

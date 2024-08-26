@@ -34,10 +34,12 @@ const (
 	ErrFromInternal = IErrFrom("internal")
 	ErrFromMongoDB  = IErrFrom("mongoDB")
 	ErrFromMysqlDB  = IErrFrom("mysqlDB")
+	ErrFromRedis    = IErrFrom("redis")
 	ErrFromAws      = IErrFrom("aws")
 	ErrFromAwsS3    = IErrFrom("aws_s3")
 	ErrFromAwsSsm   = IErrFrom("aws_ssm")
 	ErrFromNaver    = IErrFrom("naver")
+	ErrFromGemini   = IErrFrom("gemini")
 )
 
 // basic error

@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/rand"
 	"encoding/base64"
+	"fmt"
 	"io/ioutil"
 	"main/features/auth/model/request"
 	"main/utils"
@@ -40,9 +41,18 @@ func CreateSignupUser(req *request.ReqSignup) mysql.Users {
 }
 
 func VerifyAccessAndRefresh(req *request.ReqReissue) error {
-	if err := utils.VerifyToken(req.AccessToken); err != nil {
+	accessTokenUserID, accessTokenEmail, err := utils.ParseToken(req.AccessToken)
+	if err != nil {
 		return err
 	}
+	refresdhTokenUserID, refreshTokenEmail, err := utils.ParseToken(req.RefreshToken)
+	if err != nil {
+		return err
+	}
+	if accessTokenUserID != refresdhTokenUserID || accessTokenEmail != refreshTokenEmail {
+		return utils.ErrorMsg(context.TODO(), utils.ErrBadParameter, utils.Trace(), "access token and refresh token are not matched", utils.ErrFromClient)
+	}
+
 	if err := utils.VerifyToken(req.RefreshToken); err != nil {
 		return err
 	}
@@ -60,11 +70,11 @@ func GenerateStateOauthCookie(ctx context.Context) string {
 func getGoogleUserInfo(ctx context.Context, accessToken string) ([]byte, error) {
 	token, err := utils.GoogleConfig.Exchange(ctx, accessToken)
 	if err != nil {
-		return nil, err
+		return nil, utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), fmt.Sprintf("bad request %v", err), utils.ErrFromInternal)
 	}
 	resp, err := http.Get("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + token.AccessToken)
 	if err != nil {
-		return nil, err
+		return nil, utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), fmt.Sprintf("bad request google access token %v", err), utils.ErrFromInternal)
 	}
 
 	defer resp.Body.Close()

@@ -23,9 +23,12 @@ func InitGoogleOauth() error {
 	GoogleConfig = oauth2.Config{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
-		RedirectURL:  "http://localhost:8080/v0.1/auth/google/callback",
+		RedirectURL:  "http://localhost:8080/v0.2/auth/google/callback",
 		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},
 		Endpoint:     google.Endpoint,
+	}
+	if !Env.IsLocal {
+		GoogleConfig.RedirectURL = "https://food-recommendation.jokertrickster.com"
 	}
 	return nil
 }
@@ -38,7 +41,7 @@ func getClientID() (string, error) {
 		}
 		return clientID, nil
 	} else {
-		ClientID, err := aws.AwsSsmGetParam("google_client_id")
+		ClientID, err := aws.AwsSsmGetParam("food_google_client_id")
 		if err != nil {
 			return "", err
 		}
@@ -56,7 +59,7 @@ func getClientSecret() (string, error) {
 		return clientSecret, nil
 
 	} else {
-		ClientID, err := aws.AwsSsmGetParam("google_client_secret")
+		ClientID, err := aws.AwsSsmGetParam("food_google_client_secret")
 		if err != nil {
 			return "", err
 		}

@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 import classes from './css/line-link.module.css';

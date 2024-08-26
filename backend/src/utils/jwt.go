@@ -22,8 +22,8 @@ var RefreshTokenSecretKey []byte
 var JwtConfig middleware.JWTConfig
 
 const (
-	AccessTokenExpiredTime  = 1 * 24 //hours
-	RefreshTokenExpiredTime = 24 * 7 //hours
+	AccessTokenExpiredTime  = 24     // hour
+	RefreshTokenExpiredTime = 24 * 7 // hour
 )
 
 func InitJwt() error {
@@ -104,12 +104,12 @@ func VerifyToken(tokenString string) error {
 	return nil
 }
 func ParseToken(tokenString string) (uint, string, error) {
-	token, err := jwt.ParseWithClaims(tokenString, &JwtCustomClaims{}, func(token *jwt.Token) (interface{}, error) {
+	token, _ := jwt.ParseWithClaims(tokenString, &JwtCustomClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return AccessTokenSecretKey, nil
 	})
-	if err != nil {
-		return 0, "", ErrorMsg(context.TODO(), ErrBadToken, Trace(), fmt.Sprintf("failed to parse token - %v", token), ErrFromClient)
-	}
+	// if err != nil {
+	// 	return 0, "", ErrorMsg(context.TODO(), ErrBadToken, Trace(), fmt.Sprintf("failed to parse token - %v", token), ErrFromClient)
+	// }
 	// Extract claims
 	claims, ok := token.Claims.(*JwtCustomClaims)
 	if !ok {

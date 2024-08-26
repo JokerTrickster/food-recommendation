@@ -1,6 +1,7 @@
 .line-like {
   position: relative;
   display: inline-block;
+  margin: 0.5rem;
 }
 
 .line-like::after {

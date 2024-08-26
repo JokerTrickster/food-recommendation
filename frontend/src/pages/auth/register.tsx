@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router';
 import { useState } from 'react';
 
 export default function Register(): JSX.Element {
-  const [isCheck, setIsCheck] = useState<boolean>(true);
+  const [isCheck, setIsCheck] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -25,11 +25,8 @@ export default function Register(): JSX.Element {
     isValid: isPasswordValid,
   } = useValidationInput(passwordRegex);
 
-  const {
-    userValue: passwordValueCheck,
-    getUserValue: getPasswordValueCheck,
-    isValid: isPasswordValidCheck,
-  } = useValidationInput(passwordRegex);
+  const { userValue: passwordValueCheck, getUserValue: getPasswordValueCheck } =
+    useValidationInput(passwordRegex);
 
   async function registerHandler(e: React.FormEvent): Promise<void> {
     e.preventDefault();
@@ -50,31 +47,39 @@ export default function Register(): JSX.Element {
         navigate('/');
       }
     } catch (error) {
-      console.error('회원가입 실패', error);
+      if (error instanceof Error) {
+        console.error(error.message);
+        throw new Error('회원가입에 실패했습니다.');
+      }
     }
   }
 
-  async function duplicationHandler(e: React.MouseEvent): void {
+  async function duplicationHandler(e: React.MouseEvent): Promise<void> {
     e.preventDefault();
 
     try {
-      const response = await fetch(END_POINT + '/auth/check', {
-        method: 'POST',
+      const response = await fetch(`${END_POINT}/auth/email/check?email=${emailValue}`, {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          email: emailValue,
-        }),
       });
+
+      if (response.status === 400) {
+        setIsCheck(false);
+      } else {
+        setIsCheck(true);
+      }
 
       if (response.ok) {
         setIsCheck(false);
       }
     } catch (error) {
-      console.error('중복 확인 실패', error);
+      throw new Error('중복 체크에 실패했습니다.');
     }
   }
+
+  const disabledButton = isCheck || passwordValue !== passwordValueCheck;
 
   return (
     <>
@@ -98,10 +103,17 @@ export default function Register(): JSX.Element {
         </div>
 
         <ValidationText
-          condition={!isEmailValid && emailValue !== ''}
+          condition={!isCheck}
+          type="success"
+          message="사용할 수 있는 이메일입니다."
+        />
+        <ValidationText
+          condition={isEmailValid && emailValue === ''}
           type="warning"
           message="이메일이 유효하지 않습니다."
         />
+        <ValidationText condition={isCheck} type="warning" message="중복된 이메일입니다." />
+
         <Input
           id="password"
           type="password"
@@ -110,21 +122,28 @@ export default function Register(): JSX.Element {
           value={passwordValue}
           onChange={getPasswordValue}
         />
+
         <Input
           id="password-check"
-          type="password-check"
+          type="password"
           label="패스워드"
           className={classes.login__input}
           value={passwordValueCheck}
           onChange={getPasswordValueCheck}
         />
+
         <ValidationText
-          condition={!isPasswordValidCheck}
+          condition={passwordValue.length > 0 && !isPasswordValid}
           type="warning"
           message="암호가 유효하지 않습니다."
         />
+        <ValidationText
+          condition={passwordValueCheck.length > 0 && passwordValue !== passwordValueCheck}
+          type="warning"
+          message="암호가 일치하지 않습니다."
+        />
 
-        <Button>회원가입</Button>
+        <Button disabled={disabledButton}>회원가입</Button>
         <nav className={classes.nav}>
           <LineLink to="/" span="이미 회원이신가요?" strong="로그인하기" />
         </nav>

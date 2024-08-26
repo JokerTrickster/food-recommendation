@@ -1,15 +1,20 @@
-import { ReactNode, memo } from 'react';
+import { memo } from 'react';
 
 import classes from './css/card.module.css';
 
 type CardProps = {
-  children: ReactNode;
+  children: React.ReactNode;
+  onClick?: () => void;
 };
 
 const Card = memo(function Card(props: CardProps) {
-  const { children } = props;
+  const { children, onClick } = props;
 
-  return <section className={classes.card}>{children}</section>;
+  return (
+    <li className={classes.card} onClick={onClick}>
+      {children}
+    </li>
+  );
 });
 
 export default Card;

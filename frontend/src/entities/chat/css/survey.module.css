@@ -122,15 +122,13 @@
 }
 
 .form__submit {
-  border: 1px solid #249dff;
-  background-color: #fff;
-  color: #249dff;
-
+  background-color: #111;
+  color: #fff;
   cursor: pointer;
 }
 
 .form__submit:hover {
-  background-color: #249dff;
+  background-color: #b1b1b1;
   color: #fff;
 }
 
@@ -140,14 +138,14 @@
 }
 
 .disabled {
-  border: 1px solid #249cff6b;
-  color: #249cff6b;
+  border: 1px solid #b1b1b1;
+  color: #b1b1b1;
   background-color: #fff;
 }
 
 .selected {
-  border: 1px solid #249dff;
-  color: #249dff;
+  border: 1px solid #111;
+  color: #111;
   padding: 15px;
   transition: 1s all;
 }

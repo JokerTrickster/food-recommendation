@@ -1,4 +1,21 @@
 definitions:
+  request.ReqRecommendFood:
+    properties:
+      previousAnswer:
+        example: 김치찌개 떡볶이 치킨
+        type: string
+      scenario:
+        description: 전체 , 혼밥, 가족, 친구들
+        example: 혼밥
+        type: string
+      time:
+        example: 중식
+        type: string
+      type:
+        description: 전체, 양식, 한식, 중식 등
+        example: 한식
+        type: string
+    type: object
   request.ReqReissue:
     properties:
       accessToken:
@@ -13,6 +30,23 @@ definitions:
     required:
     - email
     type: object
+  request.ReqSelectFood:
+    properties:
+      name:
+        example: 김치찌개
+        type: string
+      scenario:
+        description: 전체 , 혼밥, 가족, 친구들
+        example: 혼밥
+        type: string
+      time:
+        example: 중식
+        type: string
+      type:
+        description: 전체, 양식, 한식, 중식 등
+        example: 한식
+        type: string
+    type: object
   request.ReqSignin:
     properties:
       email:
@@ -26,8 +60,6 @@ definitions:
   request.ReqSignup:
     properties:
       email:
-        type: string
-      name:
         type: string
       password:
         type: string
@@ -51,12 +83,80 @@ definitions:
       password:
         type: string
     type: object
+  response.GoogleOauthCallbackRes:
+    properties:
+      accessToken:
+        type: string
+      refreshToken:
+        type: string
+    type: object
+  response.HistoryFood:
+    properties:
+      created:
+        type: string
+      name:
+        type: string
+      scenario:
+        type: string
+      time:
+        type: string
+      type:
+        type: string
+    type: object
+  response.MetaData:
+    properties:
+      scenarios:
+        items:
+          type: string
+        type: array
+      times:
+        items:
+          type: string
+        type: array
+      types:
+        items:
+          type: string
+        type: array
+    type: object
   response.ResGetUser:
     properties:
       birth:
         type: string
       sex:
         type: string
+    type: object
+  response.ResGuest:
+    properties:
+      accessToken:
+        type: string
+      refreshToken:
+        type: string
+    type: object
+  response.ResHistoryFood:
+    properties:
+      foods:
+        items:
+          $ref: '#/definitions/response.HistoryFood'
+        type: array
+    type: object
+  response.ResMetaData:
+    properties:
+      metaData:
+        $ref: '#/definitions/response.MetaData'
+    type: object
+  response.ResRankingFood:
+    properties:
+      foods:
+        items:
+          type: string
+        type: array
+    type: object
+  response.ResRecommendFood:
+    properties:
+      foodNames:
+        items:
+          type: string
+        type: array
     type: object
   response.ResReissue:
     properties:
@@ -72,9 +172,139 @@ definitions:
       refreshToken:
         type: string
     type: object
+  response.ResSignup:
+    properties:
+      accessToken:
+        type: string
+      refreshToken:
+        type: string
+    type: object
+  response.ResV02GoogleOauthCallback:
+    properties:
+      accessToken:
+        type: string
+      refreshToken:
+        type: string
+      userID:
+        type: integer
+    type: object
 info:
   contact: {}
 paths:
+  /v0.1/auth/email/check:
+    get:
+      description: |-
+        ■ errCode with 400
+        PARAM_BAD : 파라미터 오류
+        USER_ALREADY_EXISTED : 유저가 이미 존재
+
+        ■ errCode with 500
+        INTERNAL_SERVER : 내부 로직 처리 실패
+        INTERNAL_DB : DB 처리 실패
+        PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+      parameters:
+      - description: email
+        in: query
+        name: email
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: boolean
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: 이메일 중복 체크
+      tags:
+      - auth
+  /v0.1/auth/google:
+    get:
+      description: |-
+        ■ errCode with 400
+        PARAM_BAD : 파라미터 오류
+        USER_NOT_EXIST : 유저가 존재하지 않음
+        USER_ALREADY_EXISTED : 유저가 이미 존재
+
+        ■ errCode with 500
+        INTERNAL_SERVER : 내부 로직 처리 실패
+        INTERNAL_DB : DB 처리 실패
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: boolean
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: google oauth 로그인
+      tags:
+      - auth
+  /v0.1/auth/google/callback:
+    get:
+      description: |-
+        ■ errCode with 400
+        PARAM_BAD : 파라미터 오류
+        USER_NOT_EXIST : 유저가 존재하지 않음
+        USER_ALREADY_EXISTED : 유저가 이미 존재
+
+        ■ errCode with 500
+        INTERNAL_SERVER : 내부 로직 처리 실패
+        INTERNAL_DB : DB 처리 실패
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.GoogleOauthCallbackRes'
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: google oauth 로그인 콜백
+      tags:
+      - auth
+  /v0.1/auth/guest:
+    post:
+      description: |-
+        ■ errCode with 400
+        PARAM_BAD : 파라미터 오류
+        USER_NOT_EXIST : 유저가 존재하지 않음
+        USER_ALREADY_EXISTED : 유저가 이미 존재
+
+        ■ errCode with 500
+        INTERNAL_SERVER : 내부 로직 처리 실패
+        INTERNAL_DB : DB 처리 실패
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ResGuest'
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: 게스트 로그인
+      tags:
+      - auth
   /v0.1/auth/logout:
     post:
       description: |-
@@ -235,7 +465,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: integer
+            $ref: '#/definitions/response.ResSignup'
         "400":
           description: Bad Request
           schema: {}
@@ -279,6 +509,176 @@ paths:
       summary: 액세스 토큰 재발급
       tags:
       - auth
+  /v0.1/foods/history:
+    get:
+      description: |-
+        ■ errCode with 400
+        PARAM_BAD : 파라미터 오류
+        USER_NOT_EXIST : 유저가 존재하지 않음
+        USER_ALREADY_EXISTED : 유저가 이미 존재
+
+        ■ errCode with 500
+        INTERNAL_SERVER : 내부 로직 처리 실패
+        INTERNAL_DB : DB 처리 실패
+        PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+      parameters:
+      - description: accessToken
+        in: header
+        name: tkn
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ResHistoryFood'
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: 음식 히스토리 가쟈오기
+      tags:
+      - food
+  /v0.1/foods/meta:
+    get:
+      description: |-
+        ■ errCode with 400
+        PARAM_BAD : 파라미터 오류
+        USER_NOT_EXIST : 유저가 존재하지 않음
+        USER_ALREADY_EXISTED : 유저가 이미 존재
+
+        ■ errCode with 500
+        INTERNAL_SERVER : 내부 로직 처리 실패
+        INTERNAL_DB : DB 처리 실패
+        PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ResMetaData'
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: 메타 데이터 가져오기
+      tags:
+      - food
+  /v0.1/foods/rank:
+    get:
+      description: |-
+        ■ errCode with 400
+        PARAM_BAD : 파라미터 오류
+        USER_NOT_EXIST : 유저가 존재하지 않음
+        USER_ALREADY_EXISTED : 유저가 이미 존재
+
+        ■ errCode with 500
+        INTERNAL_SERVER : 내부 로직 처리 실패
+        INTERNAL_DB : DB 처리 실패
+        PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ResRankingFood'
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: 실시간 음식 랭킹 가져오기 (TOP 10)
+      tags:
+      - food
+  /v0.1/foods/recommend:
+    post:
+      description: |-
+        ■ errCode with 400
+        PARAM_BAD : 파라미터 오류
+        USER_NOT_EXIST : 유저가 존재하지 않음
+        USER_ALREADY_EXISTED : 유저가 이미 존재
+
+        ■ errCode with 500
+        INTERNAL_SERVER : 내부 로직 처리 실패
+        INTERNAL_DB : DB 처리 실패
+        PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+      parameters:
+      - description: accessToken
+        in: header
+        name: tkn
+        required: true
+        type: string
+      - description: type
+        in: body
+        name: type
+        required: true
+        schema:
+          $ref: '#/definitions/request.ReqRecommendFood'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ResRecommendFood'
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: 음식 추천 받기
+      tags:
+      - food
+  /v0.1/foods/select:
+    post:
+      description: |-
+        ■ errCode with 400
+        PARAM_BAD : 파라미터 오류
+        USER_NOT_EXIST : 유저가 존재하지 않음
+        USER_ALREADY_EXISTED : 유저가 이미 존재
+
+        ■ errCode with 500
+        INTERNAL_SERVER : 내부 로직 처리 실패
+        INTERNAL_DB : DB 처리 실패
+        PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+      parameters:
+      - description: accessToken
+        in: header
+        name: tkn
+        required: true
+        type: string
+      - description: type
+        in: body
+        name: type
+        required: true
+        schema:
+          $ref: '#/definitions/request.ReqSelectFood'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: boolean
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: 음식 선택하기
+      tags:
+      - food
   /v0.1/users/check:
     get:
       description: |-
@@ -353,4 +753,37 @@ paths:
       summary: 유저 프로필 저장하기
       tags:
       - user
+  /v0.2/auth/google/callback:
+    get:
+      description: |-
+        ■ errCode with 400
+        PARAM_BAD : 파라미터 오류
+        USER_NOT_EXIST : 유저가 존재하지 않음
+        USER_ALREADY_EXISTED : 유저가 이미 존재
+
+        ■ errCode with 500
+        INTERNAL_SERVER : 내부 로직 처리 실패
+        INTERNAL_DB : DB 처리 실패
+      parameters:
+      - description: code
+        in: query
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ResV02GoogleOauthCallback'
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: google oauth 로그인 콜백
+      tags:
+      - auth
 swagger: "2.0"

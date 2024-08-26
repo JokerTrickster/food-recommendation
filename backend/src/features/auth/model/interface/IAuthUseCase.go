@@ -8,7 +8,7 @@ import (
 )
 
 type ISignupAuthUseCase interface {
-	Signup(c context.Context, req *request.ReqSignup) error
+	Signup(c context.Context, req *request.ReqSignup) (response.ResSignup, error)
 }
 
 type ISigninAuthUseCase interface {
@@ -29,4 +29,23 @@ type IRequestPasswordAuthUseCase interface {
 
 type IValidatePasswordAuthUseCase interface {
 	ValidatePassword(c context.Context, entity entity.ValidatePasswordAuthEntity) error
+}
+
+type ICheckEmailAuthUseCase interface {
+	CheckEmail(c context.Context, email string) error
+}
+type IGuestAuthUseCase interface {
+	Guest(c context.Context) (response.ResGuest, error)
+}
+
+type IGoogleOauthAuthUseCase interface {
+	GoogleOauth(c context.Context) (string, error)
+}
+
+type IGoogleOauthCallbackAuthUseCase interface {
+	GoogleOauthCallback(c context.Context, code string) (response.GoogleOauthCallbackRes, error)
+}
+
+type IV02GoogleOauthCallbackAuthUseCase interface {
+	V02GoogleOauthCallback(c context.Context, code string) (response.ResV02GoogleOauthCallback, error)
 }

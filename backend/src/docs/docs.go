@@ -15,6 +15,127 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/v0.1/auth/email/check": {
+            "get": {
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "이메일 중복 체크",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "email",
+                        "name": "email",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/v0.1/auth/google": {
+            "get": {
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "google oauth 로그인",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/v0.1/auth/google/callback": {
+            "get": {
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "google oauth 로그인 콜백",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.GoogleOauthCallbackRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/v0.1/auth/guest": {
+            "post": {
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "게스트 로그인",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ResGuest"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
         "/v0.1/auth/logout": {
             "post": {
                 "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
@@ -194,7 +315,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "integer"
+                            "$ref": "#/definitions/response.ResSignup"
                         }
                     },
                     "400": {
@@ -234,6 +355,191 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/response.ResReissue"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/v0.1/foods/history": {
+            "get": {
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "food"
+                ],
+                "summary": "음식 히스토리 가쟈오기",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "accessToken",
+                        "name": "tkn",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ResHistoryFood"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/v0.1/foods/meta": {
+            "get": {
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "food"
+                ],
+                "summary": "메타 데이터 가져오기",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ResMetaData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/v0.1/foods/rank": {
+            "get": {
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "food"
+                ],
+                "summary": "실시간 음식 랭킹 가져오기 (TOP 10)",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ResRankingFood"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/v0.1/foods/recommend": {
+            "post": {
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "food"
+                ],
+                "summary": "음식 추천 받기",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "accessToken",
+                        "name": "tkn",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "type",
+                        "name": "type",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ReqRecommendFood"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ResRecommendFood"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/v0.1/foods/select": {
+            "post": {
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "food"
+                ],
+                "summary": "음식 선택하기",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "accessToken",
+                        "name": "tkn",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "type",
+                        "name": "type",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ReqSelectFood"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "boolean"
                         }
                     },
                     "400": {
@@ -329,9 +635,69 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/v0.2/auth/google/callback": {
+            "get": {
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "google oauth 로그인 콜백",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "code",
+                        "name": "code",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ResV02GoogleOauthCallback"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "request.ReqRecommendFood": {
+            "type": "object",
+            "properties": {
+                "previousAnswer": {
+                    "type": "string",
+                    "example": "김치찌개 떡볶이 치킨"
+                },
+                "scenario": {
+                    "description": "전체 , 혼밥, 가족, 친구들",
+                    "type": "string",
+                    "example": "혼밥"
+                },
+                "time": {
+                    "type": "string",
+                    "example": "중식"
+                },
+                "type": {
+                    "description": "전체, 양식, 한식, 중식 등",
+                    "type": "string",
+                    "example": "한식"
+                }
+            }
+        },
         "request.ReqReissue": {
             "type": "object",
             "properties": {
@@ -354,6 +720,29 @@ const docTemplate = `{
                 }
             }
         },
+        "request.ReqSelectFood": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "example": "김치찌개"
+                },
+                "scenario": {
+                    "description": "전체 , 혼밥, 가족, 친구들",
+                    "type": "string",
+                    "example": "혼밥"
+                },
+                "time": {
+                    "type": "string",
+                    "example": "중식"
+                },
+                "type": {
+                    "description": "전체, 양식, 한식, 중식 등",
+                    "type": "string",
+                    "example": "한식"
+                }
+            }
+        },
         "request.ReqSignin": {
             "type": "object",
             "required": [
@@ -373,9 +762,6 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "email": {
-                    "type": "string"
-                },
-                "name": {
                     "type": "string"
                 },
                 "password": {
@@ -412,6 +798,60 @@ const docTemplate = `{
                 }
             }
         },
+        "response.GoogleOauthCallbackRes": {
+            "type": "object",
+            "properties": {
+                "accessToken": {
+                    "type": "string"
+                },
+                "refreshToken": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.HistoryFood": {
+            "type": "object",
+            "properties": {
+                "created": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "scenario": {
+                    "type": "string"
+                },
+                "time": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.MetaData": {
+            "type": "object",
+            "properties": {
+                "scenarios": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "times": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "types": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
         "response.ResGetUser": {
             "type": "object",
             "properties": {
@@ -420,6 +860,58 @@ const docTemplate = `{
                 },
                 "sex": {
                     "type": "string"
+                }
+            }
+        },
+        "response.ResGuest": {
+            "type": "object",
+            "properties": {
+                "accessToken": {
+                    "type": "string"
+                },
+                "refreshToken": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.ResHistoryFood": {
+            "type": "object",
+            "properties": {
+                "foods": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.HistoryFood"
+                    }
+                }
+            }
+        },
+        "response.ResMetaData": {
+            "type": "object",
+            "properties": {
+                "metaData": {
+                    "$ref": "#/definitions/response.MetaData"
+                }
+            }
+        },
+        "response.ResRankingFood": {
+            "type": "object",
+            "properties": {
+                "foods": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "response.ResRecommendFood": {
+            "type": "object",
+            "properties": {
+                "foodNames": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },
@@ -442,6 +934,31 @@ const docTemplate = `{
                 },
                 "refreshToken": {
                     "type": "string"
+                }
+            }
+        },
+        "response.ResSignup": {
+            "type": "object",
+            "properties": {
+                "accessToken": {
+                    "type": "string"
+                },
+                "refreshToken": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.ResV02GoogleOauthCallback": {
+            "type": "object",
+            "properties": {
+                "accessToken": {
+                    "type": "string"
+                },
+                "refreshToken": {
+                    "type": "string"
+                },
+                "userID": {
+                    "type": "integer"
                 }
             }
         }

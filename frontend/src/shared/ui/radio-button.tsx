@@ -1,10 +1,8 @@
-import { ReactNode } from 'react';
-
 import classes from './css/radio-button.module.css';
 
 type RadioButtonProps = {
   title: string;
-  children?: ReactNode;
+  children?: React.ReactNode;
   onChange: (id: string) => void;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
@@ -17,7 +15,14 @@ export default function RadioButton(props: RadioButtonProps) {
         {children}
         {title}
       </label>
-      <input type="radio" name={name} id={id} checked={checked} onChange={() => onChange(id!)} />
+      <input
+        type="radio"
+        name={name}
+        id={id}
+        checked={checked}
+        onChange={() => onChange(id!)}
+        value={id}
+      />
     </div>
   );
 }

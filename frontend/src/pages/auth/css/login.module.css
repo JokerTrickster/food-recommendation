@@ -94,6 +94,28 @@
   max-width: 300px;
 }
 
+.buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.guest {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #d9d9d9;
+  background-color: transparent;
+  width: 220px;
+  padding: 10px;
+  margin-top: 1rem;
+}
+
+.google {
+  margin-right: 1rem;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
