@@ -133,7 +133,14 @@
     "taskRoleArn": "arn:aws:iam::730335282594:role/dev_food-recommendation_default_task_role",
     "executionRoleArn": "arn:aws:iam::730335282594:role/dev_food-recommendation_default_task_execution_role",
     "networkMode": "awsvpc",
-    "volumes": [],
+    "volumes": [
+        {
+            "name": "log-volume",
+            "host": {
+                "sourcePath": "/log"
+            }
+        }
+    ],
     "placementConstraints": [],
     "requiresCompatibilities": [
         "EC2"
