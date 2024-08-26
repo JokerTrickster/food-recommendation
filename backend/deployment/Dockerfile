@@ -15,11 +15,11 @@ RUN apk add --no-cache curl unzip \
     && chmod +x /usr/local/bin/promtail \
     && rm /promtail.zip
 COPY --from=builder /build/main .
+COPY promtail-config.yaml /etc/promtail/promtail-config.yaml
 RUN echo 'export $(strings /proc/1/environ | grep AWS_CONTAINER_CREDENTIALS_RELATIVE_URI)' >> /root/.profile
 ARG VERSION
 ENV VER $VERSION
 EXPOSE 80
 EXPOSE 3100
-COPY promtail-config.yaml /etc/promtail/promtail-config.yaml
 CMD ["sh", "-c", "promtail -config.file=/etc/promtail/promtail-config.yaml & ./main"]
 
