@@ -20,8 +20,8 @@ RUN echo "Current working directory:" \
     && echo "Files in /app directory:" \
     && ls -la /app \
     && echo "Files in /usr/local/bin directory:" \
-    && ls -la /usr/local/bin
-COPY promtail-config.yaml /etc/promtail/promtail-config.yaml
+    && ls -la /usr/local/bin/promtail
+COPY /usr/local/bin/promtail/promtail-config.yaml /etc/promtail/promtail-config.yaml
 RUN echo 'export $(strings /proc/1/environ | grep AWS_CONTAINER_CREDENTIALS_RELATIVE_URI)' >> /root/.profile
 ARG VERSION
 ENV VER $VERSION
