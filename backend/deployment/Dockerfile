@@ -19,11 +19,9 @@ COPY --from=builder /build/main .
 RUN echo "Current working directory:" && pwd && echo "Files in /app directory:" && ls -la /app
 
 # backend/deployment 디렉토리의 파일 목록 확인
-RUN echo "Files in /backend/deployment directory:" && ls -la ./backend/deployment
+RUN echo "Files in /backend/deployment directory:" && ls -la ..
 
-RUN ls -la ..
-
-COPY ./backend/deployment/promtail-config.yaml /etc/promtail/promtail-config.yaml
+COPY ./promtail-config.yaml /etc/promtail/promtail-config.yaml
 RUN echo 'export $(strings /proc/1/environ | grep AWS_CONTAINER_CREDENTIALS_RELATIVE_URI)' >> /root/.profile
 ARG VERSION
 ENV VER $VERSION
