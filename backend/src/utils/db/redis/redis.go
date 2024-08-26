@@ -3,6 +3,7 @@ package _redis
 import (
 	"context"
 	"fmt"
+	"log"
 	"os"
 
 	_aws "main/utils/aws"
@@ -38,6 +39,7 @@ func InitRedis() error {
 
 	opt, err := redis.ParseURL(connectionString)
 	if err != nil {
+		log.Println(err)
 		return err
 	}
 
