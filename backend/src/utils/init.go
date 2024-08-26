@@ -55,7 +55,7 @@ func InitServer() error {
 	}
 
 	// 로그 파일 열기 또는 생성
-	logFile, err := os.OpenFile("./log/myapp.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	logFile, err := os.OpenFile("/logs/myapp.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatalf("Failed to open log file: %v", err)
 	}
