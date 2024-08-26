@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"main/features"
 	"main/middleware"
 	"main/utils"
@@ -33,7 +32,6 @@ func main() {
 		fmt.Printf("handler 초기화 에러 : %v", err.Error())
 		return
 	}
-	log.Println("Server is running")
 	// swagger 초기화
 
 	if utils.Env.IsLocal {

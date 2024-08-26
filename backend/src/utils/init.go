@@ -65,10 +65,10 @@ func InitServer() error {
 	if err != nil {
 		log.Fatalf("Failed to open log file: %v", err)
 	}
-	defer logFile.Close()
 
 	// 로그 출력 대상을 logFile로 설정
 	log.SetOutput(logFile)
+	log.Println("Server is running")
 
 	// 로그 메시지 작성
 	log.Println("This is a regular log message.")
