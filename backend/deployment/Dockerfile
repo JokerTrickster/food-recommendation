@@ -9,9 +9,10 @@ FROM alpine:3.15 AS runner
 WORKDIR /app/
 RUN mkdir -p /logs && chmod 755 /logs
 RUN apk add --no-cache curl tar \
-    && curl -L https://github.com/grafana/loki/releases/download/v2.9.2/promtail-linux-arm64-v2.9.2.tar.gz -o /promtail.tar.gz \
+    && curl -L https://github.com/grafana/loki/releases/download/v3.0.0/promtail-linux-arm64-v3.0.0.tar.gz -o /promtail.tar.gz \
     && tar -xzf /promtail.tar.gz -C /usr/local/bin \
-    && chmod +x /usr/local/bin/promtail
+    && chmod +x /usr/local/bin/promtail \
+    && rm /promtail.tar.gz
 COPY --from=builder /build/main .
 RUN echo 'export $(strings /proc/1/environ | grep AWS_CONTAINER_CREDENTIALS_RELATIVE_URI)' >> /root/.profile
 ARG VERSION
