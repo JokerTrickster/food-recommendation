@@ -16,7 +16,6 @@ RUN apk add --no-cache curl unzip \
     && rm /promtail.zip
 COPY --from=builder /build/main .
 # 현재 위치와 /app 디렉토리 확인
-RUN echo "Current working directory:" && pwd && echo "Files in /app directory:" && ls -la /app
 RUN mkdir -p /etc/promtail && chmod 755 /etc/promtail
 ARG LOKI_URL
 ENV LOKI_URL=${LOKI_URL}

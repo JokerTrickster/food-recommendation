@@ -100,7 +100,7 @@
             "privileged": false
         },
         {
-            "image": "grafana/promtail:2.9.2", 
+            "image": "grafana/promtail:2.6.1", 
             "name": "__ENV___promtail",
             "cpu": 256,
             "memoryReservation": 128,
