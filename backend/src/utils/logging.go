@@ -3,6 +3,7 @@ package utils
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"reflect"
 	"time"
 )
@@ -63,17 +64,17 @@ func (l *Log) MakeErrorLog(res Err) error {
 
 // LogInfo : info level log
 func LogInfo(logContent interface{}) {
-	fmt.Printf("%s %s\n", fmt.Sprintf(colorInfo, "[INFO]"), getStringFromInterface(logContent))
+	log.Printf("%s %s\n", fmt.Sprintf(colorInfo, "[INFO]"), getStringFromInterface(logContent))
 }
 
 // LogWarning : warning level log
 func LogWarning(logContent interface{}) {
-	fmt.Printf("%s %s\n", fmt.Sprintf(colorWarning, "[WARNING]"), getStringFromInterface(logContent))
+	log.Printf("%s %s\n", fmt.Sprintf(colorWarning, "[WARNING]"), getStringFromInterface(logContent))
 }
 
 // LogError : error level log
 func LogError(logContent interface{}) {
-	fmt.Printf("%s %s\n", fmt.Sprintf(colorError, "[ERROR]"), getStringFromInterface(logContent))
+	log.Printf("%s %s\n", fmt.Sprintf(colorError, "[ERROR]"), getStringFromInterface(logContent))
 }
 
 // get string from any type.

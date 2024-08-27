@@ -1,0 +1,15 @@
+2024/08/27 10:24:40 Server is running
+2024/08/27 10:24:40 This is a regular log message.
+2024/08/27 10:24:40 Another log message.
+2024/08/27 10:24:55 Server is running
+2024/08/27 10:24:55 This is a regular log message.
+2024/08/27 10:24:55 Another log message.
+2024/08/27 10:26:20 Server is running
+2024/08/27 10:26:20 This is a regular log message.
+2024/08/27 10:26:20 Another log message.
+2024/08/27 10:26:25 [1;36m[INFO][0m {"project":"frog","type":"access","userID":"","url":"/swagger/index.html","method":"GET","latency":0,"httpCode":200,"requestID":"kEeYVMoAQ0LkxvjUeSk4QOcv3yEdQejN","errorInfo":{}}
+2024/08/27 10:26:25 [1;36m[INFO][0m {"project":"frog","type":"access","userID":"","url":"/swagger/swagger-ui.css","method":"GET","latency":1,"httpCode":200,"requestID":"Z9uoZR86OQJxBthGuUkNgeZfAmElF7e6","errorInfo":{}}
+2024/08/27 10:26:25 [1;36m[INFO][0m {"project":"frog","type":"access","userID":"","url":"/swagger/swagger-ui-standalone-preset.js","method":"GET","latency":0,"httpCode":200,"requestID":"p13uzhgIrR77N7Gmckv6K6xPYZRSOnIP","errorInfo":{}}
+2024/08/27 10:26:25 [1;36m[INFO][0m {"project":"frog","type":"access","userID":"","url":"/swagger/swagger-ui-bundle.js","method":"GET","latency":8,"httpCode":200,"requestID":"EoLIpl7dtZQ0faan91KsHWTU2xFTzoZz","errorInfo":{}}
+2024/08/27 10:26:27 [1;36m[INFO][0m {"project":"frog","type":"access","userID":"","url":"/swagger/doc.json","method":"GET","latency":0,"httpCode":200,"requestID":"wiEuDPQp2U2BH9vPlGH8LbxVmcMmIYD7","errorInfo":{}}
+2024/08/27 10:26:39 [1;36m[INFO][0m {"project":"frog","type":"access","userID":"","url":"/v0.1/auth/signin","method":"POST","latency":187,"httpCode":200,"requestID":"lDW6oddvDtLJDIIXPfTwp3IvU58wTaxf","errorInfo":{}}
