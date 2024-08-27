@@ -2,7 +2,6 @@ package utils
 
 import (
 	"fmt"
-	"log"
 	"main/utils/aws"
 	_aws "main/utils/aws"
 	"main/utils/db/mysql"
@@ -46,37 +45,17 @@ func InitServer() error {
 		if !ok {
 			fmt.Println("GEMINI_ID not found")
 		}
+
 	} else {
 		var err error
 		GeminiID, err = aws.AwsSsmGetParam("food_gemini_id")
 		if err != nil {
 			fmt.Println(err)
 		}
-	}
-
-	// 로그 파일 열기 또는 생성
-	// 현재 작업 디렉토리 출력
-	var logFile *os.File
-	var err error
-	if Env.IsLocal {
-		logFile, err = os.OpenFile("./logs/myapp.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-		if err != nil {
-			log.Fatalf("Failed to open log file: %v", err)
-		}
-	} else {
-		logFile, err = os.OpenFile("/logs/myapp.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-		if err != nil {
-			log.Fatalf("Failed to open log file: %v", err)
+		if err := InitLogging(); err != nil {
+			return err
 		}
 	}
-
-	// 로그 출력 대상을 logFile로 설정
-	log.SetOutput(logFile)
-	log.Println("Server is running")
-
-	// 로그 메시지 작성
-	log.Println("This is a regular log message.")
-	log.Println("Another log message.")
 
 	return nil
 }

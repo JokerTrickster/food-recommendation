@@ -45,7 +45,7 @@ type ErrorInfo struct {
 	From      string `json:"from,omitempty"`
 }
 
-func LogInit() error {
+func InitLogging() error {
 	infoFile, err := os.OpenFile("/logs/info.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		return fmt.Errorf("failed to open info log file: %v", err)
