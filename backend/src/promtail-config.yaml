@@ -15,17 +15,4 @@ scrape_configs:
           - localhost
         labels:
           job: varlogs
-          __path__: /logs/info.log
-          log_level: "info"
-      - targets:
-          - localhost
-        labels:
-          job: varlogs
-          __path__: /logs/error.log
-          log_level: "error"
-      - targets:
-          - localhost
-        labels:
-          job: varlogs
-          __path__: /logs/warning.log
-          log_level: "warning"
+          __path__: /logs/*.log
