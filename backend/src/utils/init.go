@@ -56,9 +56,18 @@ func InitServer() error {
 
 	// 로그 파일 열기 또는 생성
 	// 현재 작업 디렉토리 출력
-	logFile, err := os.OpenFile("./logs/myapp.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-	if err != nil {
-		log.Fatalf("Failed to open log file: %v", err)
+	var logFile *os.File
+	var err error
+	if Env.IsLocal {
+		logFile, err = os.OpenFile("./logs/myapp.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+		if err != nil {
+			log.Fatalf("Failed to open log file: %v", err)
+		}
+	} else {
+		logFile, err = os.OpenFile("/logs/myapp.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+		if err != nil {
+			log.Fatalf("Failed to open log file: %v", err)
+		}
 	}
 
 	// 로그 출력 대상을 logFile로 설정
