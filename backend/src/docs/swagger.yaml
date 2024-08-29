@@ -59,10 +59,26 @@ definitions:
     type: object
   request.ReqSignup:
     properties:
+      birth:
+        example: "1990-01-01"
+        type: string
       email:
         type: string
       password:
+        example: 6글자 이상
+        minLength: 6
         type: string
+      sex:
+        enum:
+        - male
+        - female
+        example: male / female
+        type: string
+    required:
+    - birth
+    - email
+    - password
+    - sex
     type: object
   request.ReqUpdateUser:
     properties:
