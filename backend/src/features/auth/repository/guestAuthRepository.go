@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	_errors "main/features/auth/model/errors"
 	_interface "main/features/auth/model/interface"
 	"main/utils"
 	"main/utils/db/mysql"
@@ -32,16 +31,8 @@ func (g *GuestAuthRepository) FindOneAndUpdateUser(ctx context.Context, email, p
 	user := mysql.Users{
 		Email: email,
 	}
-	//state = "logout"인 유저 wait으로 변경하고 roomID = 1로 변경 user 객체에 반환
-	result := g.GormDB.WithContext(ctx).Model(&user).Where("email = ? and password = ?", email, password).Updates(user)
-	if result.Error != nil {
-		return mysql.Users{}, utils.ErrorMsg(ctx, utils.ErrUserNotFound, utils.Trace(), _errors.ErrUserNotFound.Error(), utils.ErrFromClient)
-	}
-	if result.RowsAffected == 0 {
-		return mysql.Users{}, utils.ErrorMsg(ctx, utils.ErrUserNotFound, utils.Trace(), _errors.ErrUserNotFound.Error(), utils.ErrFromClient)
-	}
-	// 변경된 사용자 정보를 가져옵니다.
-	err := g.GormDB.WithContext(ctx).Where("email = ? and provider = ?", email, "test").First(&user).Error
+
+	err := g.GormDB.WithContext(ctx).Where("email = ? and password = ? and provider = ?", email, password, "test").First(&user).Error
 	if err != nil {
 		return mysql.Users{}, utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), err.Error(), utils.ErrFromInternal)
 	}
