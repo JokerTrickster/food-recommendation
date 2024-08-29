@@ -760,12 +760,32 @@ const docTemplate = `{
         },
         "request.ReqSignup": {
             "type": "object",
+            "required": [
+                "birth",
+                "email",
+                "password",
+                "sex"
+            ],
             "properties": {
+                "birth": {
+                    "type": "string",
+                    "example": "1990-01-01"
+                },
                 "email": {
                     "type": "string"
                 },
                 "password": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 6,
+                    "example": "6글자 이상"
+                },
+                "sex": {
+                    "type": "string",
+                    "enum": [
+                        "male",
+                        "female"
+                    ],
+                    "example": "male / female"
                 }
             }
         },
