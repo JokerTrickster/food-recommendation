@@ -32,16 +32,16 @@ func InitMySQL() error {
 			os.Getenv("MYSQL_DATABASE"),
 		)
 	} else {
-		dbInfos, err := _aws.AwsSsmGetParams([]string{"dev_food-recommendation_mysql_user", "dev_food-recommendation_mysql_password", "dev_food-recommendation_mysql_host", "dev_food-recommendation_mysql_port", "dev_food-recommendation_mysql_db"})
+		dbInfos, err := _aws.AwsSsmGetParams([]string{"dev_food_mysql_user", "dev_food_mysql_password", "dev_common_mysql_host", "dev_common_mysql_port", "dev_food_mysql_db"})
 		if err != nil {
 			return err
 		}
 		connectionString = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
 			dbInfos[4], //user
-			dbInfos[2], //port
-			dbInfos[1], //password
 			dbInfos[3], //host
-			dbInfos[0], //db name
+			dbInfos[0], //db name,
+			dbInfos[1], //port
+			dbInfos[2], //db name
 		)
 	}
 	fmt.Println(connectionString)

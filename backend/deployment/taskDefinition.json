@@ -108,7 +108,7 @@
             "secrets": [
                 {
                     "name": "LOKI_URL",
-                    "valueFrom": "arn:aws:ssm:__REGION__:730335282594:parameter/dev_food-recommendation_mysql_host"
+                    "valueFrom": "arn:aws:ssm:__REGION__:730335282594:parameter/dev_common_mysql_host"
                 }
             ],
             "mountPoints": [
@@ -124,14 +124,14 @@
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
-                    "awslogs-group": "ecs-idea-__ENV___promtail",
+                    "awslogs-group": "dev_food_ecs_promtail",
                     "awslogs-region": "__REGION__"
                 }
             }
         }
     ],
-    "taskRoleArn": "arn:aws:iam::730335282594:role/dev_food-recommendation_default_task_role",
-    "executionRoleArn": "arn:aws:iam::730335282594:role/dev_food-recommendation_default_task_execution_role",
+    "taskRoleArn": "arn:aws:iam::730335282594:role/dev_food_ecs_task_role",
+    "executionRoleArn": "arn:aws:iam::730335282594:role/dev_food_ecs_task_execution_role",
     "networkMode": "awsvpc",
     "volumes": [
         {
