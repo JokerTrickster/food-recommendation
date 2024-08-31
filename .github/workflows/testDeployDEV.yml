@@ -35,7 +35,7 @@ jobs:
       - name: Retrieve Loki URL from SSM
         id: retrieve-ssm
         run: |
-          LOKI_URL=$(aws ssm get-parameter --region "ap-northeast-2" --name "dev_food-recommendation_mysql_host" --with-decryption --query "Parameter.Value" --output text)
+          LOKI_URL=$(aws ssm get-parameter --region "ap-northeast-2" --name "dev_common_mysql_host" --with-decryption --query "Parameter.Value" --output text)
           echo "LOKI_URL=${LOKI_URL}" >> $GITHUB_ENV
       - name: build & tag image
         run: |
