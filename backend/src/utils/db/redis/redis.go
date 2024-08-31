@@ -22,17 +22,18 @@ func InitRedis() error {
 	if isLocal == "true" {
 		connectionString = fmt.Sprintf("redis://%s:%s@localhost:6379/0", os.Getenv("REDIS_USER"), os.Getenv("REDIS_PASSWORD"))
 	} else {
-		dbInfos, err := _aws.AwsSsmGetParams([]string{"dev_food-recommendation_redis_user", "dev_food-recommendation_redis_password", "dev_food-recommendation_redis_host", "dev_food-recommendation_redis_port", "dev_food-recommendation_redis_db"})
+		dbInfos, err := _aws.AwsSsmGetParams([]string{"dev_food_redis_user", "dev_food_redis_password", "dev_common_redis_host", "dev_common_redis_port", "dev_food_redis_db"})
 		if err != nil {
 			return err
 		}
 		fmt.Println(dbInfos)
 		connectionString = fmt.Sprintf("redis://%s:%s@%s:%s/%s",
 			dbInfos[4], //user
-			dbInfos[2], //password
-			dbInfos[1], //host
-			dbInfos[3], //port
-			dbInfos[0], //db name
+			dbInfos[3], //password
+			dbInfos[0], //host
+			dbInfos[1], //port
+			dbInfos[2], //db
+
 		)
 		fmt.Println(connectionString)
 	}
