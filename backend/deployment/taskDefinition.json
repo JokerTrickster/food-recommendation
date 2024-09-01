@@ -78,7 +78,7 @@
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
-                    "awslogs-group": "ecs-idea-__ENV___food-recommendation",
+                    "awslogs-group": "dev_food_ecs_service",
                     "awslogs-region": "__REGION__"
                 }
             },
