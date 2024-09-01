@@ -65,7 +65,7 @@ func InitLogging() error {
 }
 
 func (l *Log) MakeLog(userID string, url string, method string, startTime time.Time, httpCode int, requestID string) error {
-	l.Project = "frog"
+	l.Project = "food-recommendation"
 	l.Type = "access"
 	l.UserID = userID
 	l.Url = url
