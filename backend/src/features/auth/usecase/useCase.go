@@ -71,7 +71,7 @@ func GenerateStateOauthCookie(ctx context.Context) string {
 func getGoogleUserInfo(ctx context.Context, accessToken string) ([]byte, error) {
 	token, err := utils.GoogleConfig.Exchange(ctx, accessToken)
 	if err != nil {
-		return nil, utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), fmt.Sprintf("bad request %v", err), utils.ErrFromInternal)
+		return nil, utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), fmt.Sprintf("google exchange error %v", err), utils.ErrFromInternal)
 	}
 	resp, err := http.Get("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + token.AccessToken)
 	if err != nil {
