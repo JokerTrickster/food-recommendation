@@ -28,6 +28,8 @@ type Logging interface {
 
 type Log struct {
 	Project   string    `json:"project"`
+	Created   string    `json:"created"`
+	Env       string    `json:"env"`
 	Type      string    `json:"type"`
 	UserID    string    `json:"userID"`
 	Url       string    `json:"url"`
@@ -58,15 +60,17 @@ func InitLogging() error {
 	if err != nil {
 		return fmt.Errorf("failed to open error log file: %v", err)
 	}
-	infoLogger = log.New(infoFile, fmt.Sprintf(colorInfo, "[INFO] "), log.LstdFlags)
-	warningLogger = log.New(warningFile, fmt.Sprintf(colorWarning, "[WARNING] "), log.LstdFlags)
-	errorLogger = log.New(errorFile, fmt.Sprintf(colorError, "[ERROR] "), log.LstdFlags)
+	infoLogger = log.New(infoFile, "", 0)
+	warningLogger = log.New(warningFile, "", 0)
+	errorLogger = log.New(errorFile, "", 0)
 	return nil
 }
 
 func (l *Log) MakeLog(userID string, url string, method string, startTime time.Time, httpCode int, requestID string) error {
 	l.Project = "food-recommendation"
-	l.Type = "access"
+	l.Type = "info"
+	l.Created = time.Now().Format("2006-01-02 15:04:05")
+	l.Env = Env.Env
 	l.UserID = userID
 	l.Url = url
 	l.Method = method
@@ -93,7 +97,7 @@ func LogInfo(logContent interface{}) {
 	if Env.IsLocal {
 		fmt.Printf("[INFO] %s\n", getStringFromInterface(logContent))
 	} else {
-		infoLogger.Printf("%s\n", getStringFromInterface(logContent))
+		infoLogger.Printf("%s", getStringFromInterface(logContent))
 	}
 }
 
@@ -102,7 +106,7 @@ func LogWarning(logContent interface{}) {
 	if Env.IsLocal {
 		fmt.Printf("[WARNING] %s\n", getStringFromInterface(logContent))
 	} else {
-		warningLogger.Printf("%s\n", getStringFromInterface(logContent))
+		warningLogger.Printf("%s", getStringFromInterface(logContent))
 	}
 }
 
@@ -111,7 +115,7 @@ func LogError(logContent interface{}) {
 	if Env.IsLocal {
 		fmt.Printf("[ERROR] %s\n", getStringFromInterface(logContent))
 	} else {
-		errorLogger.Printf("%s\n", getStringFromInterface(logContent))
+		errorLogger.Printf("%s", getStringFromInterface(logContent))
 	}
 }
 
