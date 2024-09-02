@@ -133,3 +133,5 @@ INSERT INTO scenarios (name, description) VALUES ('전체', '전체'), ('혼밥'
 
 -- 알레르기 정보 저장
 Insert INTO allergies (name, description) VALUES ('기타', '기타'), ('계란', '계란'), ('우유', '우유'), ('메밀', '메밀'), ('땅콩', '땅콩'), ('대두', '대두'), ('밀', '밀');
+
+INSERT INTO users (email, password, birth, sex, provider) VALUES ('test@jokertrickster.com', 'asdasd123', '1990-01-01', 'male', 'test');
