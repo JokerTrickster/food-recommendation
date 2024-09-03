@@ -56,8 +56,6 @@ func InitServer() error {
 			return err
 		}
 	}
-	if err := InitLogging(); err != nil {
-		return err
-	}
+
 	return nil
 }
