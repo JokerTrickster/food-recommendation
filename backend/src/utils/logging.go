@@ -48,15 +48,15 @@ type ErrorInfo struct {
 }
 
 func InitLogging() error {
-	infoFile, err := os.OpenFile("/logs/info.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	infoFile, err := os.OpenFile("./logs/info.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		return fmt.Errorf("failed to open info log file: %v", err)
 	}
-	errorFile, err := os.OpenFile("/logs/error.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	errorFile, err := os.OpenFile("./logs/error.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		return fmt.Errorf("failed to open error log file: %v", err)
 	}
-	warningFile, err := os.OpenFile("/logs/warning.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	warningFile, err := os.OpenFile("./logs/warning.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		return fmt.Errorf("failed to open error log file: %v", err)
 	}
@@ -94,7 +94,7 @@ func (l *Log) MakeErrorLog(res Err) error {
 
 // LogInfo : info level log
 func LogInfo(logContent interface{}) {
-	if Env.IsLocal {
+	if !Env.IsLocal {
 		fmt.Printf("[INFO] %s\n", getStringFromInterface(logContent))
 	} else {
 		infoLogger.Printf("%s", getStringFromInterface(logContent))
@@ -103,7 +103,7 @@ func LogInfo(logContent interface{}) {
 
 // LogWarning : warning level log
 func LogWarning(logContent interface{}) {
-	if Env.IsLocal {
+	if !Env.IsLocal {
 		fmt.Printf("[WARNING] %s\n", getStringFromInterface(logContent))
 	} else {
 		warningLogger.Printf("%s", getStringFromInterface(logContent))
@@ -112,7 +112,7 @@ func LogWarning(logContent interface{}) {
 
 // LogError : error level log
 func LogError(logContent interface{}) {
-	if Env.IsLocal {
+	if !Env.IsLocal {
 		fmt.Printf("[ERROR] %s\n", getStringFromInterface(logContent))
 	} else {
 		errorLogger.Printf("%s", getStringFromInterface(logContent))

@@ -1,5 +1,8 @@
 version: '3.8'
 
+networks:
+  loki:
+
 services:
   mysql:
     image: mysql:latest
@@ -13,8 +16,31 @@ services:
       MYSQL_PASSWORD: asdasd123
     volumes:
       - mysql_data:/var/lib/mysql
-      
+  loki:
+      image: grafana/loki:latest
+      ports:
+        - "3100:3100"
+      volumes:
+        - ./loki-config.yaml:/mnt/loki/loki-config.yaml  # 현재 경로의 설정 파일을 컨테이너 내로 마운트
+      command: -config.file=/mnt/loki/loki-config.yaml
+      networks:
+        - loki
+
+  promtail:
+      image: grafana/promtail:latest
+      volumes:
+        - /Users/mac/project/food-recommendation/backend/logs:/mnt/logs
+        - ./promtail-config.yaml:/mnt/config/promtail-config.yaml
+      command: -config.file=/mnt/config/promtail-config.yaml
+      networks:
+        - loki
+
+  grafana:
+      image: grafana/grafana:master
+      ports:
+        - "3000:3000"
+      networks:
+        - loki
 volumes:
   mysql_data:
-
 
