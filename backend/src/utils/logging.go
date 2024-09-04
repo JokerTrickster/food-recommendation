@@ -27,17 +27,20 @@ type Logging interface {
 }
 
 type Log struct {
-	Project   string    `json:"project"`
-	Created   string    `json:"created"`
-	Env       string    `json:"env"`
-	Type      string    `json:"type"`
-	UserID    string    `json:"userID"`
-	Url       string    `json:"url"`
-	Method    string    `json:"method"`
-	Latency   int64     `json:"latency"`
-	HttpCode  int       `json:"httpCode"`
-	RequestID string    `json:"requestID"`
-	ErrorInfo ErrorInfo `json:"errorInfo,omitempty"`
+	Project      string                 `json:"project"`
+	Created      string                 `json:"created"`
+	Env          string                 `json:"env"`
+	Type         string                 `json:"type"`
+	UserID       string                 `json:"userID"`
+	Url          string                 `json:"url"`
+	Method       string                 `json:"method"`
+	Latency      int64                  `json:"latency"`
+	HttpCode     int                    `json:"httpCode"`
+	RequestID    string                 `json:"requestID"`
+	RequestBody  map[string]interface{} `json:"requestBody,omitempty"`
+	RequestPath  map[string]string      `json:"requestPath,omitempty"`
+	RequestQuery map[string][]string    `json:"requestQuery,omitempty"`
+	ErrorInfo    ErrorInfo              `json:"errorInfo,omitempty"`
 }
 
 type ErrorInfo struct {
@@ -66,18 +69,26 @@ func InitLogging() error {
 	return nil
 }
 
-func (l *Log) MakeLog(userID string, url string, method string, startTime time.Time, httpCode int, requestID string) error {
-	l.Project = "food-recommendation"
+func (l *Log) MakeLog(userID string, url string, method string, startTime time.Time, httpCode int, requestID string, requestBody map[string]interface{}, queryParams map[string][]string, pathValues map[string]string) error {
+	l.Project = "frog"
 	l.Type = "info"
-	l.Created = time.Now().Format("2006-01-02 15:04:05")
 	l.Env = Env.Env
 	l.UserID = userID
+	l.Created = startTime.Format("2006-01-02 15:04:05")
 	l.Url = url
 	l.Method = method
 	l.Latency = time.Since(startTime).Milliseconds()
 	l.HttpCode = httpCode
 	l.RequestID = requestID
-
+	if requestBody != nil {
+		l.RequestBody = requestBody
+	}
+	if pathValues != nil {
+		l.RequestPath = pathValues
+	}
+	if queryParams != nil {
+		l.RequestQuery = queryParams
+	}
 	return nil
 }
 func (l *Log) MakeErrorLog(res Err) error {
