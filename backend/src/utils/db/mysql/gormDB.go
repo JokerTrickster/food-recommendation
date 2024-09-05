@@ -99,6 +99,7 @@ type Users struct {
 	Email    string `json:"email" gorm:"column:email"`
 	Password string `json:"password" gorm:"column:password"`
 	Birth    string `json:"birth" gorm:"column:birth"`
+	Name     string `json:"name" gorm:"column:name"`
 	Sex      string `json:"sex" gorm:"column:sex"`
 	Provider string `json:"provider" gorm:"column:provider"`
 }

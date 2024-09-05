@@ -38,7 +38,7 @@ func NewUpdateUserHandler(c *echo.Echo, useCase _interface.IUpdateUserUseCase) _
 // @Description INTERNAL_DB : DB 처리 실패
 // @Description PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
 // @Param tkn header string true "accessToken"
-// @param json body request.ReqUpdateUser true "유저 프로필"
+// @param json body request.ReqUpdateUser true "모든 데이터 전달 요청(수정하는 데이터만 보내면 에러 발생)"
 // @Produce json
 // @Success 200 {object} bool
 // @Failure 400 {object} error
@@ -56,6 +56,7 @@ func (d *UpdateUserHandler) Update(c echo.Context) error {
 		Email:  email,
 		Birth:  req.Birth,
 		Sex:    req.Sex,
+		Name:   req.Name,
 	}
 	err := d.UseCase.Update(ctx, &entity)
 	if err != nil {

@@ -553,7 +553,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v0.1/users/check": {
+        "/v0.1/user/{userID}": {
             "get": {
                 "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
                 "produces": [
@@ -569,6 +569,13 @@ const docTemplate = `{
                         "description": "accessToken",
                         "name": "tkn",
                         "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "userID",
+                        "name": "userID",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -609,7 +616,7 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "description": "유저 프로필",
+                        "description": "모든 데이터 전달 요청(수정하는 데이터만 보내면 에러 발생)",
                         "name": "json",
                         "in": "body",
                         "required": true,
@@ -763,6 +770,7 @@ const docTemplate = `{
             "required": [
                 "birth",
                 "email",
+                "name",
                 "password",
                 "sex"
             ],
@@ -773,6 +781,10 @@ const docTemplate = `{
                 },
                 "email": {
                     "type": "string"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "홍길동"
                 },
                 "password": {
                     "type": "string",
@@ -793,10 +805,14 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "birth",
+                "name",
                 "sex"
             ],
             "properties": {
                 "birth": {
+                    "type": "string"
+                },
+                "name": {
                     "type": "string"
                 },
                 "sex": {
@@ -876,6 +892,12 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "birth": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "name": {
                     "type": "string"
                 },
                 "sex": {

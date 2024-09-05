@@ -40,7 +40,6 @@ func (d *V02GoogleOauthCallbackAuthUseCase) V02GoogleOauthCallback(c context.Con
 		Email: googleUser.Email,
 	}
 	var user *mysql.Users
-	fmt.Println("sqlEntity.Email", sqlEntity.Email)
 	//회원 계정이 있으면 통과 없으면 회원 가입
 	user, err = d.Repository.FindOneAndUpdateUser(ctx, sqlEntity.Email)
 	if err != nil {

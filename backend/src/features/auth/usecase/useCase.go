@@ -36,6 +36,7 @@ func CreateSignupUser(req *request.ReqSignup) mysql.Users {
 		Email:    req.Email,
 		Password: req.Password,
 		Provider: "email",
+		Name:     req.Name,
 		Birth:    req.Birth,
 		Sex:      req.Sex,
 	}

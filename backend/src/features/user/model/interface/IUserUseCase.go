@@ -3,11 +3,11 @@ package _interface
 import (
 	"context"
 	"main/features/user/model/entity"
-	"main/utils/db/mysql"
+	"main/features/user/model/response"
 )
 
 type IGetUserUseCase interface {
-	Get(c context.Context, uID uint) (*mysql.Users, error)
+	Get(c context.Context, uID uint) (response.ResGetUser, error)
 }
 
 type IUpdateUserUseCase interface {
