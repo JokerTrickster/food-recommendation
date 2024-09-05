@@ -64,6 +64,9 @@ definitions:
         type: string
       email:
         type: string
+      name:
+        example: 홍길동
+        type: string
       password:
         example: 6글자 이상
         minLength: 6
@@ -77,6 +80,7 @@ definitions:
     required:
     - birth
     - email
+    - name
     - password
     - sex
     type: object
@@ -84,10 +88,13 @@ definitions:
     properties:
       birth:
         type: string
+      name:
+        type: string
       sex:
         type: string
     required:
     - birth
+    - name
     - sex
     type: object
   request.ReqValidatePassword:
@@ -137,6 +144,10 @@ definitions:
   response.ResGetUser:
     properties:
       birth:
+        type: string
+      email:
+        type: string
+      name:
         type: string
       sex:
         type: string
@@ -695,7 +706,7 @@ paths:
       summary: 음식 선택하기
       tags:
       - food
-  /v0.1/users/check:
+  /v0.1/user/{userID}:
     get:
       description: |-
         ■ errCode with 400
@@ -711,6 +722,11 @@ paths:
       - description: accessToken
         in: header
         name: tkn
+        required: true
+        type: string
+      - description: userID
+        in: path
+        name: userID
         required: true
         type: string
       produces:
@@ -747,7 +763,7 @@ paths:
         name: tkn
         required: true
         type: string
-      - description: 유저 프로필
+      - description: 모든 데이터 전달 요청(수정하는 데이터만 보내면 에러 발생)
         in: body
         name: json
         required: true

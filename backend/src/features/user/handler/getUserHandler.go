@@ -2,12 +2,10 @@ package handler
 
 import (
 	_interface "main/features/user/model/interface"
-	"main/features/user/model/response"
-
-	_errors "main/features/user/model/errors"
 	mw "main/middleware"
 	"main/utils"
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo/v4"
 )
@@ -20,12 +18,12 @@ func NewGetUserHandler(c *echo.Echo, useCase _interface.IGetUserUseCase) _interf
 	handler := &GetUserHandler{
 		UseCase: useCase,
 	}
-	c.GET("/v0.1/users/check", handler.Get, mw.TokenChecker)
+	c.GET("/v0.1/user/:userID", handler.Get, mw.TokenChecker)
 	return handler
 }
 
 // 유저 프로필 가져오기
-// @Router /v0.1/users/check [get]
+// @Router /v0.1/user/{userID} [get]
 // @Summary 유저 프로필 가져오기
 // @Description
 // @Description ■ errCode with 400
@@ -38,6 +36,7 @@ func NewGetUserHandler(c *echo.Echo, useCase _interface.IGetUserUseCase) _interf
 // @Description INTERNAL_DB : DB 처리 실패
 // @Description PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
 // @Param tkn header string true "accessToken"
+// @Param userID path string true "userID"
 // @Produce json
 // @Success 200 {object} response.ResGetUser
 // @Failure 400 {object} error
@@ -45,17 +44,16 @@ func NewGetUserHandler(c *echo.Echo, useCase _interface.IGetUserUseCase) _interf
 // @Tags user
 func (d *GetUserHandler) Get(c echo.Context) error {
 	ctx, uID, _ := utils.CtxGenerate(c)
+	pathUserID := c.Param("userID")
+	puID, _ := strconv.Atoi(pathUserID)
+	if pathUserID == "" || uID != uint(puID) {
+		return utils.ErrorMsg(ctx, utils.ErrBadParameter, utils.Trace(), "invalid user id", utils.ErrFromClient)
+	}
 
-	userDTO, err := d.UseCase.Get(ctx, uID)
+	res, err := d.UseCase.Get(ctx, uID)
 	if err != nil {
 		return err
 	}
-	if userDTO == nil {
-		return utils.ErrorMsg(ctx, utils.ErrProfileNotFount, utils.Trace(), _errors.ErrProfileNotFound.Error(), utils.ErrFromClient)
-	}
-	res := response.ResGetUser{
-		Birth: userDTO.Birth,
-		Sex:   userDTO.Sex,
-	}
+
 	return c.JSON(http.StatusOK, res)
 }

@@ -3,7 +3,7 @@ package usecase
 import (
 	"context"
 	_interface "main/features/user/model/interface"
-	"main/utils/db/mysql"
+	"main/features/user/model/response"
 	"time"
 )
 
@@ -16,16 +16,14 @@ func NewGetUserUseCase(repo _interface.IGetUserRepository, timeout time.Duration
 	return &GetUserUseCase{Repository: repo, ContextTimeout: timeout}
 }
 
-func (d *GetUserUseCase) Get(c context.Context, uID uint) (*mysql.Users, error) {
+func (d *GetUserUseCase) Get(c context.Context, uID uint) (response.ResGetUser, error) {
 	ctx, cancel := context.WithTimeout(c, d.ContextTimeout)
 	defer cancel()
 	// 유저 정보를 가져온다.
 	userDTO, err := d.Repository.FindOneUser(ctx, uID)
 	if err != nil {
-		return nil, err
+		return response.ResGetUser{}, err
 	}
-	if userDTO.Sex == "" {
-		return nil, nil
-	}
-	return userDTO, nil
+	res := CreateResGetUser(userDTO)
+	return res, nil
 }

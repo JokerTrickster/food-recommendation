@@ -52,6 +52,7 @@ func (g *V02GoogleOauthCallbackAuthRepository) FindOneAndUpdateUser(ctx context.
 		// 유저가 존재하지 않으면 생성
 		user.Provider = "google"
 		user.Birth = "0000-01-01"
+		user.Name = "푸드픽"
 		result = g.GormDB.WithContext(ctx).Model(&user).Create(&user)
 		if result.Error != nil {
 			return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), fmt.Sprintf("유저 데이터 생성 실패 %v", result.Error), utils.ErrFromMysqlDB)
