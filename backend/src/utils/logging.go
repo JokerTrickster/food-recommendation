@@ -105,7 +105,7 @@ func (l *Log) MakeErrorLog(res Err) error {
 
 // LogInfo : info level log
 func LogInfo(logContent interface{}) {
-	if !Env.IsLocal {
+	if Env.IsLocal {
 		fmt.Printf("[INFO] %s\n", getStringFromInterface(logContent))
 	} else {
 		infoLogger.Printf("%s", getStringFromInterface(logContent))
@@ -114,7 +114,7 @@ func LogInfo(logContent interface{}) {
 
 // LogWarning : warning level log
 func LogWarning(logContent interface{}) {
-	if !Env.IsLocal {
+	if Env.IsLocal {
 		fmt.Printf("[WARNING] %s\n", getStringFromInterface(logContent))
 	} else {
 		warningLogger.Printf("%s", getStringFromInterface(logContent))
@@ -123,7 +123,7 @@ func LogWarning(logContent interface{}) {
 
 // LogError : error level log
 func LogError(logContent interface{}) {
-	if !Env.IsLocal {
+	if Env.IsLocal {
 		fmt.Printf("[ERROR] %s\n", getStringFromInterface(logContent))
 	} else {
 		errorLogger.Printf("%s", getStringFromInterface(logContent))

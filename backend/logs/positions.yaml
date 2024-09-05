@@ -1,0 +1,4 @@
+positions:
+  /mnt/logs/error.log: "2020"
+  /mnt/logs/info.log: "16619"
+  /mnt/logs/warning.log: "0"
