@@ -29,4 +29,3 @@ ENV VER $VERSION
 EXPOSE 80
 EXPOSE 3100
 CMD ["sh", "-c", "promtail -config.file=/etc/promtail/promtail-config.yaml & ./main"]
-

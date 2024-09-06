@@ -70,7 +70,7 @@ func InitLogging() error {
 }
 
 func (l *Log) MakeLog(userID string, url string, method string, startTime time.Time, httpCode int, requestID string, requestBody map[string]interface{}, queryParams map[string][]string, pathValues map[string]string) error {
-	l.Project = "frog"
+	l.Project = "food-recommendation"
 	l.Type = "info"
 	l.Env = Env.Env
 	l.UserID = userID
