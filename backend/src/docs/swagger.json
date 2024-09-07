@@ -528,7 +528,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "boolean"
+                            "$ref": "#/definitions/response.ResSelectFood"
                         }
                     },
                     "400": {
@@ -953,6 +953,14 @@
                     "type": "string"
                 },
                 "refreshToken": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.ResSelectFood": {
+            "type": "object",
+            "properties": {
+                "foodCompatibility": {
                     "type": "string"
                 }
             }
