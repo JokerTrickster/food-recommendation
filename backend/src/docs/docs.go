@@ -539,7 +539,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "boolean"
+                            "$ref": "#/definitions/response.ResSelectFood"
                         }
                     },
                     "400": {
@@ -964,6 +964,14 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "refreshToken": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.ResSelectFood": {
+            "type": "object",
+            "properties": {
+                "foodCompatibility": {
                     "type": "string"
                 }
             }

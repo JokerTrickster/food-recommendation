@@ -6,8 +6,14 @@ import (
 	"main/features/food/model/response"
 	"main/utils/db/mysql"
 	"strings"
+	"time"
 )
 
+func CreateSelectFoodQuestion(e entity.SelectFoodEntity) string {
+	today := time.Now().Format("2006-01-02")
+	question := fmt.Sprintf("오늘 날짜 %s 와 %s 음식 궁합을 알려줘", today, e.Name)
+	return question
+}
 func CreateResRankingFood(foodList []string) response.ResRankingFood {
 	res := response.ResRankingFood{}
 	res.Foods = foodList

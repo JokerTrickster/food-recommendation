@@ -10,7 +10,7 @@ type IRecommendFoodUseCase interface {
 	Recommend(c context.Context, entity entity.RecommendFoodEntity) ([]string, error)
 }
 type ISelectFoodUseCase interface {
-	Select(c context.Context, entity entity.SelectFoodEntity) error
+	Select(c context.Context, entity entity.SelectFoodEntity) (response.ResSelectFood, error)
 }
 
 type IHistoryFoodUseCase interface {

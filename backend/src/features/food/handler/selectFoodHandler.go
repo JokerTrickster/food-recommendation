@@ -40,7 +40,7 @@ func NewSelectFoodHandler(c *echo.Echo, useCase _interface.ISelectFoodUseCase) _
 // @Param tkn header string true "accessToken"
 // @Param type body request.ReqSelectFood true "type"
 // @Produce json
-// @Success 200 {object} bool
+// @Success 200 {object} response.ResSelectFood
 // @Failure 400 {object} error
 // @Failure 500 {object} error
 // @Tags food
@@ -60,10 +60,10 @@ func (d *SelectFoodHandler) Select(c echo.Context) error {
 		UserID:   uID,
 	}
 
-	err := d.UseCase.Select(ctx, e)
+	res, err := d.UseCase.Select(ctx, e)
 	if err != nil {
 		return err
 	}
 
-	return c.JSON(http.StatusOK, true)
+	return c.JSON(http.StatusOK, res)
 }

@@ -192,6 +192,11 @@ definitions:
       refreshToken:
         type: string
     type: object
+  response.ResSelectFood:
+    properties:
+      foodCompatibility:
+        type: string
+    type: object
   response.ResSignin:
     properties:
       accessToken:
@@ -696,7 +701,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: boolean
+            $ref: '#/definitions/response.ResSelectFood'
         "400":
           description: Bad Request
           schema: {}
