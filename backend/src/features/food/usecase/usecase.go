@@ -116,7 +116,8 @@ func CreateRecommendFoodQuestion(entity entity.RecommendFoodEntity) string {
 	questionType := fmt.Sprintf("어떤 종류의 음식 :  %s \n", reqType)
 	questionScenario := fmt.Sprintf("누구와 함께 : %s \n", reqScenario)
 	questionTime := fmt.Sprintf("언제 : %s \n", reqTime)
-	question := fmt.Sprintf("%s %s %s 음식 이름 4개만 추천해줘 설명 필요없고 이름만 추천해줘", questionType, questionScenario, questionTime)
+	today := time.Now().Format("2006-01-02")
+	question := fmt.Sprintf("%s와 어울리는 %s %s %s 음식 이름 1개만 추천해줘 설명 필요없고 이름만 추천해줘", today, questionType, questionScenario, questionTime)
 	if entity.PreviousAnswer != "" {
 		question += fmt.Sprintf("이전에 추천받은 음식은 제외하고 알려줘 이전 추천 음식 이름 : %s", entity.PreviousAnswer)
 	}
