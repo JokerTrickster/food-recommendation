@@ -52,6 +52,7 @@ CREATE TABLE foods (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP NULL DEFAULT NULL,
     name VARCHAR(255) NOT NULL,
+    image VARCHAR(255) default 'food_default.png',
     time_id INT,
     type_id INT,
     scenario_id INT

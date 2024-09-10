@@ -26,23 +26,23 @@ var imgMeta = map[ImgType]imgMetaStruct{
 	},
 }
 
-func ImageUpload(ctx context.Context, file *multipart.FileHeader, imgType ImgType) (string, error) {
+func ImageUpload(ctx context.Context, file *multipart.FileHeader, filename string, imgType ImgType) error {
 
 	meta, ok := imgMeta[imgType]
 	if !ok {
-		return "", fmt.Errorf("not available meta info for imgType - %v", imgType)
+		return fmt.Errorf("not available meta info for imgType - %v", imgType)
 	}
 	bucket := meta.bucket()
 
 	src, err := file.Open()
 	if err != nil {
-		return "", fmt.Errorf("fail to open file - %v", err)
+		return fmt.Errorf("fail to open file - %v", err)
 	}
 	defer src.Close()
 
 	img, err := imaging.Decode(src)
 	if err != nil {
-		return "", fmt.Errorf("fail to load image - %v", err)
+		return fmt.Errorf("fail to load image - %v", err)
 	}
 
 	if meta.width < 1 || meta.height < 1 {
@@ -56,20 +56,18 @@ func ImageUpload(ctx context.Context, file *multipart.FileHeader, imgType ImgTyp
 
 	buf := new(bytes.Buffer)
 	if err := imaging.Encode(buf, img, imaging.PNG, imaging.PNGCompressionLevel(png.BestCompression)); err != nil {
-		return "", fmt.Errorf("fail to encode png image - %v", err)
+		return fmt.Errorf("fail to encode png image - %v", err)
 	}
 
-	filename := fmt.Sprintf("%s.png", fileNameGenerateRandom())
 	_, err = awsClientS3Uploader.Upload(ctx, &s3.PutObjectInput{
 		Bucket: aws.String(bucket),
 		Key:    aws.String(fmt.Sprintf("%s/%s", meta.path, filename)),
 		Body:   buf,
 	})
 	if err != nil {
-		return "", fmt.Errorf("fail to upload image to s3 - bucket:%s / key:%s/%s", bucket, meta.path, filename)
+		return fmt.Errorf("fail to upload image to s3 - bucket:%s / key:%s/%s", bucket, meta.path, filename)
 	}
-
-	return filename, nil
+	return nil
 }
 
 func ImageGetSignedURL(ctx context.Context, fileName string, imgType ImgType) (string, error) {
@@ -113,7 +111,7 @@ func ImageDelete(ctx context.Context, fileName string, imgType ImgType) error {
 
 var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 
-func fileNameGenerateRandom() string {
+func FileNameGenerateRandom() string {
 	rand.Seed(time.Now().UnixNano())
 	b := make([]rune, 32)
 	for i := range b {

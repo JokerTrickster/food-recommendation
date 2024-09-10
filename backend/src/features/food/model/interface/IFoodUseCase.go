@@ -24,3 +24,7 @@ type IMetaFoodUseCase interface {
 type IRankingFoodUseCase interface {
 	Ranking(c context.Context) (response.ResRankingFood, error)
 }
+
+type IImageUploadFoodUseCase interface {
+	ImageUpload(c context.Context, e entity.ImageUploadFoodEntity) error
+}

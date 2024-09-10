@@ -15,4 +15,5 @@ func NewFoodHandler(c *echo.Echo) {
 	NewHistoryFoodHandler(c, usecase.NewHistoryFoodUseCase(repository.NewHistoryFoodRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 	NewMetaFoodHandler(c, usecase.NewMetaFoodUseCase(repository.NewMetaFoodRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 	NewRankingFoodHandler(c, usecase.NewRankingFoodUseCase(repository.NewRankingFoodRepository(mysql.GormMysqlDB, _redis.Client), mysql.DBTimeOut))
+	NewImageUploadFoodHandler(c, usecase.NewImageUploadFoodUseCase(repository.NewImageUploadFoodRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 }
