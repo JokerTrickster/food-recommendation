@@ -107,6 +107,7 @@ type Users struct {
 type Foods struct {
 	gorm.Model
 	Name       string `json:"name" gorm:"column:name"`
+	Image      string `json:"image" gorm:"column:image"`
 	ScenarioID int    `json:"scenarioID" gorm:"column:scenario_id"`
 	TimeID     int    `json:"timeID" gorm:"column:time_id"`
 	TypeID     int    `json:"typeID" gorm:"column:type_id"`

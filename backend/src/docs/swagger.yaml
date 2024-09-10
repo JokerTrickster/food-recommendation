@@ -577,6 +577,43 @@ paths:
       summary: 음식 히스토리 가쟈오기
       tags:
       - food
+  /v0.1/foods/image:
+    post:
+      description: |-
+        ■ errCode with 400
+        PARAM_BAD : 파라미터 오류
+        USER_NOT_EXIST : 유저가 존재하지 않음
+        USER_ALREADY_EXISTED : 유저가 이미 존재
+
+        ■ errCode with 500
+        INTERNAL_SERVER : 내부 로직 처리 실패
+        INTERNAL_DB : DB 처리 실패
+        PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+      parameters:
+      - description: food ID
+        in: formData
+        name: foodID
+        type: string
+      - description: 음식 이미지 파일
+        in: formData
+        name: image
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: boolean
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: 음식 이미지 업로드하기
+      tags:
+      - food
   /v0.1/foods/meta:
     get:
       description: |-

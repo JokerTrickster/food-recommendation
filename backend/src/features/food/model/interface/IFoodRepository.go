@@ -28,3 +28,7 @@ type IMetaFoodRepository interface {
 type IRankingFoodRepository interface {
 	FindAllRanking(ctx context.Context) ([]string, error)
 }
+
+type IImageUploadFoodRepository interface {
+	FindOneAndUpdateFoods(ctx context.Context, foodID uint, filename string) error
+}

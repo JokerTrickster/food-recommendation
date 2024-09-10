@@ -19,3 +19,6 @@ type IMetaFoodHandler interface {
 type IRankingFoodHandler interface {
 	Ranking(c echo.Context) error
 }
+type IImageUploadFoodHandler interface {
+	ImageUpload(c echo.Context) error
+}
