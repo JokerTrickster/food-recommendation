@@ -28,3 +28,6 @@ type RankingFoodRepository struct {
 type ImageUploadFoodRepository struct {
 	GormDB *gorm.DB
 }
+type EmptyImageFoodRepository struct {
+	GormDB *gorm.DB
+}

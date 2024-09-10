@@ -22,3 +22,6 @@ type IRankingFoodHandler interface {
 type IImageUploadFoodHandler interface {
 	ImageUpload(c echo.Context) error
 }
+type IEmptyImageFoodHandler interface {
+	EmptyImage(c echo.Context) error
+}

@@ -9,6 +9,17 @@ import (
 	"time"
 )
 
+func CreateResEmptyImageFood(foods []mysql.Foods) response.ResEmptyImageFood {
+	var res response.ResEmptyImageFood
+	for _, f := range foods {
+		emptyFood := response.EmptyFood{
+			ID:   f.ID,
+			Name: f.Name,
+		}
+		res.Foods = append(res.Foods, emptyFood)
+	}
+	return res
+}
 func CreateSelectFoodQuestion(e entity.SelectFoodEntity) string {
 	today := time.Now().Format("2006-01-02")
 	question := fmt.Sprintf("오늘 날짜 %s 와 %s 음식 궁합을 알려줘", today, e.Name)

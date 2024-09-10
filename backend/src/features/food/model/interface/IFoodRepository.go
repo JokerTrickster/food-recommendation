@@ -32,3 +32,7 @@ type IRankingFoodRepository interface {
 type IImageUploadFoodRepository interface {
 	FindOneAndUpdateFoods(ctx context.Context, foodID uint, filename string) error
 }
+
+type IEmptyImageFoodRepository interface {
+	FindAllEmptyImageFoods(ctx context.Context) ([]mysql.Foods, error)
+}

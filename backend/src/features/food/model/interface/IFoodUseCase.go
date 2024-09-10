@@ -28,3 +28,6 @@ type IRankingFoodUseCase interface {
 type IImageUploadFoodUseCase interface {
 	ImageUpload(c context.Context, e entity.ImageUploadFoodEntity) error
 }
+type IEmptyImageFoodUseCase interface {
+	EmptyImage(c context.Context) (response.ResEmptyImageFood, error)
+}
