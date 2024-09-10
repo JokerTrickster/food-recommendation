@@ -203,6 +203,8 @@ definitions:
         type: string
       refreshToken:
         type: string
+      userID:
+        type: integer
     type: object
   response.ResSignup:
     properties:
