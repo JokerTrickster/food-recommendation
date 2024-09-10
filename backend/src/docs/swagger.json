@@ -973,6 +973,9 @@
                 },
                 "refreshToken": {
                     "type": "string"
+                },
+                "userID": {
+                    "type": "integer"
                 }
             }
         },
