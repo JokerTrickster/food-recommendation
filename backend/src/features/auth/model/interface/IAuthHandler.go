@@ -43,3 +43,6 @@ type IGoogleOauthCallbackAuthHandler interface {
 type IV02GoogleOauthCallbackAuthHandler interface {
 	V02GoogleOauthCallback(c echo.Context) error
 }
+type IV02GoogleOauthAuthHandler interface {
+	V02GoogleOauth(c echo.Context) error
+}

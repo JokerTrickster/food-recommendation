@@ -61,3 +61,9 @@ type IV02GoogleOauthCallbackAuthRepository interface {
 	DeleteToken(ctx context.Context, uID uint) error
 	FindOneAndUpdateUser(ctx context.Context, email string) (*mysql.Users, error)
 }
+
+type IV02GoogleOauthAuthRepository interface {
+	SaveToken(ctx context.Context, uID uint, accessToken, refreshToken string, refreshTknExpiredAt int64) error
+	DeleteToken(ctx context.Context, uID uint) error
+	InsertOneUser(ctx context.Context, user *mysql.Users) (*mysql.Users, error)
+}

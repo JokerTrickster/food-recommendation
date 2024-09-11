@@ -20,4 +20,5 @@ func NewAuthHandler(c *echo.Echo) {
 	NewGoogleOauthAuthHandler(c, usecase.NewGoogleOauthAuthUseCase(repository.NewGoogleOauthAuthRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 	NewGoogleOauthCallbackAuthHandler(c, usecase.NewGoogleOauthCallbackAuthUseCase(repository.NewGoogleOauthCallbackAuthRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 	NewV02GoogleOauthCallbackAuthHandler(c, usecase.NewV02GoogleOauthCallbackAuthUseCase(repository.NewV02GoogleOauthCallbackAuthRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
+	NewV02GoogleOauthAuthHandler(c, usecase.NewV02GoogleOauthAuthUseCase(repository.NewV02GoogleOauthAuthRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 }

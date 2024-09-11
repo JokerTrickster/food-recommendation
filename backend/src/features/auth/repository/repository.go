@@ -44,3 +44,6 @@ type GuestAuthRepository struct {
 type V02GoogleOauthCallbackAuthRepository struct {
 	GormDB *gorm.DB
 }
+type V02GoogleOauthAuthRepository struct {
+	GormDB *gorm.DB
+}
