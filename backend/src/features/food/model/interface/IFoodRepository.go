@@ -6,7 +6,7 @@ import (
 )
 
 type IRecommendFoodRepository interface {
-	SaveRecommendFood(ctx context.Context, foodDTO *mysql.Foods) error
+	SaveRecommendFood(ctx context.Context, foodDTO *mysql.Foods) (*mysql.Foods, error)
 }
 
 type ISelectFoodRepository interface {

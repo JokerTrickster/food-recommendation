@@ -4,7 +4,6 @@ import (
 	"main/features/food/model/entity"
 	_interface "main/features/food/model/interface"
 	"main/features/food/model/request"
-	"main/features/food/model/response"
 
 	mw "main/middleware"
 	"main/utils"
@@ -63,13 +62,9 @@ func (d *RecommendFoodHandler) Recommend(c echo.Context) error {
 		entity.PreviousAnswer = req.PreviousAnswer
 	}
 
-	data, err := d.UseCase.Recommend(ctx, entity)
+	res, err := d.UseCase.Recommend(ctx, entity)
 	if err != nil {
 		return err
-	}
-
-	res := response.ResRecommendFood{
-		FoodNames: data,
 	}
 
 	return c.JSON(http.StatusOK, res)

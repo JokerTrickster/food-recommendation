@@ -1,5 +1,10 @@
 package response
 
 type ResRecommendFood struct {
-	FoodNames []string `json:"foodNames"`
+	FoodNames []RecommendFood `json:"foodNames"`
+}
+
+type RecommendFood struct {
+	Name  string `json:"name"`
+	Image string `json:"image"`
 }

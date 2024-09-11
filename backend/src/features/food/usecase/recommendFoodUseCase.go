@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"main/features/food/model/entity"
+	"main/features/food/model/response"
+	"main/utils/aws"
 
 	_errors "main/features/food/model/errors"
 	_interface "main/features/food/model/interface"
@@ -24,14 +26,14 @@ func NewRecommendFoodUseCase(repo _interface.IRecommendFoodRepository, timeout t
 	return &RecommendFoodUseCase{Repository: repo, ContextTimeout: timeout}
 }
 
-func (d *RecommendFoodUseCase) Recommend(c context.Context, e entity.RecommendFoodEntity) ([]string, error) {
+func (d *RecommendFoodUseCase) Recommend(c context.Context, e entity.RecommendFoodEntity) (response.ResRecommendFood, error) {
 	ctx, cancel := context.WithTimeout(c, d.ContextTimeout)
 	defer cancel()
 
 	//음식 추천 로직 구현
 	client, err := genai.NewClient(ctx, option.WithAPIKey(utils.GeminiID))
 	if err != nil {
-		return nil, utils.ErrorMsg(ctx, utils.ErrPartner, utils.Trace(), _errors.ErrGeminiError.Error()+err.Error(), utils.ErrFromGemini)
+		return response.ResRecommendFood{}, utils.ErrorMsg(ctx, utils.ErrPartner, utils.Trace(), _errors.ErrGeminiError.Error()+err.Error(), utils.ErrFromGemini)
 	}
 	model := client.GenerativeModel("gemini-1.5-flash")
 	//데이터 가공
@@ -47,35 +49,44 @@ func (d *RecommendFoodUseCase) Recommend(c context.Context, e entity.RecommendFo
 	)
 
 	if err != nil {
-		return nil, utils.ErrorMsg(ctx, utils.ErrPartner, utils.Trace(), _errors.ErrGeminiError.Error()+err.Error(), utils.ErrFromGemini)
+		return response.ResRecommendFood{}, utils.ErrorMsg(ctx, utils.ErrPartner, utils.Trace(), _errors.ErrGeminiError.Error()+err.Error(), utils.ErrFromGemini)
 	}
-	res := make([]string, 0)
+	gptRes := make([]string, 0)
 	// 출력 부분 수정
 
 	if len(resp.Candidates) > 0 {
 		marshalResponse, _ := json.MarshalIndent(resp, "", "  ")
 		var generateResponse entity.ContentResponse
 		if err := json.Unmarshal(marshalResponse, &generateResponse); err != nil {
-			return nil, utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), _errors.ErrServerError.Error()+err.Error(), utils.ErrFromInternal)
+			return response.ResRecommendFood{}, utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), _errors.ErrServerError.Error()+err.Error(), utils.ErrFromInternal)
 		}
 		for _, cad := range *generateResponse.Candidates {
 			if cad.Content != nil {
 				cleanedString := strings.Trim(cad.Content.Parts[0], "[] \n")
-				res = SplitAndRemoveEmpty(cleanedString)
+				gptRes = SplitAndRemoveEmpty(cleanedString)
 			}
 		}
 
 	} else {
-		return nil, utils.ErrorMsg(ctx, utils.ErrNotFound, utils.Trace(), _errors.ErrFoodNotFound.Error(), utils.ErrFromGemini)
+		return response.ResRecommendFood{}, utils.ErrorMsg(ctx, utils.ErrNotFound, utils.Trace(), _errors.ErrFoodNotFound.Error(), utils.ErrFromGemini)
 	}
-
+	res := response.ResRecommendFood{}
 	//db에 저장
-	for _, foodName := range res {
+	for _, foodName := range gptRes {
 		foodDTO := CreateRecommendFoodDTO(e, foodName)
-		if err := d.Repository.SaveRecommendFood(ctx, foodDTO); err != nil {
-			return nil, err
+		foods, err := d.Repository.SaveRecommendFood(ctx, foodDTO)
+		if err != nil {
+			return response.ResRecommendFood{}, err
 		}
+		food := response.RecommendFood{
+			Name: foods.Name,
+		}
+		imageUrl, err := aws.ImageGetSignedURL(ctx, foods.Image, aws.ImgTypeFood)
+		if err != nil {
+			return response.ResRecommendFood{}, err
+		}
+		food.Image = imageUrl
+		res.FoodNames = append(res.FoodNames, food)
 	}
-
 	return res, nil
 }

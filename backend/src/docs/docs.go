@@ -969,6 +969,17 @@ const docTemplate = `{
                 }
             }
         },
+        "response.RecommendFood": {
+            "type": "object",
+            "properties": {
+                "image": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
         "response.ResEmptyImageFood": {
             "type": "object",
             "properties": {
@@ -1044,7 +1055,7 @@ const docTemplate = `{
                 "foodNames": {
                     "type": "array",
                     "items": {
-                        "type": "string"
+                        "$ref": "#/definitions/response.RecommendFood"
                     }
                 }
             }
