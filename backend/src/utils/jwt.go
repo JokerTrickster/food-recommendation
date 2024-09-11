@@ -1,13 +1,22 @@
 package utils
 
 import (
+	"crypto/aes"
+	"crypto/cipher"
+	"crypto/rand"
+	"encoding/base64"
+	"encoding/hex"
 	"fmt"
+	"io"
+	"io/ioutil"
+	"net/http"
 	"time"
 
 	"context"
 
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/lestrrat-go/jwx/jwk"
 )
 
 type JwtCustomClaims struct {
@@ -120,4 +129,130 @@ func ParseToken(tokenString string) (uint, string, error) {
 	email := claims.Email
 	userID := claims.UserID
 	return userID, email, nil
+}
+
+// JwtVerify verify data
+func jwtVerifyWithKeySet(ctx context.Context, p AuthProvider, tokenString string, keySetUrl string) (jwt.MapClaims, error) {
+
+	ctxHttp, ctxHttpCancel := context.WithTimeout(ctx, time.Second*10)
+	defer ctxHttpCancel()
+
+	req, err := http.NewRequestWithContext(ctxHttp, http.MethodGet, keySetUrl, nil)
+	if err != nil {
+		return jwt.MapClaims{}, ErrorMsg(context.TODO(), ErrBadToken, Trace(), fmt.Sprintf("request jwt pub key for %s - url : %s", authProviderName[p], keySetUrl), ErrFromClient)
+	}
+
+	res, err := httpClient.Do(req)
+	if err != nil {
+		return jwt.MapClaims{}, ErrorMsg(context.TODO(), ErrBadToken, Trace(), fmt.Sprintf("request jwt pub key for %s - url : %s", authProviderName[p], keySetUrl), ErrFromClient)
+	}
+	defer res.Body.Close()
+
+	if res.StatusCode != http.StatusOK {
+		return jwt.MapClaims{}, ErrorMsg(context.TODO(), ErrBadToken, Trace(), fmt.Sprintf("request jwt pub key for %s resCode not 200 - url : %s / resCode : %d", authProviderName[p], keySetUrl, res.StatusCode), ErrFromClient)
+	}
+
+	bytes, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return jwt.MapClaims{}, ErrorMsg(context.TODO(), ErrBadToken, Trace(), fmt.Sprintf("read response jwt pub key for %s - url : %s", authProviderName[p], keySetUrl), ErrFromClient)
+	}
+
+	// get apple jwt public key
+	set, err := jwk.Parse(bytes) // jwk.FetchHTTPWithContext(ctx, keySetUrl)
+	if err != nil {
+		return jwt.MapClaims{}, ErrorMsg(context.TODO(), ErrBadToken, Trace(), fmt.Sprintf("parse response jwt pub key for %s - %s", authProviderName[p], keySetUrl), ErrFromClient)
+	}
+
+	claims := jwt.MapClaims{}
+	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+		keyID, ok := token.Header["kid"].(string)
+		if !ok {
+			return nil, fmt.Errorf("expecting JWT header to have string kid")
+		}
+		key, isExist := set.LookupKeyID(keyID)
+		if !isExist {
+			return nil, fmt.Errorf("expecting key is just one")
+		}
+		var pubKey interface{}
+		if err := key.Raw(&pubKey); err != nil {
+			return nil, err
+		}
+		return pubKey, nil
+	})
+	if err != nil || !token.Valid {
+		return jwt.MapClaims{}, ErrorMsg(context.TODO(), ErrBadToken, Trace(), fmt.Sprintf("token not validate - %s", authProviderName[p]), ErrFromClient)
+	}
+
+	return claims, nil
+}
+
+func aesEncrypt(ctx context.Context, byteToEncrypt []byte, keyString string) (string, error) {
+
+	// since the key is in string, we need to convert decode it to bytes
+	key, err := hex.DecodeString(keyString)
+	if err != nil {
+		return "", ErrorMsg(context.TODO(), ErrInternalServer, Trace(), "decode aes encrypt key string", ErrFromClient)
+	}
+
+	// create a new Cipher Block from the key
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return "", ErrorMsg(context.TODO(), ErrInternalServer, Trace(), fmt.Sprintf("create aes encrypt cipher - %v", err), ErrFromInternal)
+	}
+
+	// create a new GCM - https://en.wikipedia.org/wiki/Galois/Counter_Mode
+	// https://golang.org/pkg/crypto/cipher/#NewGCM
+	aesGCM, err := cipher.NewGCM(block)
+	if err != nil {
+		return "", ErrorMsg(context.TODO(), ErrInternalServer, Trace(), fmt.Sprintf("decode aes encrypt key gcm - %v", err), ErrFromInternal)
+	}
+
+	// create a nonce. Nonce should be from GCM
+	nonce := make([]byte, aesGCM.NonceSize())
+	if _, err = io.ReadFull(rand.Reader, nonce); err != nil {
+		return "", ErrorMsg(context.TODO(), ErrInternalServer, Trace(), fmt.Sprintf("create aes encrypt nonce - %v", err), ErrFromInternal)
+	}
+
+	// encrypt the data using aesGCM.Seal
+	return base64.StdEncoding.EncodeToString(aesGCM.Seal(nonce, nonce, byteToEncrypt, nil)), nil
+}
+
+func aesDecrypt(ctx context.Context, stringToDecrypt string, keyString string) (string, error) {
+
+	key, err := hex.DecodeString(keyString)
+	if err != nil {
+		return "", ErrorMsg(context.TODO(), ErrInternalServer, Trace(), fmt.Sprintf("decode aes decode key string"), ErrFromInternal)
+	}
+	enc, err := base64.StdEncoding.DecodeString(stringToDecrypt)
+	if err != nil {
+		return "", ErrorMsg(context.TODO(), ErrBadToken, Trace(), fmt.Sprintf("decode encrypted string"), ErrFromClient)
+	}
+
+	// create a new Cipher Block from the key
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return "", ErrorMsg(context.TODO(), ErrInternalServer, Trace(), fmt.Sprintf("create aes decrypt cipher - %v", err), ErrFromInternal)
+
+	}
+
+	// create a new GCM
+	aesGCM, err := cipher.NewGCM(block)
+	if err != nil {
+		return "", ErrorMsg(context.TODO(), ErrInternalServer, Trace(), fmt.Sprintf("decode aes decrypt key gcm - %v", err), ErrFromInternal)
+
+	}
+
+	// get the nonce size
+	nonceSize := aesGCM.NonceSize()
+
+	// extract the nonce from the encrypted data
+	nonce, ciphertext := enc[:nonceSize], enc[nonceSize:]
+
+	// decrypt the data
+	plaintext, err := aesGCM.Open(nil, nonce, ciphertext, nil)
+	if err != nil {
+		return "", ErrorMsg(context.TODO(), ErrBadToken, Trace(), fmt.Sprintf("decrypt token data - %v", err), ErrFromClient)
+	}
+
+	return string(plaintext), nil
 }

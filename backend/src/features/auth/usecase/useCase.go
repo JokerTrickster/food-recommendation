@@ -12,6 +12,14 @@ import (
 	"net/http"
 )
 
+func CreateGoogleUserDTO(oauthData utils.OAuthData) *mysql.Users {
+	return &mysql.Users{
+		Email:    oauthData.Email,
+		Password: "",
+		Provider: "google",
+	}
+}
+
 // 영문 + 숫자 6글자 랜덤값 생성
 func GeneratePasswordAuthCode() (string, error) {
 	b := make([]byte, 6)
