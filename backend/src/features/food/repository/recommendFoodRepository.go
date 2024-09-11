@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"errors"
+	"fmt"
 	_errors "main/features/food/model/errors"
 	_interface "main/features/food/model/interface"
 	"main/utils"
@@ -24,25 +25,25 @@ func (d *RecommendFoodRepository) FindOneUser(ctx context.Context, uID uint) (*m
 	return &user, nil
 }
 
-func (d *RecommendFoodRepository) SaveRecommendFood(ctx context.Context, foodDTO *mysql.Foods) error {
-	var existingFood mysql.Foods
-
+func (d *RecommendFoodRepository) SaveRecommendFood(ctx context.Context, foodDTO *mysql.Foods) (*mysql.Foods, error) {
+	foods := mysql.Foods{}
 	// 존재 여부 확인
-	err := d.GormDB.WithContext(ctx).Where("name = ? AND time_id = ? AND type_id = ? AND scenario_id = ?", foodDTO.Name, foodDTO.TimeID, foodDTO.TypeID, foodDTO.ScenarioID).First(&existingFood).Error
+	err := d.GormDB.WithContext(ctx).Model(&foods).Where("name = ? AND time_id = ? AND type_id = ? AND scenario_id = ?", foodDTO.Name, foodDTO.TimeID, foodDTO.TypeID, foodDTO.ScenarioID).First(&foods).Error
 
 	if err == nil {
 		// 데이터가 이미 존재함
-		return nil
+		return &foods, nil
 	}
 
 	if !errors.Is(err, gorm.ErrRecordNotFound) {
 		// 데이터베이스 오류
-		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), _errors.ErrServerError.Error()+err.Error(), utils.ErrFromMysqlDB)
+		return &mysql.Foods{}, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), _errors.ErrServerError.Error()+err.Error(), utils.ErrFromMysqlDB)
 	}
 
 	// 데이터가 존재하지 않으므로 저장
-	if err := d.GormDB.WithContext(ctx).Create(foodDTO).Error; err != nil {
-		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), _errors.ErrServerError.Error()+err.Error(), utils.ErrFromMysqlDB)
+	if err := d.GormDB.WithContext(ctx).Create(&foodDTO).Error; err != nil {
+		return &mysql.Foods{}, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), _errors.ErrServerError.Error()+err.Error(), utils.ErrFromMysqlDB)
 	}
-	return nil
+	fmt.Println(foods)
+	return &foods, nil
 }
