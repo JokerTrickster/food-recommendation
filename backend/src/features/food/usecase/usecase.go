@@ -1,9 +1,11 @@
 package usecase
 
 import (
+	"context"
 	"fmt"
 	"main/features/food/model/entity"
 	"main/features/food/model/response"
+	"main/utils/aws"
 	"main/utils/db/mysql"
 	"strings"
 	"time"
@@ -31,17 +33,67 @@ func CreateResRankingFood(foodList []string) response.ResRankingFood {
 	return res
 }
 
-func CreateResMetaData(typeDTO []mysql.Types, timeDTO []mysql.Times, scenarioDTO []mysql.Scenarios) response.ResMetaData {
+func CreateResMetaData(typeDTO []mysql.Types, timeDTO []mysql.Times, scenarioDTO []mysql.Scenarios, themesDTO []mysql.Themes, flavorDTO []mysql.Flavors) response.ResMetaData {
 	var res response.ResMetaData
 	var metaData response.MetaData
 	for _, t := range typeDTO {
-		metaData.Types = append(metaData.Types, t.Name)
+		category := response.Category{
+			Name: t.Name,
+		}
+		imageUrl, err := aws.ImageGetSignedURL(context.TODO(), t.Image, aws.ImgTypeCategory)
+		if err != nil {
+			return response.ResMetaData{}
+		}
+		category.Image = imageUrl
+		metaData.Types = append(metaData.Types, category)
 	}
 	for _, t := range timeDTO {
-		metaData.Times = append(metaData.Times, t.Name)
+		category := response.Category{
+			Name:  t.Name,
+			Image: t.Image,
+		}
+		imageUrl, err := aws.ImageGetSignedURL(context.TODO(), t.Image, aws.ImgTypeCategory)
+		if err != nil {
+			return response.ResMetaData{}
+		}
+		category.Image = imageUrl
+		metaData.Times = append(metaData.Times, category)
 	}
 	for _, t := range scenarioDTO {
-		metaData.Scenarios = append(metaData.Scenarios, t.Name)
+		category := response.Category{
+			Name:  t.Name,
+			Image: t.Image,
+		}
+		imageUrl, err := aws.ImageGetSignedURL(context.TODO(), t.Image, aws.ImgTypeCategory)
+		if err != nil {
+			return response.ResMetaData{}
+		}
+		category.Image = imageUrl
+		metaData.Scenarios = append(metaData.Scenarios, category)
+	}
+	for _, t := range themesDTO {
+		category := response.Category{
+			Name:  t.Name,
+			Image: t.Image,
+		}
+		imageUrl, err := aws.ImageGetSignedURL(context.TODO(), t.Image, aws.ImgTypeCategory)
+		if err != nil {
+			return response.ResMetaData{}
+		}
+		category.Image = imageUrl
+		metaData.Themes = append(metaData.Themes, category)
+	}
+	for _, t := range flavorDTO {
+		category := response.Category{
+			Name:  t.Name,
+			Image: t.Image,
+		}
+		imageUrl, err := aws.ImageGetSignedURL(context.TODO(), t.Image, aws.ImgTypeCategory)
+		if err != nil {
+			return response.ResMetaData{}
+		}
+		category.Image = imageUrl
+		metaData.Flavors = append(metaData.Flavors, category)
 	}
 	res.MetaData = metaData
 	return res

@@ -14,7 +14,6 @@ import (
 	"github.com/disintegration/imaging"
 )
 
-// https://dev-food-recommendation.s3.ap-northeast-2.amazonaws.com/images/food1.jpg
 var imgMeta = map[ImgType]imgMetaStruct{
 	ImgTypeFood: {
 		bucket:     func() string { return "dev-food-recommendation" },
@@ -23,6 +22,14 @@ var imgMeta = map[ImgType]imgMetaStruct{
 		width:      512,
 		height:     512,
 		expireTime: 5 * time.Minute,
+	},
+	ImgTypeCategory: {
+		bucket:     func() string { return "dev-food-recommendation" },
+		domain:     func() string { return "dev-food-recommendation.s3.ap-northeast-2.amazonaws.com" },
+		path:       "category",
+		width:      62,
+		height:     62,
+		expireTime: 1 * time.Hour,
 	},
 }
 

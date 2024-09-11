@@ -904,6 +904,17 @@ const docTemplate = `{
                 }
             }
         },
+        "response.Category": {
+            "type": "object",
+            "properties": {
+                "image": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
         "response.EmptyFood": {
             "type": "object",
             "properties": {
@@ -949,22 +960,34 @@ const docTemplate = `{
         "response.MetaData": {
             "type": "object",
             "properties": {
+                "flavors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.Category"
+                    }
+                },
                 "scenarios": {
                     "type": "array",
                     "items": {
-                        "type": "string"
+                        "$ref": "#/definitions/response.Category"
+                    }
+                },
+                "themes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.Category"
                     }
                 },
                 "times": {
                     "type": "array",
                     "items": {
-                        "type": "string"
+                        "$ref": "#/definitions/response.Category"
                     }
                 },
                 "types": {
                     "type": "array",
                     "items": {
-                        "type": "string"
+                        "$ref": "#/definitions/response.Category"
                     }
                 }
             }

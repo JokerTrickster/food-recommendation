@@ -23,6 +23,8 @@ type IMetaFoodRepository interface {
 	FindAllTypeMeta(ctx context.Context) ([]mysql.Types, error)
 	FindAllTimeMeta(ctx context.Context) ([]mysql.Times, error)
 	FindAllScenarioMeta(ctx context.Context) ([]mysql.Scenarios, error)
+	FindAllThemesMeta(ctx context.Context) ([]mysql.Themes, error)
+	FindAllFlavorMeta(ctx context.Context) ([]mysql.Flavors, error)
 }
 
 type IRankingFoodRepository interface {

@@ -106,6 +106,13 @@ definitions:
       password:
         type: string
     type: object
+  response.Category:
+    properties:
+      image:
+        type: string
+      name:
+        type: string
+    type: object
   response.EmptyFood:
     properties:
       id:
@@ -135,17 +142,25 @@ definitions:
     type: object
   response.MetaData:
     properties:
+      flavors:
+        items:
+          $ref: '#/definitions/response.Category'
+        type: array
       scenarios:
         items:
-          type: string
+          $ref: '#/definitions/response.Category'
+        type: array
+      themes:
+        items:
+          $ref: '#/definitions/response.Category'
         type: array
       times:
         items:
-          type: string
+          $ref: '#/definitions/response.Category'
         type: array
       types:
         items:
-          type: string
+          $ref: '#/definitions/response.Category'
         type: array
     type: object
   response.RecommendFood:

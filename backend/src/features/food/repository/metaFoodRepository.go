@@ -36,3 +36,19 @@ func (g *MetaFoodRepository) FindAllScenarioMeta(ctx context.Context) ([]mysql.S
 	}
 	return scenarioDTO, nil
 }
+
+func (g *MetaFoodRepository) FindAllThemesMeta(ctx context.Context) ([]mysql.Themes, error) {
+	var themesDTO []mysql.Themes
+	if err := g.GormDB.WithContext(ctx).Find(&themesDTO).Error; err != nil {
+		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), _errors.ErrServerError.Error()+err.Error(), utils.ErrFromMysqlDB)
+	}
+	return themesDTO, nil
+}
+
+func (g *MetaFoodRepository) FindAllFlavorMeta(ctx context.Context) ([]mysql.Flavors, error) {
+	var flavorDTO []mysql.Flavors
+	if err := g.GormDB.WithContext(ctx).Find(&flavorDTO).Error; err != nil {
+		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), _errors.ErrServerError.Error()+err.Error(), utils.ErrFromMysqlDB)
+	}
+	return flavorDTO, nil
+}
