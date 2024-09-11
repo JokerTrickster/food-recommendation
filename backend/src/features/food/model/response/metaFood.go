@@ -5,7 +5,14 @@ type ResMetaData struct {
 }
 
 type MetaData struct {
-	Types     []string `json:"types"`
-	Scenarios []string `json:"scenarios"`
-	Times     []string `json:"times"`
+	Types     []Category `json:"types"`
+	Scenarios []Category `json:"scenarios"`
+	Times     []Category `json:"times"`
+	Themes    []Category `json:"themes"`
+	Flavors   []Category `json:"flavors"`
+}
+
+type Category struct {
+	Name  string `json:"name"`
+	Image string `json:"image"`
 }

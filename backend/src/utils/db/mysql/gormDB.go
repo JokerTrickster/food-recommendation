@@ -124,26 +124,40 @@ type MetaTables struct {
 	TableDescription string `json:"tableDescription" gorm:"column:table_description"`
 }
 
-// 전체, 혼밥, 친구, 가족, 회식, 연인, 기타
 type Scenarios struct {
 	gorm.Model
 	Name        string `json:"name" gorm:"column:name"`
+	Image       string `json:"image" gorm:"column:image"`
 	Description string `json:"description" gorm:"column:description"`
 }
 
-// 전체, 아침, 점심, 저녁, 간식, 야식
 type Times struct {
 	gorm.Model
 	Name        string `json:"name" gorm:"column:name"`
+	Image       string `json:"image" gorm:"column:image"`
 	Description string `json:"description" gorm:"column:description"`
 }
 
-// 전체, 한식, 중식, 일식, 양식, 분식, 패스트푸드, 카페, 술집, 기타
 type Types struct {
 	gorm.Model
 	Name        string `json:"name" gorm:"column:name"`
+	Image       string `json:"image" gorm:"column:image"`
 	Description string `json:"description" gorm:"column:description"`
 }
+
+type Flavors struct {
+	gorm.Model
+	Name        string `json:"name" gorm:"column:name"`
+	Image       string `json:"image" gorm:"column:image"`
+	Description string `json:"description" gorm:"column:description"`
+}
+type Themes struct {
+	gorm.Model
+	Name        string `json:"name" gorm:"column:name"`
+	Image       string `json:"image" gorm:"column:image"`
+	Description string `json:"description" gorm:"column:description"`
+}
+
 type UserAuths struct {
 	gorm.Model
 	Email    string `json:"email" gorm:"column:email"`

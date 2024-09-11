@@ -2,7 +2,6 @@ package usecase
 
 import (
 	"context"
-	"fmt"
 
 	_interface "main/features/food/model/interface"
 	"main/features/food/model/response"
@@ -21,7 +20,6 @@ func NewMetaFoodUseCase(repo _interface.IMetaFoodRepository, timeout time.Durati
 func (d *MetaFoodUseCase) Meta(c context.Context) (response.ResMetaData, error) {
 	ctx, cancel := context.WithTimeout(c, d.ContextTimeout)
 	defer cancel()
-	fmt.Println(ctx)
 	typeDTO, err := d.Repository.FindAllTypeMeta(ctx)
 	if err != nil {
 		return response.ResMetaData{}, err
@@ -34,7 +32,16 @@ func (d *MetaFoodUseCase) Meta(c context.Context) (response.ResMetaData, error) 
 	if err != nil {
 		return response.ResMetaData{}, err
 	}
-	res := CreateResMetaData(typeDTO, timeDTO, scenarioDTO)
+	themesDTO, err := d.Repository.FindAllThemesMeta(ctx)
+	if err != nil {
+		return response.ResMetaData{}, err
+	}
+	flavorDTO, err := d.Repository.FindAllFlavorMeta(ctx)
+	if err != nil {
+		return response.ResMetaData{}, err
+	}
+
+	res := CreateResMetaData(typeDTO, timeDTO, scenarioDTO, themesDTO, flavorDTO)
 
 	return res, nil
 }
