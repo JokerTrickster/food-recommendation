@@ -38,3 +38,7 @@ type IImageUploadFoodRepository interface {
 type IEmptyImageFoodRepository interface {
 	FindAllEmptyImageFoods(ctx context.Context) ([]mysql.Foods, error)
 }
+
+type IDailyRecommendFoodRepository interface {
+	FindOneFood(ctx context.Context, foodName string) (*mysql.Foods, error)
+}

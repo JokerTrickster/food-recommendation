@@ -25,3 +25,7 @@ type IImageUploadFoodHandler interface {
 type IEmptyImageFoodHandler interface {
 	EmptyImage(c echo.Context) error
 }
+
+type IDailyRecommendFoodHandler interface {
+	DailyRecommend(c echo.Context) error
+}
