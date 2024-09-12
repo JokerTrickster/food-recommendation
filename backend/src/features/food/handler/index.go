@@ -17,4 +17,5 @@ func NewFoodHandler(c *echo.Echo) {
 	NewRankingFoodHandler(c, usecase.NewRankingFoodUseCase(repository.NewRankingFoodRepository(mysql.GormMysqlDB, _redis.Client), mysql.DBTimeOut))
 	NewImageUploadFoodHandler(c, usecase.NewImageUploadFoodUseCase(repository.NewImageUploadFoodRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 	NewEmptyImageFoodHandler(c, usecase.NewEmptyImageFoodUseCase(repository.NewEmptyImageFoodRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
+	NewDailyRecommendFoodHandler(c, usecase.NewDailyRecommendFoodUseCase(repository.NewDailyRecommendFoodRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 }

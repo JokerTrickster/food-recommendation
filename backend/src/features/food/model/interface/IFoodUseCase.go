@@ -31,3 +31,7 @@ type IImageUploadFoodUseCase interface {
 type IEmptyImageFoodUseCase interface {
 	EmptyImage(c context.Context) (response.ResEmptyImageFood, error)
 }
+
+type IDailyRecommendFoodUseCase interface {
+	DailyRecommend(c context.Context) (response.ResDailyRecommendFood, error)
+}
