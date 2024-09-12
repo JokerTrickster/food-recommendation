@@ -2,7 +2,11 @@ package handler
 
 import (
 	"context"
+	"encoding/json"
 	_interface "main/features/food/model/interface"
+	"main/features/food/model/response"
+	_redis "main/utils/db/redis"
+	"time"
 
 	"net/http"
 
@@ -42,11 +46,44 @@ func NewDailyRecommendFoodHandler(c *echo.Echo, useCase _interface.IDailyRecomme
 func (d *DailyRecommendFoodHandler) DailyRecommend(c echo.Context) error {
 	ctx := context.Background()
 	//business logic
+	// Redis 캐시 처리
+	cacheKey := "daily_recommend_foods"
+	foodData, err := _redis.Client.Get(ctx, cacheKey).Result()
+	if foodData == "" {
+		// 2. 캐시에 데이터가 없을 경우 UseCase에서 조회
+		res, err := d.UseCase.DailyRecommend(ctx)
+		if err != nil {
+			return err
+		}
 
-	res, err := d.UseCase.DailyRecommend(ctx)
-	if err != nil {
+		// 3. 조회된 데이터를 Redis에 캐시 (예: 1시간 TTL)
+		data, err := json.Marshal(res)
+		if err != nil {
+			return err
+		}
+		err = _redis.Client.Set(ctx, cacheKey, data, time.Hour).Err()
+		if err != nil {
+			return err
+		}
+
+		// 캐시 히트 여부
+		c.Response().Header().Set("X-Cache-Hit", "false")
+
+		// 4. DB에서 조회한 데이터 반환
+		return c.JSON(http.StatusOK, res)
+	} else if err != nil {
+		// Redis 오류 처리
 		return err
 	}
+
+	// 5. 캐시된 데이터가 있을 경우 반환
+	var res response.ResDailyRecommendFood
+	if err := json.Unmarshal([]byte(foodData), &res); err != nil {
+		return err
+	}
+
+	// 캐시 히트 여부
+	c.Response().Header().Set("X-Cache-Hit", "true")
 
 	return c.JSON(http.StatusOK, res)
 }
