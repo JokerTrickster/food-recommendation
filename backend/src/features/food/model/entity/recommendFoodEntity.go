@@ -4,10 +4,11 @@ type RecommendFoodEntity struct {
 	Type           string `json:"type"`
 	Scenario       string `json:"scenario"`
 	Time           string `json:"time"`
+	Theme          string `json:"theme"`
+	Flavor         string `json:"flavor"`
 	UserID         uint   `json:"userID"`
 	PreviousAnswer string `json:"previousAnswer"`
 }
-
 
 type Content struct {
 	Parts []string `json:"Parts"`

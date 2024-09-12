@@ -55,7 +55,9 @@ CREATE TABLE foods (
     image VARCHAR(255) default 'food_default.png',
     time_id INT,
     type_id INT,
-    scenario_id INT
+    scenario_id INT,
+    theme_id INT,
+    flavor_id INT
 );
 
 -- 유저에게 추천된 음식을 저장해야 된다.

@@ -139,12 +139,23 @@ func CreateRecommendFoodDTO(entity entity.RecommendFoodEntity, foodName string) 
 	if err != nil {
 		fmt.Println(err)
 	}
+	themeID, err := mysql.GetThemeID(entity.Theme)
+	if err != nil {
+		fmt.Println(err)
+	}
+	flavorID, err := mysql.GetFlavorID(entity.Flavor)
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	return &mysql.Foods{
 		TypeID:     typeID,
 		TimeID:     timeID,
 		ScenarioID: secnarioID,
+		ThemeID:    themeID,
+		FlavorID:   flavorID,
 		Name:       foodName,
+		Image:      "food_default.png",
 	}
 
 }
@@ -159,28 +170,43 @@ func SplitAndRemoveEmpty(s string) []string {
 
 func CreateRecommendFoodQuestion(entity entity.RecommendFoodEntity) string {
 	var reqType string
-	if entity.Type == "전체" {
+	if entity.Type == "" {
 		reqType = "전체 음식"
 	} else {
 		reqType = entity.Type
 	}
 	var reqScenario string
-	if entity.Scenario == "전체" {
+	if entity.Scenario == "" {
 		reqScenario = "누구든지"
 	} else {
 		reqScenario = entity.Scenario
 	}
 	var reqTime string
-	if entity.Time == "전체" {
+	if entity.Time == "" {
 		reqTime = "아무때나"
 	} else {
 		reqTime = entity.Time
 	}
+	var reqTheme string
+	if entity.Theme == "" {
+		reqTheme = "아무 테마"
+	} else {
+		reqTheme = entity.Theme
+	}
+	var reqFlavor string
+	if entity.Flavor == "" {
+		reqFlavor = "아무맛"
+	} else {
+		reqFlavor = entity.Flavor
+	}
+
 	questionType := fmt.Sprintf("어떤 종류의 음식 :  %s \n", reqType)
 	questionScenario := fmt.Sprintf("누구와 함께 : %s \n", reqScenario)
 	questionTime := fmt.Sprintf("언제 : %s \n", reqTime)
+	questionTheme := fmt.Sprintf("어떤 테마 : %s \n", reqTheme)
+	questionFlavor := fmt.Sprintf("어떤 맛 : %s \n", reqFlavor)
 	today := time.Now().Format("2006-01-02")
-	question := fmt.Sprintf("%s와 어울리는 %s %s %s 음식 이름 1개만 추천해줘 설명 필요없고 이름만 추천해줘", today, questionType, questionScenario, questionTime)
+	question := fmt.Sprintf("%s와 어울리는 %s, %s, %s, %s, %s, 음식 이름 1개만 추천해줘 설명 필요없고 이름만 추천해줘", today, questionType, questionScenario, questionTime, questionTheme, questionFlavor)
 	if entity.PreviousAnswer != "" {
 		question += fmt.Sprintf("이전에 추천받은 음식은 제외하고 알려줘 이전 추천 음식 이름 : %s", entity.PreviousAnswer)
 	}

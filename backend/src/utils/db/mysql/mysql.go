@@ -108,6 +108,21 @@ func GetScenarioID(name string) (int, error) {
 	return id, nil
 }
 
+func GetFlavorID(name string) (int, error) {
+	id, exists := FlavorMap[name]
+	if !exists {
+		return 0, fmt.Errorf("맛 이름을 찾을 수 없습니다: %s", name)
+	}
+	return id, nil
+}
+func GetThemeID(name string) (int, error) {
+	id, exists := ThemeMap[name]
+	if !exists {
+		return 0, fmt.Errorf("테마 이름을 찾을 수 없습니다: %s", name)
+	}
+	return id, nil
+}
+
 func GetTimeID(name string) (int, error) {
 	id, exists := TimeMap[name]
 	if !exists {
