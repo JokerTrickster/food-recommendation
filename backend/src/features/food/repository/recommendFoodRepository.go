@@ -28,7 +28,7 @@ func (d *RecommendFoodRepository) FindOneUser(ctx context.Context, uID uint) (*m
 func (d *RecommendFoodRepository) SaveRecommendFood(ctx context.Context, foodDTO *mysql.Foods) (*mysql.Foods, error) {
 	foods := mysql.Foods{}
 	// 존재 여부 확인
-	err := d.GormDB.WithContext(ctx).Model(&foods).Where("name = ? AND time_id = ? AND type_id = ? AND scenario_id = ?", foodDTO.Name, foodDTO.TimeID, foodDTO.TypeID, foodDTO.ScenarioID).First(&foods).Error
+	err := d.GormDB.WithContext(ctx).Model(&foods).Where("name = ? AND time_id = ? AND type_id = ? AND scenario_id = ? and theme_id = ? and flavor_id = ?", foodDTO.Name, foodDTO.TimeID, foodDTO.TypeID, foodDTO.ScenarioID, foodDTO.ThemeID, foodDTO.FlavorID).First(&foods).Error
 
 	if err == nil {
 		// 데이터가 이미 존재함
@@ -44,6 +44,6 @@ func (d *RecommendFoodRepository) SaveRecommendFood(ctx context.Context, foodDTO
 	if err := d.GormDB.WithContext(ctx).Create(&foodDTO).Error; err != nil {
 		return &mysql.Foods{}, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), _errors.ErrServerError.Error()+err.Error(), utils.ErrFromMysqlDB)
 	}
-	fmt.Println(foods)
-	return &foods, nil
+	fmt.Println(foodDTO)
+	return foodDTO, nil
 }

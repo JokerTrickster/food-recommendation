@@ -794,21 +794,27 @@ const docTemplate = `{
         "request.ReqRecommendFood": {
             "type": "object",
             "properties": {
+                "flavor": {
+                    "type": "string",
+                    "example": "매운맛"
+                },
                 "previousAnswer": {
                     "type": "string",
                     "example": "김치찌개 떡볶이 치킨"
                 },
                 "scenario": {
-                    "description": "전체 , 혼밥, 가족, 친구들",
                     "type": "string",
                     "example": "혼밥"
                 },
+                "theme": {
+                    "type": "string",
+                    "example": "스트레스 해소"
+                },
                 "time": {
                     "type": "string",
-                    "example": "중식"
+                    "example": "점심"
                 },
                 "type": {
-                    "description": "전체, 양식, 한식, 중식 등",
                     "type": "string",
                     "example": "한식"
                 }
