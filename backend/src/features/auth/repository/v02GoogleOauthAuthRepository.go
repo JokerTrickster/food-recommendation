@@ -47,3 +47,15 @@ func (g *V02GoogleOauthAuthRepository) InsertOneUser(ctx context.Context, user *
 	}
 	return user, nil
 }
+
+func (g *V02GoogleOauthAuthRepository) FindOneUser(ctx context.Context, user *mysql.Users) (*mysql.Users, error) {
+	var newUser mysql.Users
+	result := g.GormDB.WithContext(ctx).Where("email = ?", user.Email).First(&newUser)
+	if result.RowsAffected == 0 {
+		return nil, nil
+	}
+	if result.Error != nil {
+		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), result.Error.Error(), utils.ErrFromMysqlDB)
+	}
+	return &newUser, nil
+}
