@@ -261,7 +261,7 @@ definitions:
       refreshToken:
         type: string
       userID:
-        type: string
+        type: integer
     type: object
   response.ResV02GoogleOauthCallback:
     properties:

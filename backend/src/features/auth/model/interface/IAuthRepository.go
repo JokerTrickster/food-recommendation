@@ -66,4 +66,5 @@ type IV02GoogleOauthAuthRepository interface {
 	SaveToken(ctx context.Context, uID uint, accessToken, refreshToken string, refreshTknExpiredAt int64) error
 	DeleteToken(ctx context.Context, uID uint) error
 	InsertOneUser(ctx context.Context, user *mysql.Users) (*mysql.Users, error)
+	FindOneUser(ctx context.Context, userDTO *mysql.Users) (*mysql.Users, error)
 }

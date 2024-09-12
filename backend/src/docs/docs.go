@@ -1184,7 +1184,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "userID": {
-                    "type": "string"
+                    "type": "integer"
                 }
             }
         },

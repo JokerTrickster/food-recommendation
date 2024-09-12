@@ -1173,7 +1173,7 @@
                     "type": "string"
                 },
                 "userID": {
-                    "type": "string"
+                    "type": "integer"
                 }
             }
         },

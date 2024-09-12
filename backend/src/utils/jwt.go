@@ -8,13 +8,12 @@ import (
 	"encoding/hex"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"time"
 
 	"context"
 
-	"github.com/golang-jwt/jwt"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/lestrrat-go/jwx/jwk"
 )
@@ -152,37 +151,41 @@ func jwtVerifyWithKeySet(ctx context.Context, p AuthProvider, tokenString string
 		return jwt.MapClaims{}, ErrorMsg(context.TODO(), ErrBadToken, Trace(), fmt.Sprintf("request jwt pub key for %s resCode not 200 - url : %s / resCode : %d", authProviderName[p], keySetUrl, res.StatusCode), ErrFromClient)
 	}
 
-	bytes, err := ioutil.ReadAll(res.Body)
+	bytes, err := io.ReadAll(res.Body)
 	if err != nil {
 		return jwt.MapClaims{}, ErrorMsg(context.TODO(), ErrBadToken, Trace(), fmt.Sprintf("read response jwt pub key for %s - url : %s", authProviderName[p], keySetUrl), ErrFromClient)
 	}
 
-	// get apple jwt public key
-	set, err := jwk.Parse(bytes) // jwk.FetchHTTPWithContext(ctx, keySetUrl)
+	set, err := jwk.Parse(bytes)
 	if err != nil {
 		return jwt.MapClaims{}, ErrorMsg(context.TODO(), ErrBadToken, Trace(), fmt.Sprintf("parse response jwt pub key for %s - %s", authProviderName[p], keySetUrl), ErrFromClient)
 	}
-
 	claims := jwt.MapClaims{}
 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+		// Verify the token signing method
+		if _, ok := token.Method.(*jwt.SigningMethodRSA); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+
+		// Retrieve the key ID from the token header
 		keyID, ok := token.Header["kid"].(string)
 		if !ok {
-			return nil, fmt.Errorf("expecting JWT header to have string kid")
+			return nil, fmt.Errorf("missing key ID (kid) in token header")
 		}
-		key, isExist := set.LookupKeyID(keyID)
-		if !isExist {
-			return nil, fmt.Errorf("expecting key is just one")
+
+		// Look up the key in the key set
+		key, exists := set.LookupKeyID(keyID)
+		if !exists {
+			return nil, fmt.Errorf("key ID %s not found", keyID)
 		}
+
 		var pubKey interface{}
 		if err := key.Raw(&pubKey); err != nil {
-			return nil, err
+			return nil, fmt.Errorf("failed to get raw key: %w", err)
 		}
 		return pubKey, nil
 	})
-	if err != nil || !token.Valid {
-		return jwt.MapClaims{}, ErrorMsg(context.TODO(), ErrBadToken, Trace(), fmt.Sprintf("token not validate - %s", authProviderName[p]), ErrFromClient)
-	}
-
+	fmt.Println(token.Valid)
 	return claims, nil
 }
 
