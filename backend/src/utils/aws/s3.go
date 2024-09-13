@@ -21,7 +21,7 @@ var imgMeta = map[ImgType]imgMetaStruct{
 		path:       "images",
 		width:      512,
 		height:     512,
-		expireTime: 5 * time.Minute,
+		expireTime: 24 * time.Hour,
 	},
 	ImgTypeCategory: {
 		bucket:     func() string { return "dev-food-recommendation" },
