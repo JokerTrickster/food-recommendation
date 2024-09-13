@@ -74,7 +74,7 @@ func (d *DailyRecommendFoodUseCase) DailyRecommend(c context.Context) (response.
 	for _, foodName := range gptRes {
 		food := response.DailyRecommendFood{
 			Name:  foodName,
-			Image: "food-default.png",
+			Image: "food_default.png",
 		}
 		foods, err := d.Repository.FindOneFood(ctx, foodName)
 		if err != nil {
