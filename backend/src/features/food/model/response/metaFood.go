@@ -1,6 +1,7 @@
 package response
 
 type ResMetaData struct {
+	MetaKeys []string `json:"metaKeys"`
 	MetaData MetaData `json:"metaData"`
 }
 

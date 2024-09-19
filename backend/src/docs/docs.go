@@ -1183,6 +1183,12 @@ const docTemplate = `{
             "properties": {
                 "metaData": {
                     "$ref": "#/definitions/response.MetaData"
+                },
+                "metaKeys": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },
