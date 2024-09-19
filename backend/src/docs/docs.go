@@ -873,6 +873,10 @@ const docTemplate = `{
         "request.ReqSelectFood": {
             "type": "object",
             "properties": {
+                "flavor": {
+                    "type": "string",
+                    "example": "매운맛"
+                },
                 "name": {
                     "type": "string",
                     "example": "김치찌개"
@@ -882,9 +886,13 @@ const docTemplate = `{
                     "type": "string",
                     "example": "혼밥"
                 },
+                "theme": {
+                    "type": "string",
+                    "example": "기분 전환"
+                },
                 "time": {
                     "type": "string",
-                    "example": "중식"
+                    "example": "점심"
                 },
                 "type": {
                     "description": "전체, 양식, 한식, 중식 등",
@@ -1084,6 +1092,20 @@ const docTemplate = `{
                 }
             }
         },
+        "response.RankFood": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "rank": {
+                    "type": "integer"
+                },
+                "rankChange": {
+                    "type": "string"
+                }
+            }
+        },
         "response.RecommendFood": {
             "type": "object",
             "properties": {
@@ -1170,7 +1192,7 @@ const docTemplate = `{
                 "foods": {
                     "type": "array",
                     "items": {
-                        "type": "string"
+                        "$ref": "#/definitions/response.RankFood"
                     }
                 }
             }

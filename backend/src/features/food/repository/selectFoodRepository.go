@@ -2,11 +2,13 @@ package repository
 
 import (
 	"context"
+	"fmt"
 	_errors "main/features/food/model/errors"
 	_interface "main/features/food/model/interface"
 	"main/utils"
 	"main/utils/db/mysql"
 	_redis "main/utils/db/redis"
+	"time"
 
 	"github.com/redis/go-redis/v9"
 	"gorm.io/gorm"
@@ -32,8 +34,10 @@ func (g *SelectFoodRepository) InsertOneFoodHistory(ctx context.Context, foodHis
 }
 
 func (g *SelectFoodRepository) IncrementFoodRanking(ctx context.Context, foodName string, score float64) error {
-
-	err := g.RedisClient.ZIncrBy(ctx, _redis.RankingKey, score, foodName).Err()
+	today := time.Now().Format("2006-01-02")
+	redisKey := _redis.RankingKey + ":" + today
+	fmt.Println(redisKey)
+	err := g.RedisClient.ZIncrBy(ctx, redisKey, score, foodName).Err()
 	if err != nil {
 		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), _errors.ErrServerError.Error()+err.Error(), utils.ErrFromRedis)
 	}
