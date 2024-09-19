@@ -3,7 +3,6 @@ package usecase
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"main/features/food/model/entity"
 	"main/features/food/model/response"
 	"main/utils/aws"
@@ -74,7 +73,6 @@ func (d *RecommendFoodUseCase) Recommend(c context.Context, e entity.RecommendFo
 	res := response.ResRecommendFood{}
 	//db에 저장
 	for _, foodName := range gptRes {
-		fmt.Println(foodName)
 		foodDTO := CreateRecommendFoodDTO(e, foodName)
 		foods, err := d.Repository.SaveRecommendFood(ctx, foodDTO)
 		if err != nil {

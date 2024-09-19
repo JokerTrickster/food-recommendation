@@ -36,6 +36,9 @@ definitions:
     type: object
   request.ReqSelectFood:
     properties:
+      flavor:
+        example: 매운맛
+        type: string
       name:
         example: 김치찌개
         type: string
@@ -43,8 +46,11 @@ definitions:
         description: 전체 , 혼밥, 가족, 친구들
         example: 혼밥
         type: string
+      theme:
+        example: 기분 전환
+        type: string
       time:
-        example: 중식
+        example: 점심
         type: string
       type:
         description: 전체, 양식, 한식, 중식 등
@@ -179,6 +185,15 @@ definitions:
           $ref: '#/definitions/response.Category'
         type: array
     type: object
+  response.RankFood:
+    properties:
+      name:
+        type: string
+      rank:
+        type: integer
+      rankChange:
+        type: string
+    type: object
   response.RecommendFood:
     properties:
       image:
@@ -234,7 +249,7 @@ definitions:
     properties:
       foods:
         items:
-          type: string
+          $ref: '#/definitions/response.RankFood'
         type: array
     type: object
   response.ResRecommendFood:

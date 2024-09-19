@@ -32,11 +32,6 @@ func CreateSelectFoodQuestion(e entity.SelectFoodEntity) string {
 	question := fmt.Sprintf("오늘 날짜 %s 와 %s 음식 궁합을 알려줘", today, e.Name)
 	return question
 }
-func CreateResRankingFood(foodList []string) response.ResRankingFood {
-	res := response.ResRankingFood{}
-	res.Foods = foodList
-	return res
-}
 
 func CreateResMetaData(typeDTO []mysql.Types, timeDTO []mysql.Times, scenarioDTO []mysql.Scenarios, themesDTO []mysql.Themes, flavorDTO []mysql.Flavors) response.ResMetaData {
 	var res response.ResMetaData
@@ -117,10 +112,20 @@ func CreateSelectFoodDTO(e entity.SelectFoodEntity) *mysql.Foods {
 	if err != nil {
 		fmt.Println(err)
 	}
+	themeID, err := mysql.GetThemeID(e.Theme)
+	if err != nil {
+		fmt.Println(err)
+	}
+	flavorID, err := mysql.GetFlavorID(e.Flavor)
+	if err != nil {
+		fmt.Println(err)
+	}
 	return &mysql.Foods{
 		TypeID:     typeID,
 		TimeID:     timeID,
 		ScenarioID: secnarioID,
+		ThemeID:    themeID,
+		FlavorID:   flavorID,
 		Name:       e.Name,
 	}
 }

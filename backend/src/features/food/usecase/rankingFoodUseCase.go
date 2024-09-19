@@ -25,8 +25,22 @@ func (d *RankingFoodUseCase) Ranking(c context.Context) (response.ResRankingFood
 	if err != nil {
 		return response.ResRankingFood{}, err
 	}
+	res := response.ResRankingFood{}
+	// 순위 업데이트 및 저장
+	for i, food := range foodRank {
+		rankFood := response.RankFood{}
+		currentRank := i + 1 // 1위부터 시작
 
-	res := CreateResRankingFood(foodRank)
+		// 이전 순위 가져오기
+		rankChange, err := d.Repository.FindPreviousRanking(ctx, food, currentRank)
+		if err != nil {
+			continue
+		}
+		rankFood.Name = food
+		rankFood.Rank = currentRank
+		rankFood.RankChange = rankChange
+		res.Foods = append(res.Foods, rankFood)
+	}
 
 	return res, nil
 }
