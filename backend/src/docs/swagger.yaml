@@ -244,6 +244,10 @@ definitions:
     properties:
       metaData:
         $ref: '#/definitions/response.MetaData'
+      metaKeys:
+        items:
+          type: string
+        type: array
     type: object
   response.ResRankingFood:
     properties:

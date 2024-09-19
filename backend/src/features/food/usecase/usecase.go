@@ -96,6 +96,7 @@ func CreateResMetaData(typeDTO []mysql.Types, timeDTO []mysql.Times, scenarioDTO
 		metaData.Flavors = append(metaData.Flavors, category)
 	}
 	res.MetaData = metaData
+	res.MetaKeys = []string{"types", "times", "scenarios", "themes", "flavors"}
 	return res
 }
 
