@@ -56,3 +56,6 @@ type IV02GoogleOauthAuthUseCase interface {
 type IKakaoOauthAuthUseCase interface {
 	KakaoOauth(c context.Context, req *request.ReqKakaoOauth) (response.ResKakaoOauth, error)
 }
+type INaverOauthAuthUseCase interface {
+	NaverOauth(c context.Context, req *request.ReqNaverOauth) (response.ResNaverOauth, error)
+}
