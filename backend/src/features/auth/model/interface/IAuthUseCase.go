@@ -52,3 +52,7 @@ type IV02GoogleOauthCallbackAuthUseCase interface {
 type IV02GoogleOauthAuthUseCase interface {
 	V02GoogleOauth(c context.Context, req *request.ReqV02GoogleOauth) (response.ResV02GoogleOauth, error)
 }
+
+type IKakaoOauthAuthUseCase interface {
+	KakaoOauth(c context.Context, req *request.ReqKakaoOauth) (response.ResKakaoOauth, error)
+}
