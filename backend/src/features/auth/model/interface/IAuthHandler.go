@@ -50,3 +50,6 @@ type IV02GoogleOauthAuthHandler interface {
 type IKakaoOauthAuthHandler interface {
 	KakaoOauth(c echo.Context) error
 }
+type INaverOauthAuthHandler interface {
+	NaverOauth(c echo.Context) error
+}
