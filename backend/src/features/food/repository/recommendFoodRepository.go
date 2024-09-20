@@ -3,7 +3,6 @@ package repository
 import (
 	"context"
 	"errors"
-	"fmt"
 	_errors "main/features/food/model/errors"
 	_interface "main/features/food/model/interface"
 	"main/utils"
@@ -44,6 +43,5 @@ func (d *RecommendFoodRepository) SaveRecommendFood(ctx context.Context, foodDTO
 	if err := d.GormDB.WithContext(ctx).Create(&foodDTO).Error; err != nil {
 		return &mysql.Foods{}, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), _errors.ErrServerError.Error()+err.Error(), utils.ErrFromMysqlDB)
 	}
-	fmt.Println(foodDTO)
 	return foodDTO, nil
 }

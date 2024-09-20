@@ -32,12 +32,12 @@ func (d *RankingFoodUseCase) Ranking(c context.Context) (response.ResRankingFood
 		currentRank := i + 1 // 1위부터 시작
 
 		// 이전 순위 가져오기
-		rankChange, err := d.Repository.FindPreviousRanking(ctx, food, currentRank)
+		rankChange, err := d.Repository.FindPreviousRanking(ctx, food, int(currentRank))
 		if err != nil {
 			continue
 		}
 		rankFood.Name = food
-		rankFood.Rank = currentRank
+		rankFood.Rank = int(currentRank)
 		rankFood.RankChange = rankChange
 		res.Foods = append(res.Foods, rankFood)
 	}
