@@ -28,9 +28,8 @@ type IMetaFoodRepository interface {
 }
 
 type IRankingFoodRepository interface {
-	FindAllRanking(ctx context.Context) ([]string, error)
-	FindPreviousRanking(ctx context.Context, food string, currentRank int) (string, error)
-	SavePreviousRanking(ctx context.Context, food string, currentRank int) error
+	FindAllRanking(ctx context.Context, redisKey string) ([]string, error)
+	FindPreviousRanking(ctx context.Context, todayRedisKey, yesterDayRedisKey string, food string, currentRank int) (string, error)
 }
 
 type IImageUploadFoodRepository interface {
