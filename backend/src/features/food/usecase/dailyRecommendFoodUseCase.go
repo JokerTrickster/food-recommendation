@@ -71,7 +71,10 @@ func (d *DailyRecommendFoodUseCase) DailyRecommend(c context.Context) (response.
 	}
 	res := response.ResDailyRecommendFood{}
 	//db에서 가져온다.
-	for _, foodName := range gptRes {
+	for i, foodName := range gptRes {
+		if i == 3 {
+			break
+		}
 		food := response.DailyRecommendFood{
 			Name:  foodName,
 			Image: "food_default.png",

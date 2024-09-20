@@ -13,7 +13,7 @@ import (
 
 func CreateDailyRecommendFoodQuestion() string {
 	today := time.Now().Format("2006-01-02")
-	question := fmt.Sprintf("오늘 날짜 %s와 궁합이 좋은 음식 3개 추천해줘", today)
+	question := fmt.Sprintf("오늘 날짜 %s와 궁합이 좋은 음식 3개 추천해줘 음식 이름만 추천해줘", today)
 	return question
 }
 func CreateResEmptyImageFood(foods []mysql.Foods) response.ResEmptyImageFood {
