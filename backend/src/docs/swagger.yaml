@@ -1,4 +1,9 @@
 definitions:
+  request.ReqKakaoOauth:
+    properties:
+      token:
+        type: string
+    type: object
   request.ReqRecommendFood:
     properties:
       flavor:
@@ -240,6 +245,15 @@ definitions:
           $ref: '#/definitions/response.HistoryFood'
         type: array
     type: object
+  response.ResKakaoOauth:
+    properties:
+      accessToken:
+        type: string
+      refreshToken:
+        type: string
+      userID:
+        type: integer
+    type: object
   response.ResMetaData:
     properties:
       metaData:
@@ -424,6 +438,40 @@ paths:
           description: Internal Server Error
           schema: {}
       summary: 게스트 로그인
+      tags:
+      - auth
+  /v0.1/auth/kakao:
+    post:
+      description: |-
+        ■ errCode with 400
+        PARAM_BAD : 파라미터 오류
+        USER_NOT_EXIST : 유저가 존재하지 않음
+        USER_ALREADY_EXISTED : 유저가 이미 존재
+
+        ■ errCode with 500
+        INTERNAL_SERVER : 내부 로직 처리 실패
+        INTERNAL_DB : DB 처리 실패
+      parameters:
+      - description: 구글 토큰
+        in: body
+        name: json
+        required: true
+        schema:
+          $ref: '#/definitions/request.ReqKakaoOauth'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ResKakaoOauth'
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: '[app] kakao oauth 로그인'
       tags:
       - auth
   /v0.1/auth/logout:
