@@ -40,10 +40,11 @@ func (d *RecommendFoodUseCase) Recommend(c context.Context, e entity.RecommendFo
 	question := CreateRecommendFoodQuestion(e)
 	resp, err := model.GenerateContent(
 		ctx,
-		genai.Text("너는 맛있는 요리 음식을 알려주는 전문가이다."),
-		genai.Text("내가 질문을 하면 단어로만 대답을 해줘야 된다."),
+		genai.Text("너는 맛있는 요리 음식 이름을 알려주는 전문가이다."),
+		genai.Text("내가 질문을 하면 음식 이름으로만 대답을 해줘야 된다."),
 		genai.Text("예를 들어서 '매운 음식 추천해줘' 라고 물으면 '김치찌개' 라고 대답을 해줘야 된다."),
-		genai.Text("반드시 음식 이름 하나만 추천해줘"),
+		genai.Text("반드시 음식 이름 1개만 추천해줘, 요리법, 재료 등 다른 정보는 필요없다"),
+		genai.Text("응답을 해줄때 음식 이름인지 한번더 생각하고 말해줘"),
 		genai.Text("지금부터 질문할게 대답해줘"),
 		genai.Text(question),
 	)
@@ -87,6 +88,7 @@ func (d *RecommendFoodUseCase) Recommend(c context.Context, e entity.RecommendFo
 		}
 		food.Image = imageUrl
 		res.FoodNames = append(res.FoodNames, food)
+		break
 	}
 	return res, nil
 }
