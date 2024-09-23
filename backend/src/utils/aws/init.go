@@ -51,6 +51,9 @@ func InitAws() error {
 	awsClientS3Downloader = manager.NewDownloader(awsClientS3)
 	awsClientSes = sesv2.NewFromConfig(awsConfig)
 	awsS3Signer = s3.NewPresignClient(awsClientS3)
-
+	err = InitAwsSes()
+	if err != nil {
+		return err
+	}
 	return nil
 }
