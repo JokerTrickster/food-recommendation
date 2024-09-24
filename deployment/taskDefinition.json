@@ -4,7 +4,7 @@
         {
             "image": "__REPO_DOMAIN__/__REPO_URL__@__IMAGE_DIGEST__",
             "name": "__ENV___food-recommendation",
-            "cpu": 1024,
+            "cpu": 1608,
             "memoryReservation": __MEM__,
             "environment": [
                 {
