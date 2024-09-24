@@ -1,5 +1,9 @@
 # Food Recommendation Service
 
+## 회의 일지 및 프로젝트 문서 링크
+### [회의 일지 열기](https://github.com/JokerTrickster/food-recommendation/wiki/%ED%9A%8C%EC%9D%98-%EC%9D%BC%EC%A7%80)
+### [문서 링크 열기](https://github.com/JokerTrickster/food-recommendation/wiki/%EB%AC%B8%EC%84%9C-%EB%A7%81%ED%81%AC)
+
 ## Introduction
 This project is a food recommendation service designed to help users find food options based on their preferences. The service uses advanced algorithms to suggest meals, making dining choices easier and more personalized.
 
