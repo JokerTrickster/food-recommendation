@@ -2,7 +2,12 @@ package handler
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	_interface "main/features/food/model/interface"
+	"main/features/food/model/response"
+	_redis "main/utils/db/redis"
+	"time"
 
 	"net/http"
 
@@ -41,12 +46,40 @@ func NewMetaFoodHandler(c *echo.Echo, useCase _interface.IMetaFoodUseCase) _inte
 // @Tags food
 func (d *MetaFoodHandler) Meta(c echo.Context) error {
 	ctx := context.Background()
-
+	// 캐시 체크
 	//business logic
-	res, err := d.UseCase.Meta(ctx)
-	if err != nil {
+	cacheKey := "meta:category"
+	metaData, err := _redis.Client.Get(ctx, cacheKey).Result()
+	if metaData == "" {
+		res, err := d.UseCase.Meta(ctx)
+		if err != nil {
+			return err
+		}
+		fmt.Println(res)
+		// 3. 조회된 데이터를 Redis에 캐시 (예: 1시간 TTL)
+		data, err := json.Marshal(res)
+		if err != nil {
+			return err
+		}
+		err = _redis.Client.Set(ctx, cacheKey, data, 24*time.Hour).Err()
+		if err != nil {
+			return err
+		}
+
+		// 캐시 히트 여부
+		c.Response().Header().Set("X-Cache-Hit", "false")
+
+		// 4. DB에서 조회한 데이터 반환
+		return c.JSON(http.StatusOK, res)
+	} else if err != nil {
 		return err
 	}
+	var res response.ResMetaData
+	if err := json.Unmarshal([]byte(metaData), &res); err != nil {
+		return err
+	}
+	// 캐시 히트 여부
+	c.Response().Header().Set("X-Cache-Hit", "true")
 
 	return c.JSON(http.StatusOK, res)
 }
