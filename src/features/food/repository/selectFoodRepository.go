@@ -7,7 +7,6 @@ import (
 	"main/utils"
 	"main/utils/db/mysql"
 	_redis "main/utils/db/redis"
-	"time"
 
 	"github.com/redis/go-redis/v9"
 	"gorm.io/gorm"
@@ -32,10 +31,9 @@ func (g *SelectFoodRepository) InsertOneFoodHistory(ctx context.Context, foodHis
 	return nil
 }
 
-func (g *SelectFoodRepository) IncrementFoodRanking(ctx context.Context, foodName string, score float64) error {
-	today := time.Now().Format("2006-01-02")
-	redisKey := _redis.RankingKey + ":" + today
-	err := g.RedisClient.ZIncrBy(ctx, redisKey, score, foodName).Err()
+func (g *SelectFoodRepository) IncrementFoodRanking(ctx context.Context, foodID string, score float64) error {
+	redisKey := _redis.RankingKey
+	_, err := g.RedisClient.ZAdd(ctx, redisKey, redis.Z{Score: score, Member: foodID}).Result()
 	if err != nil {
 		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), _errors.ErrServerError.Error()+err.Error(), utils.ErrFromRedis)
 	}

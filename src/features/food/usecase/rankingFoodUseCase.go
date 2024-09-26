@@ -3,7 +3,9 @@ package usecase
 import (
 	"context"
 	"fmt"
+	"strconv"
 
+	"main/features/food/model/entity"
 	_interface "main/features/food/model/interface"
 	"main/features/food/model/response"
 	_redis "main/utils/db/redis"
@@ -22,53 +24,76 @@ func NewRankingFoodUseCase(repo _interface.IRankingFoodRepository, timeout time.
 func (d *RankingFoodUseCase) Ranking(c context.Context) (response.ResRankingFood, error) {
 	ctx, cancel := context.WithTimeout(c, d.ContextTimeout)
 	defer cancel()
-	todayRedisKey := _redis.RankingKey + ":" + time.Now().Format("2006-01-02")
-	foodRank, err := d.Repository.FindAllRanking(ctx, todayRedisKey)
+	currentRankings := make([]*entity.RankFoodRedis, 0)
+	var err error
+	currentRankings, err = d.Repository.RankingTop(ctx)
 	if err != nil {
 		return response.ResRankingFood{}, err
 	}
-	res := response.ResRankingFood{}
-	if len(foodRank) >= 10 {
-
-		// 순위 업데이트 및 저장
-		for i, food := range foodRank {
-			rankFood := response.RankFood{}
-			currentRank := i + 1 // 1위부터 시작
-			yesterDayRedisKey := _redis.RankingKey + ":" + time.Now().AddDate(0, 0, -1).Format("2006-01-02")
-			// 이전 순위 가져오기
-			rankChange, err := d.Repository.FindPreviousRanking(ctx, todayRedisKey, yesterDayRedisKey, food, int(currentRank))
-			if err != nil {
-				continue
-			}
-			rankFood.Name = food
-			rankFood.Rank = int(currentRank)
-			rankFood.RankChange = rankChange
-			res.Foods = append(res.Foods, rankFood)
-		}
-	} else {
-		// 순위 업데이트 및 저장
-		prevDayRedisKey := _redis.RankingKey + ":" + time.Now().AddDate(0, 0, -1).Format("2006-01-02")
-		foodRank, err := d.Repository.FindAllRanking(ctx, prevDayRedisKey)
+	//현재 랭킹 데이터가 비어 있다면
+	if len(currentRankings) == 0 {
+		//rdb에서 데이터를 가져와 현재 랭킹에 저장을 한다.
+		currentRankings, err = d.Repository.FindRankingTop10FoodHistories(ctx)
 		if err != nil {
 			return response.ResRankingFood{}, err
 		}
-		fmt.Println("foodRank", foodRank)
-		for i, food := range foodRank {
-			rankFood := response.RankFood{}
-			currentRank := i + 1 // 1위부터 시작
-			todayDayRedisKey := _redis.RankingKey + ":" + time.Now().AddDate(0, 0, -1).Format("2006-01-02")
-			yesterDayRedisKey := _redis.RankingKey + ":" + time.Now().AddDate(0, 0, -2).Format("2006-01-02")
-
-			// 이전 순위 가져오기
-			rankChange, err := d.Repository.FindPreviousRanking(ctx, todayDayRedisKey, yesterDayRedisKey, food, int(currentRank))
+		//현재 랭킹 레디스에 저장한다.
+		for _, food := range currentRankings {
+			err := d.Repository.IncrementFoodRanking(ctx, _redis.RankingKey, food.FoodID, 1)
 			if err != nil {
-				continue
+				return response.ResRankingFood{}, err
 			}
-			rankFood.Name = food
-			rankFood.Rank = int(currentRank)
-			rankFood.RankChange = rankChange
-			res.Foods = append(res.Foods, rankFood)
 		}
+	}
+
+	// 이전 데이터가 비어 있다면 현재 랭킹 데이터를 저장한다.
+	previousExist, err := d.Repository.PreviousRankingExist(ctx)
+	if err != nil {
+		return response.ResRankingFood{}, err
+	}
+	fmt.Println(previousExist)
+	if previousExist == 0 {
+		//이전 데이터가 없다면 현재 랭킹 데이터를 이전 랭킹 데이터로 저장한다.
+		for _, food := range currentRankings {
+			err := d.Repository.IncrementFoodRanking(ctx, _redis.PrevRankingKey, food.FoodID, food.Score)
+			if err != nil {
+				return response.ResRankingFood{}, err
+			}
+		}
+		//이전 데이터 만료시간을 설정한다.
+		err := d.Repository.ExpireRanking(ctx, _redis.PrevRankingKey)
+		if err != nil {
+			return response.ResRankingFood{}, err
+		}
+	}
+	//이전 데이터가 있다면 랭킹 변동을 계산한다.
+	res := response.ResRankingFood{}
+	for i, food := range currentRankings {
+		if i == 10 {
+			break
+		}
+		rank := i + 1
+		previousRank, err := d.Repository.PreviousRanking(ctx, food.FoodID)
+		if err != nil {
+			return response.ResRankingFood{}, err
+		}
+		fID, _ := strconv.Atoi(food.FoodID)
+		foodName, err := d.Repository.FindOneFoods(ctx, fID)
+		if err != nil {
+			return response.ResRankingFood{}, err
+		}
+		rankFood := response.RankFood{
+			Rank: rank,
+			Name: foodName,
+		}
+		if previousRank == _redis.NewRank {
+			rankFood.RankChange = "new"
+		} else {
+			rankChange := previousRank - rank
+			rankFood.RankChange = strconv.Itoa(rankChange)
+		}
+
+		res.Foods = append(res.Foods, rankFood)
 	}
 
 	return res, nil
