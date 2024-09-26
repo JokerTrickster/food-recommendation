@@ -14,6 +14,8 @@ import (
 var Client *redis.Client
 
 const RankingKey = "food:rankings"
+const PrevRankingKey = "prev:food:rankings"
+const NewRank = 0
 
 func InitRedis() error {
 	ctx := context.Background()

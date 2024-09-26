@@ -2,6 +2,7 @@ package _interface
 
 import (
 	"context"
+	"main/features/food/model/entity"
 	"main/utils/db/mysql"
 )
 
@@ -30,6 +31,13 @@ type IMetaFoodRepository interface {
 type IRankingFoodRepository interface {
 	FindAllRanking(ctx context.Context, redisKey string) ([]string, error)
 	FindPreviousRanking(ctx context.Context, todayRedisKey, yesterDayRedisKey string, food string, currentRank int) (string, error)
+	RankingTop(ctx context.Context) ([]*entity.RankFoodRedis, error)
+	PreviousRanking(ctx context.Context, food string) (int, error)
+	FindRankingTop10FoodHistories(ctx context.Context) ([]*entity.RankFoodRedis, error)
+	IncrementFoodRanking(ctx context.Context, redisKey string, foodName string, score float64) error
+	PreviousRankingExist(ctx context.Context) (int, error)
+	FindOneFoods(ctx context.Context, foodID int) (string, error)
+	ExpireRanking(ctx context.Context, key string) error
 }
 
 type IImageUploadFoodRepository interface {
