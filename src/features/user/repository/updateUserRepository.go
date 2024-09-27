@@ -17,10 +17,10 @@ func (d *UpdateUserRepository) FindOneAndUpdateUser(ctx context.Context, userDTO
 
 	result := d.GormDB.Model(&userDTO).Where("id = ?", userDTO.ID).Updates(&userDTO)
 	if result.Error != nil {
-		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), result.Error.Error(), utils.ErrFromInternal)
+		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), utils.HandleError(result.Error.Error(),userDTO), utils.ErrFromInternal)
 	}
 	if result.RowsAffected == 0 {
-		return utils.ErrorMsg(ctx, utils.ErrUserNotFound, utils.Trace(), _errors.ErrUserNotFound.Error(), utils.ErrFromClient)
+		return utils.ErrorMsg(ctx, utils.ErrUserNotFound, utils.Trace(), utils.HandleError(_errors.ErrUserNotFound.Error(),userDTO), utils.ErrFromClient)
 	}
 	return nil
 }

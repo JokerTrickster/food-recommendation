@@ -19,13 +19,13 @@ func NewSelectFoodRepository(gormDB *gorm.DB, redisClient *redis.Client) _interf
 func (g *SelectFoodRepository) FindOneFood(ctx context.Context, foodDTO *mysql.Foods) (uint, error) {
 	food := mysql.Foods{}
 	if err := g.GormDB.WithContext(ctx).Model(&food).Where(foodDTO).First(&food).Error; err != nil {
-		return 0, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), _errors.ErrServerError.Error()+err.Error(), utils.ErrFromMysqlDB)
+		return 0, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(_errors.ErrServerError.Error()+err.Error(), foodDTO), utils.ErrFromMysqlDB)
 	}
 	return food.ID, nil
 }
 func (g *SelectFoodRepository) InsertOneFoodHistory(ctx context.Context, foodHistoryDTO *mysql.FoodHistory) error {
 	if err := g.GormDB.WithContext(ctx).Create(&foodHistoryDTO).Error; err != nil {
-		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), _errors.ErrServerError.Error()+err.Error(), utils.ErrFromMysqlDB)
+		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(_errors.ErrServerError.Error()+err.Error(), foodHistoryDTO), utils.ErrFromMysqlDB)
 	}
 
 	return nil
@@ -35,7 +35,7 @@ func (g *SelectFoodRepository) IncrementFoodRanking(ctx context.Context, foodID 
 	redisKey := _redis.RankingKey
 	_, err := g.RedisClient.ZAdd(ctx, redisKey, redis.Z{Score: score, Member: foodID}).Result()
 	if err != nil {
-		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), _errors.ErrServerError.Error()+err.Error(), utils.ErrFromRedis)
+		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(_errors.ErrServerError.Error()+err.Error(), foodID), utils.ErrFromRedis)
 	}
 	return nil
 }

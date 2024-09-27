@@ -22,7 +22,7 @@ func (g *GuestAuthRepository) SaveToken(ctx context.Context, uID uint, accessTok
 	}
 	result := g.GormDB.Model(&token).Create(&token)
 	if result.Error != nil {
-		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), result.Error.Error(), utils.ErrFromInternal)
+		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), utils.HandleError(result.Error.Error(),uID,accessToken,refreshToken), utils.ErrFromInternal)
 	}
 	return nil
 }
@@ -34,7 +34,7 @@ func (g *GuestAuthRepository) FindOneAndUpdateUser(ctx context.Context, email, p
 
 	err := g.GormDB.WithContext(ctx).Where("email = ? and password = ? and provider = ?", email, password, "test").First(&user).Error
 	if err != nil {
-		return mysql.Users{}, utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), err.Error(), utils.ErrFromInternal)
+		return mysql.Users{}, utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), utils.HandleError(err.Error(),email,password), utils.ErrFromInternal)
 	}
 	return user, nil
 }

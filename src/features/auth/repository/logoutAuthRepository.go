@@ -18,7 +18,7 @@ func (d *LogoutAuthRepository) DeleteToken(ctx context.Context, uID uint) error 
 	}
 	result := d.GormDB.Model(&token).Where("user_id = ?", uID).Delete(&token)
 	if result.Error != nil {
-		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), result.Error.Error(), utils.ErrFromInternal)
+		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), utils.HandleError(result.Error.Error(),uID), utils.ErrFromInternal)
 	}
 	return nil
 }

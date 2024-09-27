@@ -61,7 +61,7 @@ func (d *DailyRecommendFoodHandler) DailyRecommend(c echo.Context) error {
 		if err != nil {
 			return err
 		}
-		err = _redis.Client.Set(ctx, cacheKey, data, time.Hour).Err()
+		err = _redis.Client.Set(ctx, cacheKey, data, 1*time.Hour).Err()
 		if err != nil {
 			return err
 		}

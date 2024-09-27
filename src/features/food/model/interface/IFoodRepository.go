@@ -29,8 +29,6 @@ type IMetaFoodRepository interface {
 }
 
 type IRankingFoodRepository interface {
-	FindAllRanking(ctx context.Context, redisKey string) ([]string, error)
-	FindPreviousRanking(ctx context.Context, todayRedisKey, yesterDayRedisKey string, food string, currentRank int) (string, error)
 	RankingTop(ctx context.Context) ([]*entity.RankFoodRedis, error)
 	PreviousRanking(ctx context.Context, food string) (int, error)
 	FindRankingTop10FoodHistories(ctx context.Context) ([]*entity.RankFoodRedis, error)

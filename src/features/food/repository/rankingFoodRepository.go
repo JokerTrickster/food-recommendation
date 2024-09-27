@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"fmt"
 	"main/features/food/model/entity"
 	_interface "main/features/food/model/interface"
 	"main/utils"
@@ -19,53 +18,6 @@ func NewRankingFoodRepository(gormDB *gorm.DB, redisClient *redis.Client) _inter
 	return &RankingFoodRepository{GormDB: gormDB, RedisClient: redisClient}
 }
 
-func (g *RankingFoodRepository) FindAllRanking(ctx context.Context, redisKey string) ([]string, error) {
-	// 내림차순으로 10개 멤버와 점수 가져오기
-	foodList, err := g.RedisClient.ZRevRangeWithScores(ctx, redisKey, 0, 9).Result()
-	if err != nil {
-		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), err.Error(), utils.ErrFromRedis)
-	}
-
-	// 음식 이름과 점수를 저장할 맵 생성
-	rankings := make([]string, 0)
-
-	// 결과를 맵에 추가
-	for _, z := range foodList {
-		rankings = append(rankings, z.Member.(string))
-	}
-
-	return rankings, nil
-}
-func (g *RankingFoodRepository) FindPreviousRanking(ctx context.Context, todayRedisKey, yesterDayRedisKey string, food string, currentRank int) (string, error) {
-
-	// 어제의 점수를 가져오기
-	_, err := g.RedisClient.ZScore(ctx, yesterDayRedisKey, food).Result()
-	if err == redis.Nil {
-		return "new", nil // 이전 랭킹이 없으면 "new" 반환
-	} else if err != nil {
-		fmt.Println("Error fetching previous ranking:", err)
-		return "", utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), err.Error(), utils.ErrFromRedis)
-	}
-
-	// 어제의 랭킹 가져오기
-	prevRank, err := g.RedisClient.ZRevRank(ctx, yesterDayRedisKey, food).Result()
-	if err != nil {
-		return "", utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), err.Error(), utils.ErrFromRedis)
-	}
-
-	// 오늘의 랭킹 가져오기
-	currentRankToday, err := g.RedisClient.ZRevRank(ctx, todayRedisKey, food).Result()
-	if err != nil {
-		return "", utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), err.Error(), utils.ErrFromRedis)
-	}
-
-	// 랭킹 변동 계산
-	rankChange := int(prevRank) - int(currentRankToday)
-	rankChangeStr := strconv.Itoa(rankChange)
-
-	return rankChangeStr, nil
-}
-
 func (g *RankingFoodRepository) RankingTop(ctx context.Context) ([]*entity.RankFoodRedis, error) {
 	//get rankings foods
 	currentRankings, err := _redis.Client.ZRevRangeWithScores(ctx, _redis.RankingKey, 0, -1).Result()
@@ -73,7 +25,7 @@ func (g *RankingFoodRepository) RankingTop(ctx context.Context) ([]*entity.RankF
 		if err == redis.Nil {
 			return nil, nil
 		}
-		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), err.Error(), utils.ErrFromRedis)
+		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(err.Error()), utils.ErrFromRedis)
 	}
 	result := []*entity.RankFoodRedis{}
 	for _, z := range currentRankings {
@@ -94,7 +46,7 @@ func (g *RankingFoodRepository) PreviousRanking(ctx context.Context, food string
 		if err == redis.Nil {
 			return _redis.NewRank, nil
 		}
-		return 0, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), err.Error(), utils.ErrFromRedis)
+		return 0, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(err.Error(), food), utils.ErrFromRedis)
 	}
 
 	return int(previousRank), nil
@@ -115,7 +67,7 @@ func (g *RankingFoodRepository) FindRankingTop10FoodHistories(ctx context.Contex
 		Scan(&results).Error
 
 	if err != nil {
-		return nil, fmt.Errorf("failed to fetch top 10 food histories: %w", err)
+		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(err.Error()), utils.ErrFromMysqlDB)
 	}
 
 	// 결과에서 음식 이름 추출
@@ -134,7 +86,7 @@ func (g *RankingFoodRepository) IncrementFoodRanking(ctx context.Context, redisK
 	// Increment food ranking in Redis
 	_, err := _redis.Client.ZAdd(ctx, redisKey, redis.Z{Score: score, Member: foodName}).Result()
 	if err != nil {
-		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), err.Error(), utils.ErrFromRedis)
+		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(err.Error(), redisKey, foodName, score), utils.ErrFromRedis)
 	}
 
 	return nil
@@ -144,7 +96,7 @@ func (g *RankingFoodRepository) PreviousRankingExist(ctx context.Context) (int, 
 	// Check if previous ranking exists
 	previousExist, err := _redis.Client.Exists(ctx, _redis.PrevRankingKey).Result()
 	if err != nil {
-		return 0, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), err.Error(), utils.ErrFromRedis)
+		return 0, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(err.Error()), utils.ErrFromRedis)
 	}
 
 	return int(previousExist), nil
@@ -155,7 +107,7 @@ func (g *RankingFoodRepository) FindOneFoods(ctx context.Context, foodID int) (s
 	var foodName string
 	err := g.GormDB.WithContext(ctx).Model(&mysql.Foods{}).Select("name").Where("id = ?", foodID).First(&foodName).Error
 	if err != nil {
-		return "", utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), err.Error(), utils.ErrFromMysqlDB)
+		return "", utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(err.Error(), foodID), utils.ErrFromMysqlDB)
 	}
 
 	return foodName, nil
@@ -165,7 +117,7 @@ func (g *RankingFoodRepository) ExpireRanking(ctx context.Context, key string) e
 	// Set expiration time for key
 	err := g.RedisClient.Expire(ctx, key, 30*time.Minute).Err() // RedisClient는 Redis 연결을 나타내는 변수입니다.
 	if err != nil {
-		return fmt.Errorf("failed to set expiration for key %s: %w", key, err)
+		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(err.Error(), key), utils.ErrFromRedis)
 	}
 
 	return nil

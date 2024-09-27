@@ -20,7 +20,7 @@ func (g *SigninAuthRepository) DeleteToken(ctx context.Context, uID uint) error 
 	}
 	result := g.GormDB.Model(&token).Where("user_id = ?", uID).Delete(&token)
 	if result.Error != nil {
-		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), result.Error.Error(), utils.ErrFromInternal)
+		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), utils.HandleError(result.Error.Error(),uID), utils.ErrFromInternal)
 	}
 	return nil
 }
@@ -33,7 +33,7 @@ func (g *SigninAuthRepository) SaveToken(ctx context.Context, uID uint, accessTo
 	}
 	result := g.GormDB.Model(&token).Create(&token)
 	if result.Error != nil {
-		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), result.Error.Error(), utils.ErrFromInternal)
+		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), utils.HandleError(result.Error.Error(),uID), utils.ErrFromInternal)
 	}
 	return nil
 }
@@ -45,15 +45,15 @@ func (g *SigninAuthRepository) FindOneAndUpdateUser(ctx context.Context, email, 
 	//state = "logout"인 유저 wait으로 변경하고 roomID = 1로 변경 user 객체에 반환
 	result := g.GormDB.WithContext(ctx).Model(&user).Where("email = ? and password = ?", email, password).Updates(user)
 	if result.Error != nil {
-		return mysql.Users{}, utils.ErrorMsg(ctx, utils.ErrUserNotFound, utils.Trace(), _errors.ErrUserNotFound.Error(), utils.ErrFromClient)
+		return mysql.Users{}, utils.ErrorMsg(ctx, utils.ErrUserNotFound, utils.Trace(), utils.HandleError(_errors.ErrUserNotFound.Error(),email,password), utils.ErrFromClient)
 	}
 	if result.RowsAffected == 0 {
-		return mysql.Users{}, utils.ErrorMsg(ctx, utils.ErrUserNotFound, utils.Trace(), _errors.ErrUserNotFound.Error(), utils.ErrFromClient)
+		return mysql.Users{}, utils.ErrorMsg(ctx, utils.ErrUserNotFound, utils.Trace(), utils.HandleError(_errors.ErrUserNotFound.Error(),email,password), utils.ErrFromClient)
 	}
 	// 변경된 사용자 정보를 가져옵니다.
 	err := g.GormDB.WithContext(ctx).Where("email = ? and provider = ?", email, "email").First(&user).Error
 	if err != nil {
-		return mysql.Users{}, utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), err.Error(), utils.ErrFromInternal)
+		return mysql.Users{}, utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), utils.HandleError(err.Error(),email,password), utils.ErrFromInternal)
 	}
 	return user, nil
 }
