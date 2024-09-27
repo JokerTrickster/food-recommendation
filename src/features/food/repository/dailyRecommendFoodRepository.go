@@ -18,7 +18,7 @@ func (d *DailyRecommendFoodRepository) FindOneFood(ctx context.Context, foodName
 		if err == gorm.ErrRecordNotFound {
 			return nil, nil
 		}
-		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), err.Error(), utils.ErrFromMysqlDB)
+		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(err.Error(),foodName), utils.ErrFromMysqlDB)
 	}
 	return &food, nil
 

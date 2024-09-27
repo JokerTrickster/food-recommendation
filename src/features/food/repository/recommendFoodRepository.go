@@ -19,7 +19,7 @@ func (d *RecommendFoodRepository) FindOneUser(ctx context.Context, uID uint) (*m
 	user := mysql.Users{}
 	result := d.GormDB.Model(&user).Where("id = ?", uID).First(&user)
 	if result.Error != nil {
-		return nil, utils.ErrorMsg(ctx, utils.ErrUserNotFound, utils.Trace(), _errors.ErrUserNotFound.Error(), utils.ErrFromClient)
+		return nil, utils.ErrorMsg(ctx, utils.ErrUserNotFound, utils.Trace(), utils.HandleError(_errors.ErrUserNotFound.Error(),uID), utils.ErrFromClient)
 	}
 	return &user, nil
 }
@@ -36,12 +36,12 @@ func (d *RecommendFoodRepository) SaveRecommendFood(ctx context.Context, foodDTO
 
 	if !errors.Is(err, gorm.ErrRecordNotFound) {
 		// 데이터베이스 오류
-		return &mysql.Foods{}, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), _errors.ErrServerError.Error()+err.Error(), utils.ErrFromMysqlDB)
+		return &mysql.Foods{}, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(_errors.ErrServerError.Error()+err.Error(),foodDTO), utils.ErrFromMysqlDB)
 	}
 
 	// 데이터가 존재하지 않으므로 저장
 	if err := d.GormDB.WithContext(ctx).Create(&foodDTO).Error; err != nil {
-		return &mysql.Foods{}, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), _errors.ErrServerError.Error()+err.Error(), utils.ErrFromMysqlDB)
+		return &mysql.Foods{}, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(_errors.ErrServerError.Error()+err.Error(),foodDTO), utils.ErrFromMysqlDB)
 	}
 	return foodDTO, nil
 }
