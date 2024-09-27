@@ -27,7 +27,6 @@ func main() {
 	}
 
 	//핸드러 초기화
-
 	if err := features.InitHandler(e); err != nil {
 		fmt.Printf("handler 초기화 에러 : %v", err.Error())
 		return

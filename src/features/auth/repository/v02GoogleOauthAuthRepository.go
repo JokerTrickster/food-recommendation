@@ -19,7 +19,7 @@ func (g *V02GoogleOauthAuthRepository) DeleteToken(ctx context.Context, uID uint
 	}
 	result := g.GormDB.Model(&token).Where("user_id = ?", uID).Delete(&token)
 	if result.Error != nil {
-		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), result.Error.Error(), utils.ErrFromInternal)
+		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), utils.HandleError(result.Error.Error(),uID), utils.ErrFromInternal)
 	}
 	return nil
 }
@@ -32,7 +32,7 @@ func (g *V02GoogleOauthAuthRepository) SaveToken(ctx context.Context, uID uint, 
 	}
 	result := g.GormDB.Model(&token).Create(&token)
 	if result.Error != nil {
-		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), result.Error.Error(), utils.ErrFromInternal)
+		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), utils.HandleError(result.Error.Error(),uID), utils.ErrFromInternal)
 	}
 	return nil
 }
@@ -40,10 +40,10 @@ func (g *V02GoogleOauthAuthRepository) SaveToken(ctx context.Context, uID uint, 
 func (g *V02GoogleOauthAuthRepository) InsertOneUser(ctx context.Context, user *mysql.Users) (*mysql.Users, error) {
 	result := g.GormDB.WithContext(ctx).Create(&user)
 	if result.RowsAffected == 0 {
-		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), "failed user insert", utils.ErrFromMysqlDB)
+		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError("failed user insert",user), utils.ErrFromMysqlDB)
 	}
 	if result.Error != nil {
-		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), result.Error.Error(), utils.ErrFromMysqlDB)
+		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(result.Error.Error(),user), utils.ErrFromMysqlDB)
 	}
 	return user, nil
 }
@@ -55,7 +55,7 @@ func (g *V02GoogleOauthAuthRepository) FindOneUser(ctx context.Context, user *my
 		return nil, nil
 	}
 	if result.Error != nil {
-		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), result.Error.Error(), utils.ErrFromMysqlDB)
+		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(result.Error.Error(),user), utils.ErrFromMysqlDB)
 	}
 	return &newUser, nil
 }

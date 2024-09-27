@@ -20,7 +20,7 @@ func (g *GoogleOauthCallbackAuthRepository) DeleteToken(ctx context.Context, uID
 	}
 	result := g.GormDB.Model(&token).Where("user_id = ?", uID).Delete(&token)
 	if result.Error != nil {
-		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), result.Error.Error(), utils.ErrFromInternal)
+		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), utils.HandleError(result.Error.Error(),uID), utils.ErrFromInternal)
 	}
 	return nil
 }
@@ -33,7 +33,7 @@ func (g *GoogleOauthCallbackAuthRepository) SaveToken(ctx context.Context, uID u
 	}
 	result := g.GormDB.Model(&token).Create(&token)
 	if result.Error != nil {
-		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), result.Error.Error(), utils.ErrFromInternal)
+		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), utils.HandleError(result.Error.Error(),uID,accessToken,refreshToken,refreshTknExpiredAt), utils.ErrFromInternal)
 	}
 	return nil
 }
@@ -41,10 +41,10 @@ func (g *GoogleOauthCallbackAuthRepository) SaveToken(ctx context.Context, uID u
 func (g *GoogleOauthCallbackAuthRepository) InsertOneUser(ctx context.Context, user mysql.Users) error {
 	result := g.GormDB.WithContext(ctx).Create(&user)
 	if result.RowsAffected == 0 {
-		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), "failed user insert", utils.ErrFromMysqlDB)
+		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError("failed user insert",user), utils.ErrFromMysqlDB)
 	}
 	if result.Error != nil {
-		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), result.Error.Error(), utils.ErrFromMysqlDB)
+		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(),utils.HandleError(result.Error.Error(),user), utils.ErrFromMysqlDB)
 	}
 	return nil
 }
@@ -65,7 +65,7 @@ func (g *GoogleOauthCallbackAuthRepository) FindOneAndUpdateUser(ctx context.Con
 		user.Birth = "0000-01-01"
 		result = g.GormDB.WithContext(ctx).Model(&user).Create(&user)
 		if result.Error != nil {
-			return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), fmt.Sprintf("유저 데이터 생성 실패 %v", result.Error), utils.ErrFromMysqlDB)
+			return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(fmt.Sprintf("유저 데이터 생성 실패 %v", result.Error),email), utils.ErrFromMysqlDB)
 		}
 		return &user, nil
 	} else {
