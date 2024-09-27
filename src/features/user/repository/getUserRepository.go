@@ -18,7 +18,7 @@ func (d *GetUserRepository) FindOneUser(ctx context.Context, uID uint) (*mysql.U
 	user := mysql.Users{}
 	result := d.GormDB.Model(&user).Where("id = ?", uID).First(&user)
 	if result.Error != nil {
-		return nil, utils.ErrorMsg(ctx, utils.ErrUserNotFound, utils.Trace(), _errors.ErrUserNotFound.Error(), utils.ErrFromClient)
+		return nil, utils.ErrorMsg(ctx, utils.ErrUserNotFound, utils.Trace(), utils.HandleError(_errors.ErrUserNotFound.Error(),uID), utils.ErrFromClient)
 	}
 	return &user, nil
 }
