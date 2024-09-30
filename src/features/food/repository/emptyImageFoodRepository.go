@@ -13,10 +13,10 @@ func NewEmptyImageFoodRepository(gormDB *gorm.DB) _interface.IEmptyImageFoodRepo
 	return &EmptyImageFoodRepository{GormDB: gormDB}
 }
 
-func (g *EmptyImageFoodRepository) FindAllEmptyImageFoods(ctx context.Context) ([]mysql.Foods, error) {
-	var foods []mysql.Foods
-	if err := g.GormDB.WithContext(ctx).Where("image = ?", "food_default.png").Find(&foods).Error; err != nil {
+func (g *EmptyImageFoodRepository) FindAllEmptyImageFoods(ctx context.Context) ([]mysql.FoodImages, error) {
+	var foodImages []mysql.FoodImages
+	if err := g.GormDB.WithContext(ctx).Where("image = ?", "food_default.png").Find(&foodImages).Error; err != nil {
 		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(err.Error()), utils.ErrFromMysqlDB)
 	}
-	return foods, nil
+	return foodImages, nil
 }

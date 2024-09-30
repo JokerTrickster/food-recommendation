@@ -74,7 +74,10 @@ func (d *RecommendFoodUseCase) Recommend(c context.Context, e entity.RecommendFo
 	res := response.ResRecommendFood{}
 	//db에 저장
 	for _, foodName := range gptRes {
-		foodDTO := CreateRecommendFoodDTO(e, foodName)
+		foodImageDTO := CreateRecommendFoodImageDTO(e, foodName)
+		foodImage, err := d.Repository.FindOneOrCreateFoodImage(ctx, foodImageDTO)
+		foodDTO := CreateRecommendFoodDTO(e, foodName, int(foodImage.ID))
+
 		foods, err := d.Repository.SaveRecommendFood(ctx, foodDTO)
 		if err != nil {
 			return response.ResRecommendFood{}, err
@@ -82,7 +85,7 @@ func (d *RecommendFoodUseCase) Recommend(c context.Context, e entity.RecommendFo
 		food := response.RecommendFood{
 			Name: foods.Name,
 		}
-		imageUrl, err := aws.ImageGetSignedURL(ctx, foods.Image, aws.ImgTypeFood)
+		imageUrl, err := aws.ImageGetSignedURL(ctx, foodImage.Image, aws.ImgTypeFood)
 		if err != nil {
 			return response.ResRecommendFood{}, err
 		}

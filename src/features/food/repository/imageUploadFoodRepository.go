@@ -13,8 +13,8 @@ func NewImageUploadFoodRepository(gormDB *gorm.DB) _interface.IImageUploadFoodRe
 	return &ImageUploadFoodRepository{GormDB: gormDB}
 }
 
-func (g *ImageUploadFoodRepository) FindOneAndUpdateFoods(ctx context.Context, foodID uint, filename string) error {
-	if err := mysql.GormMysqlDB.WithContext(ctx).Model(&mysql.Foods{}).Where("id = ?", foodID).Update("image", filename).Error; err != nil {
+func (g *ImageUploadFoodRepository) FindOneAndUpdateFoodImages(ctx context.Context, foodID uint, filename string) error {
+	if err := mysql.GormMysqlDB.WithContext(ctx).Model(&mysql.FoodImages{}).Where("id = ?", foodID).Update("image", filename).Error; err != nil {
 		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(err.Error(), foodID, filename), utils.ErrFromMysqlDB)
 	}
 	return nil

@@ -8,6 +8,7 @@ import (
 
 type IRecommendFoodRepository interface {
 	SaveRecommendFood(ctx context.Context, foodDTO *mysql.Foods) (*mysql.Foods, error)
+	FindOneOrCreateFoodImage(ctx context.Context, foodImageDTO *mysql.FoodImages) (*mysql.FoodImages, error)
 }
 
 type ISelectFoodRepository interface {
@@ -39,13 +40,14 @@ type IRankingFoodRepository interface {
 }
 
 type IImageUploadFoodRepository interface {
-	FindOneAndUpdateFoods(ctx context.Context, foodID uint, filename string) error
+	FindOneAndUpdateFoodImages(ctx context.Context, foodID uint, filename string) error
 }
 
 type IEmptyImageFoodRepository interface {
-	FindAllEmptyImageFoods(ctx context.Context) ([]mysql.Foods, error)
+	FindAllEmptyImageFoods(ctx context.Context) ([]mysql.FoodImages, error)
 }
 
 type IDailyRecommendFoodRepository interface {
 	FindOneFood(ctx context.Context, foodName string) (*mysql.Foods, error)
+	FindOneFoodImage(ctx context.Context, foodID int) (string, error)
 }

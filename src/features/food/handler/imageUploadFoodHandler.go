@@ -36,7 +36,7 @@ func NewImageUploadFoodHandler(c *echo.Echo, useCase _interface.IImageUploadFood
 // @Description INTERNAL_SERVER : 내부 로직 처리 실패
 // @Description INTERNAL_DB : DB 처리 실패
 // @Description PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
-// @Param foodID formData string false "food ID"
+// @Param foodImageID formData string false "food image ID"
 // @Param image formData file false "음식 이미지 파일"
 // @Produce json
 // @Success 200 {object} bool
@@ -50,12 +50,12 @@ func (d *ImageUploadFoodHandler) ImageUpload(c echo.Context) error {
 		return err
 	}
 
-	foodID, err := strconv.Atoi(c.FormValue("foodID"))
+	foodImageID, err := strconv.Atoi(c.FormValue("foodImageID"))
 	if err != nil {
 		return err
 	}
 	entity := entity.ImageUploadFoodEntity{
-		FoodID: foodID,
+		FoodID: foodImageID,
 		Image:  file,
 	}
 

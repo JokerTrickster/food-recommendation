@@ -84,7 +84,11 @@ func (d *DailyRecommendFoodUseCase) DailyRecommend(c context.Context) (response.
 			return response.ResDailyRecommendFood{}, err
 		}
 		if foods != nil {
-			food.Image = foods.Image
+			foodImage, err := d.Repository.FindOneFoodImage(ctx, foods.FoodImageID)
+			if err != nil {
+				return response.ResDailyRecommendFood{}, err
+			}
+			food.Image = foodImage
 		}
 
 		imageUrl, err := aws.ImageGetSignedURL(ctx, food.Image, aws.ImgTypeFood)

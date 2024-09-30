@@ -50,14 +50,14 @@ definitions:
         example: 매운맛
         type: string
       name:
-        example: 김치찌개
+        example: 된장찌개
         type: string
       scenario:
         description: 전체 , 혼밥, 가족, 친구들
         example: 혼밥
         type: string
       theme:
-        example: 기분 전환
+        example: 스트레스 해소
         type: string
       time:
         example: 점심
@@ -163,9 +163,13 @@ definitions:
     properties:
       created:
         type: string
+      flavor:
+        type: string
       name:
         type: string
       scenario:
+        type: string
+      theme:
         type: string
       time:
         type: string
@@ -829,9 +833,9 @@ paths:
         INTERNAL_DB : DB 처리 실패
         PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
       parameters:
-      - description: food ID
+      - description: food image ID
         in: formData
-        name: foodID
+        name: foodImageID
         type: string
       - description: 음식 이미지 파일
         in: formData

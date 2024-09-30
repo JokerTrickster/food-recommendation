@@ -552,8 +552,8 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "food ID",
-                        "name": "foodID",
+                        "description": "food image ID",
+                        "name": "foodImageID",
                         "in": "formData"
                     },
                     {
@@ -973,7 +973,7 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string",
-                    "example": "김치찌개"
+                    "example": "된장찌개"
                 },
                 "scenario": {
                     "description": "전체 , 혼밥, 가족, 친구들",
@@ -982,7 +982,7 @@ const docTemplate = `{
                 },
                 "theme": {
                     "type": "string",
-                    "example": "기분 전환"
+                    "example": "스트레스 해소"
                 },
                 "time": {
                     "type": "string",
@@ -1137,10 +1137,16 @@ const docTemplate = `{
                 "created": {
                     "type": "string"
                 },
+                "flavor": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
                 "scenario": {
+                    "type": "string"
+                },
+                "theme": {
                     "type": "string"
                 },
                 "time": {
