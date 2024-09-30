@@ -11,4 +11,5 @@ type IGetUserRepository interface {
 
 type IUpdateUserRepository interface {
 	FindOneAndUpdateUser(ctx context.Context, userDTO *mysql.Users) error
+	CheckPassword(ctx context.Context, id uint, prevPassword string) error
 }

@@ -792,7 +792,7 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "description": "모든 데이터 전달 요청(수정하는 데이터만 보내면 에러 발생)",
+                        "description": "수정한 데이터만 전달",
                         "name": "json",
                         "in": "body",
                         "required": true,
@@ -1048,16 +1048,17 @@ const docTemplate = `{
         },
         "request.ReqUpdateUser": {
             "type": "object",
-            "required": [
-                "birth",
-                "name",
-                "sex"
-            ],
             "properties": {
                 "birth": {
                     "type": "string"
                 },
                 "name": {
+                    "type": "string"
+                },
+                "newPassword": {
+                    "type": "string"
+                },
+                "prevPassword": {
                     "type": "string"
                 },
                 "sex": {
