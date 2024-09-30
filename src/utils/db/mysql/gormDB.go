@@ -5,8 +5,7 @@ import "gorm.io/gorm"
 // 시나리오 상수 정의
 // 연인, 혼반, 가족, 다이어트, 회식, 친구
 const (
-	ScenarioAll = 1 + iota
-	ScenarioCouple
+	ScenarioCouple = 1 + iota
 	ScenarioSolo
 	ScenarioFamily
 	ScenarioDiet
@@ -17,8 +16,7 @@ const (
 // 식사 시간 상수 정의
 // 아침, 점심, 저녁, 브런치, 간식, 야식
 const (
-	TimeAll      = 1 + iota
-	TimeMorning  //아침
+	TimeMorning   = 1 + iota //아침
 	TimeLunch    //점심
 	TimeDinner   //저녁
 	TimeBrunch   //브런치
@@ -29,8 +27,7 @@ const (
 // 음식 종류 상수 정의
 // 한식, 중식, 일식, 양식, 분식,베트남 음식, 인도 음식, 패스트 푸드, 디저트, 퓨전 요리
 const (
-	TypeAll        = 1 + iota
-	TypeKorean     //한식
+	TypeKorean    = 1 + iota  //한식
 	TypeChinese    //중식
 	TypeJapanese   //일식
 	TypeWestern    //양식
@@ -45,8 +42,7 @@ const (
 // 기분/테마 상수 정의
 // 스트레스 해소, 피로 회복, 기분 전환, 제철 음식, 영양식, 특별한 날
 const (
-	ThemeAll             = 1 + iota
-	ThemeStressRelief    // 스트레스 해소
+	ThemeStressRelief  = 1 + iota   // 스트레스 해소
 	ThemeFatigueRecovery // 피로 회복
 	ThemeSpecialDay      //특별한 날
 	ThemeSeasonalFood    //제철 음식
@@ -55,8 +51,7 @@ const (
 // 맛 상수 정의
 // 매운맛, 감칠맛, 고소한맛, 단맛, 짠맛, 싱거운맛
 const (
-	FlavorAll    = 1 + iota
-	FlavorSpicy  //매운맛
+	FlavorSpicy  = 1 + iota //매운맛
 	FlavorSavory //감칠맛
 	FlavorNutty  //고소한맛
 	FlavorSweet  //단맛
@@ -66,7 +61,6 @@ const (
 
 // 맵 정의
 var ScenarioMap = map[string]int{
-	"전체":   ScenarioAll,
 	"연인":   ScenarioCouple,
 	"혼밥":   ScenarioSolo,
 	"가족":   ScenarioFamily,
@@ -76,7 +70,6 @@ var ScenarioMap = map[string]int{
 }
 
 var TimeMap = map[string]int{
-	"전체":  TimeAll,
 	"아침":  TimeMorning,
 	"점심":  TimeLunch,
 	"저녁":  TimeDinner,
@@ -86,7 +79,6 @@ var TimeMap = map[string]int{
 }
 
 var TypeMap = map[string]int{
-	"전체":     TypeAll,
 	"한식":     TypeKorean,
 	"중식":     TypeChinese,
 	"일식":     TypeJapanese,
@@ -100,7 +92,6 @@ var TypeMap = map[string]int{
 }
 
 var FlavorMap = map[string]int{
-	"전체":   FlavorAll,
 	"매운맛":  FlavorSpicy,
 	"감칠맛":  FlavorSavory,
 	"고소한맛": FlavorNutty,
@@ -110,7 +101,6 @@ var FlavorMap = map[string]int{
 }
 
 var ThemeMap = map[string]int{
-	"전체":      ThemeAll,
 	"스트레스 해소": ThemeStressRelief,
 	"피로 회복":   ThemeFatigueRecovery,
 	"특별한 날":   ThemeSpecialDay,
