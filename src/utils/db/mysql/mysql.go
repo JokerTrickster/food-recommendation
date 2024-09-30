@@ -154,6 +154,14 @@ func GetTypeKey(val int) (string, bool) {
 	key, ok := TypeReverseMap[val]
 	return key, ok
 }
+func GetFlavorKey(val int) (string, bool) {
+	key, ok := FlavorReverseMap[val]
+	return key, ok
+}
+func GetThemeKey(val int) (string, bool) {
+	key, ok := ThemeReverseMap[val]
+	return key, ok
+}
 
 func InitMeta() {
 	for k, v := range ScenarioMap {
@@ -165,6 +173,13 @@ func InitMeta() {
 	for k, v := range TypeMap {
 		TypeReverseMap[v] = k
 	}
+	for k, v := range FlavorMap {
+		FlavorReverseMap[v] = k
+	}
+	for k, v := range ThemeMap {
+		ThemeReverseMap[v] = k
+	}
+
 }
 
 // 트랜잭션 처리 미들웨어

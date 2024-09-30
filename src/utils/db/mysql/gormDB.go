@@ -44,10 +44,8 @@ const (
 const (
 	ThemeStressRelief    = 1 + iota // 스트레스 해소
 	ThemeFatigueRecovery            // 피로 회복
-	ThemeMoodChange                 //기분 전환
-	ThemeSeasonalFood               //제철 음식
-	ThemeNutrition                  //영양식
 	ThemeSpecialDay                 //특별한 날
+	ThemeSeasonalFood               //제철 음식
 )
 
 // 맛 상수 정의
@@ -105,10 +103,8 @@ var FlavorMap = map[string]int{
 var ThemeMap = map[string]int{
 	"스트레스 해소": ThemeStressRelief,
 	"피로 회복":   ThemeFatigueRecovery,
-	"기분 전환":   ThemeMoodChange,
-	"제철 음식":   ThemeSeasonalFood,
-	"영양식":     ThemeNutrition,
 	"특별한 날":   ThemeSpecialDay,
+	"제철 음식":   ThemeSeasonalFood,
 }
 
 // 반대 맵 정의 (int -> string)
@@ -138,13 +134,13 @@ type Users struct {
 
 type Foods struct {
 	gorm.Model
-	Name       string `json:"name" gorm:"column:name"`
-	Image      string `json:"image" gorm:"column:image"`
-	ScenarioID int    `json:"scenarioID" gorm:"column:scenario_id"`
-	TimeID     int    `json:"timeID" gorm:"column:time_id"`
-	TypeID     int    `json:"typeID" gorm:"column:type_id"`
-	ThemeID    int    `json:"themeID" gorm:"column:theme_id"`
-	FlavorID   int    `json:"flavorID" gorm:"column:flavor_id"`
+	Name        string `json:"name" gorm:"column:name"`
+	FoodImageID int    `json:"foodImageID" gorm:"column:food_image_id"`
+	ScenarioID  int    `json:"scenarioID" gorm:"column:scenario_id"`
+	TimeID      int    `json:"timeID" gorm:"column:time_id"`
+	TypeID      int    `json:"typeID" gorm:"column:type_id"`
+	ThemeID     int    `json:"themeID" gorm:"column:theme_id"`
+	FlavorID    int    `json:"flavorID" gorm:"column:flavor_id"`
 }
 type FoodHistory struct {
 	gorm.Model
@@ -197,4 +193,10 @@ type UserAuths struct {
 	Email    string `json:"email" gorm:"column:email"`
 	AuthCode string `json:"authCode" gorm:"column:auth_code"`
 	Type     string `json:"type" gorm:"column:type"`
+}
+
+type FoodImages struct {
+	gorm.Model
+	Name  string `json:"name" gorm:"column:name"`
+	Image string `json:"image" gorm:"column:image"`
 }

@@ -27,7 +27,7 @@ func (d *ImageUploadFoodUseCase) ImageUpload(c context.Context, e entity.ImageUp
 	// 랜덤으로 이미지 이름 생성
 	filename := fmt.Sprintf("%s.png", _aws.FileNameGenerateRandom())
 	// 디비에 이미지 파일 이름 저장
-	err := d.Repository.FindOneAndUpdateFoods(ctx, uint(e.FoodID), filename)
+	err := d.Repository.FindOneAndUpdateFoodImages(ctx, uint(e.FoodID), filename)
 	if err != nil {
 		return err
 	}

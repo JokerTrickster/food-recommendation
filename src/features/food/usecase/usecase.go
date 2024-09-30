@@ -11,14 +11,22 @@ import (
 	"time"
 )
 
+func CreateRecommendFoodImageDTO(entity entity.RecommendFoodEntity, foodName string) *mysql.FoodImages {
+
+	return &mysql.FoodImages{
+		Name:  foodName,
+		Image: "food_default.png",
+	}
+}
+
 func CreateDailyRecommendFoodQuestion() string {
 	today := time.Now().Format("2006-01-02")
 	question := fmt.Sprintf("오늘 날짜 %s와 궁합이 좋은 음식 3개 추천해줘 음식 이름만 추천해줘", today)
 	return question
 }
-func CreateResEmptyImageFood(foods []mysql.Foods) response.ResEmptyImageFood {
+func CreateResEmptyImageFood(foodImages []mysql.FoodImages) response.ResEmptyImageFood {
 	var res response.ResEmptyImageFood
-	for _, f := range foods {
+	for _, f := range foodImages {
 		emptyFood := response.EmptyFood{
 			ID:   f.ID,
 			Name: f.Name,
@@ -137,7 +145,7 @@ func CreateFoodHistoryDTO(foodID, userID uint) *mysql.FoodHistory {
 	}
 }
 
-func CreateRecommendFoodDTO(entity entity.RecommendFoodEntity, foodName string) *mysql.Foods {
+func CreateRecommendFoodDTO(entity entity.RecommendFoodEntity, foodName string, foodImageID int) *mysql.Foods {
 	typeID, err := mysql.GetTypeID(entity.Type)
 	if err != nil {
 		fmt.Println(err)
@@ -160,13 +168,13 @@ func CreateRecommendFoodDTO(entity entity.RecommendFoodEntity, foodName string) 
 	}
 
 	return &mysql.Foods{
-		TypeID:     typeID,
-		TimeID:     timeID,
-		ScenarioID: secnarioID,
-		ThemeID:    themeID,
-		FlavorID:   flavorID,
-		Name:       foodName,
-		Image:      "food_default.png",
+		TypeID:      typeID,
+		TimeID:      timeID,
+		ScenarioID:  secnarioID,
+		ThemeID:     themeID,
+		FlavorID:    flavorID,
+		Name:        foodName,
+		FoodImageID: foodImageID,
 	}
 
 }

@@ -24,10 +24,10 @@ func (d *EmptyImageFoodUseCase) EmptyImage(c context.Context) (response.ResEmpty
 	defer cancel()
 	fmt.Println(ctx)
 
-	foods, err := d.Repository.FindAllEmptyImageFoods(ctx)
+	foodImages, err := d.Repository.FindAllEmptyImageFoods(ctx)
 	if err != nil {
 		return response.ResEmptyImageFood{}, err
 	}
-	res := CreateResEmptyImageFood(foods)
+	res := CreateResEmptyImageFood(foodImages)
 	return res, nil
 }
