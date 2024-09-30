@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"fmt"
 	"main/features/food/model/entity"
 	_interface "main/features/food/model/interface"
 	"main/utils"
@@ -105,6 +106,7 @@ func (g *RankingFoodRepository) PreviousRankingExist(ctx context.Context) (int, 
 func (g *RankingFoodRepository) FindOneFoods(ctx context.Context, foodID int) (string, error) {
 	// Find food name by food ID
 	var foodName string
+	fmt.Println(foodID)
 	err := g.GormDB.WithContext(ctx).Model(&mysql.Foods{}).Select("name").Where("id = ?", foodID).First(&foodName).Error
 	if err != nil {
 		return "", utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(err.Error(), foodID), utils.ErrFromMysqlDB)

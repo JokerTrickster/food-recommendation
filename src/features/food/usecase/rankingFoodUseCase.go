@@ -2,7 +2,6 @@ package usecase
 
 import (
 	"context"
-	"fmt"
 	"strconv"
 
 	"main/features/food/model/entity"
@@ -51,7 +50,6 @@ func (d *RankingFoodUseCase) Ranking(c context.Context) (response.ResRankingFood
 	if err != nil {
 		return response.ResRankingFood{}, err
 	}
-	fmt.Println(previousExist)
 	if previousExist == 0 {
 		//이전 데이터가 없다면 현재 랭킹 데이터를 이전 랭킹 데이터로 저장한다.
 		for _, food := range currentRankings {

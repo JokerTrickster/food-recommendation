@@ -5,7 +5,8 @@ import "gorm.io/gorm"
 // 시나리오 상수 정의
 // 연인, 혼반, 가족, 다이어트, 회식, 친구
 const (
-	ScenarioCouple = 1 + iota
+	ScenarioAll = 1 + iota
+	ScenarioCouple
 	ScenarioSolo
 	ScenarioFamily
 	ScenarioDiet
@@ -16,51 +17,56 @@ const (
 // 식사 시간 상수 정의
 // 아침, 점심, 저녁, 브런치, 간식, 야식
 const (
-	TimeMorning  = 1 + iota //아침
-	TimeLunch               //점심
-	TimeDinner              //저녁
-	TimeBrunch              //브런치
-	TimeSnack               //간식
-	TimeMidnight            //야식
+	TimeAll      = 1 + iota
+	TimeMorning  //아침
+	TimeLunch    //점심
+	TimeDinner   //저녁
+	TimeBrunch   //브런치
+	TimeSnack    //간식
+	TimeMidnight //야식
 )
 
 // 음식 종류 상수 정의
 // 한식, 중식, 일식, 양식, 분식,베트남 음식, 인도 음식, 패스트 푸드, 디저트, 퓨전 요리
 const (
-	TypeKorean     = 1 + iota //한식
-	TypeChinese               //중식
-	TypeJapanese              //일식
-	TypeWestern               //양식
-	TypeStreetFood            //분식
-	TypeFastFood              //패스트 푸드
-	TypeVietnamese            //베트남 음식
-	TypeIndian                //인도 음식
-	TypeDessert               //디저트
-	TypeFusion                //퓨전 요리
+	TypeAll        = 1 + iota
+	TypeKorean     //한식
+	TypeChinese    //중식
+	TypeJapanese   //일식
+	TypeWestern    //양식
+	TypeStreetFood //분식
+	TypeFastFood   //패스트 푸드
+	TypeVietnamese //베트남 음식
+	TypeIndian     //인도 음식
+	TypeDessert    //디저트
+	TypeFusion     //퓨전 요리
 )
 
 // 기분/테마 상수 정의
 // 스트레스 해소, 피로 회복, 기분 전환, 제철 음식, 영양식, 특별한 날
 const (
-	ThemeStressRelief    = 1 + iota // 스트레스 해소
-	ThemeFatigueRecovery            // 피로 회복
-	ThemeSpecialDay                 //특별한 날
-	ThemeSeasonalFood               //제철 음식
+	ThemeAll             = 1 + iota
+	ThemeStressRelief    // 스트레스 해소
+	ThemeFatigueRecovery // 피로 회복
+	ThemeSpecialDay      //특별한 날
+	ThemeSeasonalFood    //제철 음식
 )
 
 // 맛 상수 정의
 // 매운맛, 감칠맛, 고소한맛, 단맛, 짠맛, 싱거운맛
 const (
-	FlavorSpicy  = 1 + iota //매운맛
-	FlavorSavory            //감칠맛
-	FlavorNutty             //고소한맛
-	FlavorSweet             //단맛
-	FlavorSalty             //짠맛
-	FlavorSour              //싱거운맛
+	FlavorAll    = 1 + iota
+	FlavorSpicy  //매운맛
+	FlavorSavory //감칠맛
+	FlavorNutty  //고소한맛
+	FlavorSweet  //단맛
+	FlavorSalty  //짠맛
+	FlavorSour   //싱거운맛
 )
 
 // 맵 정의
 var ScenarioMap = map[string]int{
+	"전체":   ScenarioAll,
 	"연인":   ScenarioCouple,
 	"혼밥":   ScenarioSolo,
 	"가족":   ScenarioFamily,
@@ -70,6 +76,7 @@ var ScenarioMap = map[string]int{
 }
 
 var TimeMap = map[string]int{
+	"전체":  TimeAll,
 	"아침":  TimeMorning,
 	"점심":  TimeLunch,
 	"저녁":  TimeDinner,
@@ -79,6 +86,7 @@ var TimeMap = map[string]int{
 }
 
 var TypeMap = map[string]int{
+	"전체":     TypeAll,
 	"한식":     TypeKorean,
 	"중식":     TypeChinese,
 	"일식":     TypeJapanese,
@@ -92,6 +100,7 @@ var TypeMap = map[string]int{
 }
 
 var FlavorMap = map[string]int{
+	"전체":   FlavorAll,
 	"매운맛":  FlavorSpicy,
 	"감칠맛":  FlavorSavory,
 	"고소한맛": FlavorNutty,
@@ -101,6 +110,7 @@ var FlavorMap = map[string]int{
 }
 
 var ThemeMap = map[string]int{
+	"전체":      ThemeAll,
 	"스트레스 해소": ThemeStressRelief,
 	"피로 회복":   ThemeFatigueRecovery,
 	"특별한 날":   ThemeSpecialDay,
