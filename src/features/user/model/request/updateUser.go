@@ -1,7 +1,9 @@
 package request
 
 type ReqUpdateUser struct {
-	Birth string `json:"birth" validate:"required"`
-	Sex   string `json:"sex" validate:"required"`
-	Name  string `json:"name" validate:"required"`
+	Birth        string `json:"birth" `
+	Sex          string `json:"sex" `
+	Name         string `json:"name" `
+	NewPassword  string `json:"newPassword" `
+	PrevPassword string `json:"prevPassword" `
 }

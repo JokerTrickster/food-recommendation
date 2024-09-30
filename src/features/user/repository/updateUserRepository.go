@@ -17,10 +17,22 @@ func (d *UpdateUserRepository) FindOneAndUpdateUser(ctx context.Context, userDTO
 
 	result := d.GormDB.Model(&userDTO).Where("id = ?", userDTO.ID).Updates(&userDTO)
 	if result.Error != nil {
-		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), utils.HandleError(result.Error.Error(),userDTO), utils.ErrFromInternal)
+		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), utils.HandleError(result.Error.Error(), userDTO), utils.ErrFromInternal)
 	}
 	if result.RowsAffected == 0 {
-		return utils.ErrorMsg(ctx, utils.ErrUserNotFound, utils.Trace(), utils.HandleError(_errors.ErrUserNotFound.Error(),userDTO), utils.ErrFromClient)
+		return utils.ErrorMsg(ctx, utils.ErrUserNotFound, utils.Trace(), utils.HandleError(_errors.ErrUserNotFound.Error(), userDTO), utils.ErrFromClient)
+	}
+	return nil
+}
+
+func (d *UpdateUserRepository) CheckPassword(ctx context.Context, id uint, prevPassword string) error {
+	user := &mysql.Users{}
+	result := d.GormDB.Model(&user).Where("id = ?", id).First(&user)
+	if result.Error != nil {
+		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), utils.HandleError(result.Error.Error(), user), utils.ErrFromInternal)
+	}
+	if user.Password != prevPassword {
+		return utils.ErrorMsg(ctx, utils.ErrPasswordNotMatch, utils.Trace(), utils.HandleError(_errors.ErrPasswordNotMatch.Error(), user), utils.ErrFromClient)
 	}
 	return nil
 }

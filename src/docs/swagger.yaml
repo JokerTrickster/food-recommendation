@@ -110,12 +110,12 @@ definitions:
         type: string
       name:
         type: string
+      newPassword:
+        type: string
+      prevPassword:
+        type: string
       sex:
         type: string
-    required:
-    - birth
-    - name
-    - sex
     type: object
   request.ReqV02GoogleOauth:
     properties:
@@ -1050,7 +1050,7 @@ paths:
         name: tkn
         required: true
         type: string
-      - description: 모든 데이터 전달 요청(수정하는 데이터만 보내면 에러 발생)
+      - description: 수정한 데이터만 전달
         in: body
         name: json
         required: true

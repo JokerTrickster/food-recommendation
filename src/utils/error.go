@@ -59,6 +59,7 @@ const (
 	ErrProfileNotFount    = ErrType("PROFILE_NOT_FOUND")
 	ErrUserAlreadyExisted = ErrType("USER_ALREADY_EXISTED")
 	ErrInvalidAccessToken = ErrType("INVALID_ACCESS_TOKEN")
+	ErrPasswordNotMatch   = ErrType("PASSWORD_NOT_MATCH")
 )
 
 // basic , game, room, auth error mapping
@@ -78,6 +79,7 @@ var ErrHttpCode = map[string]int{
 	"NOT_LOAN_CARD":        http.StatusBadRequest,
 	"NOT_ENOUGH_CARD":      http.StatusBadRequest,
 	"NOT_ENOUGH_CONDITION": http.StatusBadRequest,
+	"PASSWORD_NOT_MATCH":   http.StatusBadRequest,
 
 	//401
 	"TOKEN_BAD":            http.StatusUnauthorized,
