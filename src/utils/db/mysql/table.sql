@@ -20,8 +20,7 @@ CREATE TABLE tokens (
     refresh_expired_at INT,
     user_id INT,
     access_token VARCHAR(255),
-    refresh_token VARCHAR(255),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    refresh_token VARCHAR(255)
 );
 
 CREATE TABLE user_auths (
@@ -124,11 +123,6 @@ CREATE TABLE foods (
     scenario_id INT,
     theme_id INT,
     flavor_id INT,
-    FOREIGN KEY (time_id) REFERENCES times(id),
-    FOREIGN KEY (type_id) REFERENCES types(id),
-    FOREIGN KEY (scenario_id) REFERENCES scenarios(id),
-    FOREIGN KEY (theme_id) REFERENCES themes(id),
-    FOREIGN KEY (flavor_id) REFERENCES flavors(id),
     FOREIGN KEY (food_image_id) REFERENCES food_images(id)
 );
 
@@ -140,7 +134,6 @@ CREATE TABLE food_histories (
     deleted_at TIMESTAMP NULL DEFAULT NULL,
     food_id INT,
     user_id INT,
-    FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (food_id) REFERENCES foods(id)
 );
 
