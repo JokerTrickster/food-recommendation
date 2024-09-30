@@ -44,10 +44,8 @@ const (
 const (
 	ThemeStressRelief    = 1 + iota // 스트레스 해소
 	ThemeFatigueRecovery            // 피로 회복
-	ThemeMoodChange                 //기분 전환
-	ThemeSeasonalFood               //제철 음식
-	ThemeNutrition                  //영양식
 	ThemeSpecialDay                 //특별한 날
+	ThemeSeasonalFood               //제철 음식
 )
 
 // 맛 상수 정의
@@ -105,10 +103,8 @@ var FlavorMap = map[string]int{
 var ThemeMap = map[string]int{
 	"스트레스 해소": ThemeStressRelief,
 	"피로 회복":   ThemeFatigueRecovery,
-	"기분 전환":   ThemeMoodChange,
-	"제철 음식":   ThemeSeasonalFood,
-	"영양식":     ThemeNutrition,
 	"특별한 날":   ThemeSpecialDay,
+	"제철 음식":   ThemeSeasonalFood,
 }
 
 // 반대 맵 정의 (int -> string)
