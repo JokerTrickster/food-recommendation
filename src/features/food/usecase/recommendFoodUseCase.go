@@ -76,6 +76,9 @@ func (d *RecommendFoodUseCase) Recommend(c context.Context, e entity.RecommendFo
 	for _, foodName := range gptRes {
 		foodImageDTO := CreateRecommendFoodImageDTO(e, foodName)
 		foodImage, err := d.Repository.FindOneOrCreateFoodImage(ctx, foodImageDTO)
+		if err != nil {
+			return response.ResRecommendFood{}, err
+		}
 		foodDTO := CreateRecommendFoodDTO(e, foodName, int(foodImage.ID))
 
 		foods, err := d.Repository.SaveRecommendFood(ctx, foodDTO)

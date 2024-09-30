@@ -3,6 +3,7 @@ package usecase
 import (
 	"context"
 	"encoding/json"
+	"strconv"
 	"strings"
 
 	"main/features/food/model/entity"
@@ -84,7 +85,8 @@ func (d *SelectFoodUseCase) Select(c context.Context, e entity.SelectFoodEntity)
 		return response.ResSelectFood{}, utils.ErrorMsg(ctx, utils.ErrNotFound, utils.Trace(), _errors.ErrFoodNotFound.Error(), utils.ErrFromGemini)
 	}
 	//레디스 저장한다.
-	if err := d.Repository.IncrementFoodRanking(ctx, foodDTO.Name, 1); err != nil {
+
+	if err := d.Repository.IncrementFoodRanking(ctx, strconv.Itoa(int(foodDTO.ID)), 1); err != nil {
 		return response.ResSelectFood{}, err
 	}
 

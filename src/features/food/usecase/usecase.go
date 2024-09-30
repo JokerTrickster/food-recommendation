@@ -189,31 +189,31 @@ func SplitAndRemoveEmpty(s string) []string {
 
 func CreateRecommendFoodQuestion(entity entity.RecommendFoodEntity) string {
 	var reqType string
-	if entity.Type == "" {
+	if entity.Type == "" || entity.Type == "전체" {
 		reqType = "전체 음식"
 	} else {
 		reqType = entity.Type
 	}
 	var reqScenario string
-	if entity.Scenario == "" {
+	if entity.Scenario == "" || entity.Scenario == "전체" {
 		reqScenario = "누구든지"
 	} else {
 		reqScenario = entity.Scenario
 	}
 	var reqTime string
-	if entity.Time == "" {
+	if entity.Time == "" || entity.Time == "전체" {
 		reqTime = "아무때나"
 	} else {
 		reqTime = entity.Time
 	}
 	var reqTheme string
-	if entity.Theme == "" {
+	if entity.Theme == "" || entity.Theme == "전체" {
 		reqTheme = "아무 테마"
 	} else {
 		reqTheme = entity.Theme
 	}
 	var reqFlavor string
-	if entity.Flavor == "" {
+	if entity.Flavor == "" || entity.Flavor == "전체" {
 		reqFlavor = "아무맛"
 	} else {
 		reqFlavor = entity.Flavor
