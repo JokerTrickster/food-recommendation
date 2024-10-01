@@ -41,10 +41,11 @@ func (d *RecommendFoodUseCase) Recommend(c context.Context, e entity.RecommendFo
 	resp, err := model.GenerateContent(
 		ctx,
 		genai.Text("너는 맛있는 요리 음식 이름을 알려주는 전문가이다."),
-		genai.Text("내가 질문을 하면 음식 이름으로만 대답을 해줘야 된다."),
-		genai.Text("예를 들어서 '매운 음식 추천해줘' 라고 물으면 '김치찌개' 라고 대답을 해줘야 된다."),
-		genai.Text("반드시 음식 이름 1개만 추천해줘, 요리법, 재료 등 다른 정보는 필요없다"),
-		genai.Text("응답을 해줄때 음식 이름인지 한번더 생각하고 말해줘"),
+		genai.Text("한국에 살고 있는 사람들에게 맛있는 음식을 추천해주는 전문가이다."),
+		genai.Text("상황을 제시해주면 상황에 맞는 맛있는 음식을 추천해주면 된다."),
+		genai.Text("반드시 음식 이름 1개만 추천해줘야 되며, 요리법, 재료, 가게 이름 등으로 대답해주면 안된다."),
+		genai.Text("예를들면 오늘 친구와 같이 점심에 매운 음식 이름을 추천받고 싶다면 대답으로 닭갈비 라고 하면 된다."),
+		genai.Text("응답을 해줄때 음식 이름인지 한번 더 확인 후 대답해줘"),
 		genai.Text("지금부터 질문할게 대답해줘"),
 		genai.Text(question),
 	)
