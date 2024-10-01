@@ -23,4 +23,6 @@ This project follows the principles of Clean Architecture. This architectural pa
 </p>
 
 ## DB Schema
-![음식 추천 db](https://github.com/user-attachments/assets/333fa72e-8379-461e-a111-fcfaea260cbc)
+<p align="center">
+    <img width="914" alt="스크린샷 2024-10-01 오후 1 47 11" src="https://github.com/user-attachments/assets/25706d45-817d-4616-8bb3-d1b667370f66">
+</p>
