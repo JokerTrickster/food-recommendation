@@ -137,6 +137,15 @@ CREATE TABLE food_histories (
     FOREIGN KEY (food_id) REFERENCES foods(id)
 );
 
+-- 신고 테이블
+CREATE TABLE reports (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL DEFAULT NULL,
+    user_id INT,
+    reason varchar(1000)
+);
 
 
 -- meta table에 types, scenarios, times, themes, flavors 테이블을 저장하는 sql 문 만들어줘

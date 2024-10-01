@@ -37,6 +37,11 @@ definitions:
       refreshToken:
         type: string
     type: object
+  request.ReqReport:
+    properties:
+      reason:
+        type: string
+    type: object
   request.ReqRequestPassword:
     properties:
       email:
@@ -993,6 +998,46 @@ paths:
       summary: 음식 선택하기
       tags:
       - food
+  /v0.1/system/report:
+    post:
+      description: |-
+        ■ errCode with 400
+        PARAM_BAD : 파라미터 오류
+        USER_NOT_EXIST : 유저가 존재하지 않음
+        USER_ALREADY_EXISTED : 유저가 이미 존재
+
+        ■ errCode with 500
+        INTERNAL_SERVER : 내부 로직 처리 실패
+        INTERNAL_DB : DB 처리 실패
+        PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+      parameters:
+      - description: accessToken
+        in: header
+        name: tkn
+        required: true
+        type: string
+      - description: json body
+        in: body
+        name: json
+        required: true
+        schema:
+          $ref: '#/definitions/request.ReqReport'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: boolean
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: 1:1 문의하기
+      tags:
+      - system
   /v0.1/user/{userID}:
     get:
       description: |-
