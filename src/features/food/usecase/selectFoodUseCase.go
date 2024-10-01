@@ -56,8 +56,9 @@ func (d *SelectFoodUseCase) Select(c context.Context, e entity.SelectFoodEntity)
 	resp, err := model.GenerateContent(
 		ctx,
 		genai.Text("너는 맛있는 요리 음식을 알려주는 전문가이다."),
-		genai.Text("오늘 날짜와 음식이름을 받고 해당 날짜와 음식 궁합을 알려줘"),
+		genai.Text("오늘 날짜와 음식 이름을 받으면 해당 날짜와 음식 궁합을 알려줘"),
 		genai.Text("사람들에게 재미요소로 알려줄려고 한다."),
+		genai.Text("최대 글자는 300글자 이내로 답변해주고 건강적으로 사주를 봐줘"),
 		genai.Text("예를 들면 2024년 9월 3일 김치찌개와 궁합 \n 날짜와 궁합에 대해서 설명..."),
 		genai.Text("지금부터 질문할게"),
 		genai.Text(question),
