@@ -47,8 +47,8 @@ func (d *DailyRecommendFoodHandler) DailyRecommend(c echo.Context) error {
 	ctx := context.Background()
 	//business logic
 	// Redis 캐시 처리
-	cacheKey := "daily_recommend_foods"
-	foodData, err := _redis.Client.Get(ctx, cacheKey).Result()
+
+	foodData, err := _redis.Client.Get(ctx, _redis.DailyKey).Result()
 	if foodData == "" {
 		// 2. 캐시에 데이터가 없을 경우 UseCase에서 조회
 		res, err := d.UseCase.DailyRecommend(ctx)
@@ -61,7 +61,7 @@ func (d *DailyRecommendFoodHandler) DailyRecommend(c echo.Context) error {
 		if err != nil {
 			return err
 		}
-		err = _redis.Client.Set(ctx, cacheKey, data, 1*time.Hour).Err()
+		err = _redis.Client.Set(ctx, _redis.DailyKey, data, 1*time.Hour).Err()
 		if err != nil {
 			return err
 		}

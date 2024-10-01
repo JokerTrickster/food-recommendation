@@ -40,11 +40,11 @@ func (d *DailyRecommendFoodUseCase) DailyRecommend(c context.Context) (response.
 	question := CreateDailyRecommendFoodQuestion()
 	resp, err := model.GenerateContent(
 		ctx,
-		genai.Text("너는 맛있는 요리 음식을 알려주는 전문가이다."),
-		genai.Text("내가 질문을 하면 단어로만 대답을 해줘야 된다."),
-		genai.Text("예를 들어서 '매운 음식 추천해줘' 라고 물으면 '김치찌개' 라고 대답을 해줘야 된다."),
-		genai.Text("반드시 음식 이름 3개 추천해줘"),
-		genai.Text("지금부터 질문할게 대답해줘 대답 해줄때 공백으로 구분지어서 대답해줘"),
+		genai.Text("너는 한국에 살고 있고 맛있는 요리 음식을 알려주는 전문가이다."),
+		genai.Text("오늘 날짜와 궁합이 좋을거 같은 음식 이름을 3개 추천해줘"),
+		genai.Text("예를 들어서 '피자 치킨 탕수육' 이런식으로 음식 이름 사이에 공백을 추가해서 3개만 대답해주면 된다."),
+		genai.Text("반드시 음식 이름만 추천해줘야 된다. 요리법, 재료, 가게 이름 등으로 대답해주면 안된다."),
+		genai.Text("지금부터 질문할게 대답해줘"),
 		genai.Text(question),
 	)
 
