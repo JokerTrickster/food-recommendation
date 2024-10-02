@@ -11,22 +11,22 @@ definitions:
     type: object
   request.ReqRecommendFood:
     properties:
-      flavor:
+      flavors:
         example: 매운맛
         type: string
       previousAnswer:
         example: 김치찌개 떡볶이 치킨
         type: string
-      scenario:
+      scenarios:
         example: 혼밥
         type: string
-      theme:
+      themes:
         example: 스트레스 해소
         type: string
-      time:
+      times:
         example: 점심
         type: string
-      type:
+      types:
         example: 한식
         type: string
     type: object
@@ -51,23 +51,23 @@ definitions:
     type: object
   request.ReqSelectFood:
     properties:
-      flavor:
+      flavors:
         example: 매운맛
         type: string
       name:
         example: 된장찌개
         type: string
-      scenario:
+      scenarios:
         description: 전체 , 혼밥, 가족, 친구들
         example: 혼밥
         type: string
-      theme:
+      themes:
         example: 스트레스 해소
         type: string
-      time:
+      times:
         example: 점심
         type: string
-      type:
+      types:
         description: 전체, 양식, 한식, 중식 등
         example: 한식
         type: string

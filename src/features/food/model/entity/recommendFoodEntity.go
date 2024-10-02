@@ -1,11 +1,11 @@
 package entity
 
 type RecommendFoodEntity struct {
-	Type           string `json:"type"`
-	Scenario       string `json:"scenario"`
-	Time           string `json:"time"`
-	Theme          string `json:"theme"`
-	Flavor         string `json:"flavor"`
+	Types          string `json:"types"`
+	Scenarios      string `json:"scenarios"`
+	Times          string `json:"times"`
+	Themes         string `json:"themes"`
+	Flavors        string `json:"flavors"`
 	UserID         uint   `json:"userID"`
 	PreviousAnswer string `json:"previousAnswer"`
 }
