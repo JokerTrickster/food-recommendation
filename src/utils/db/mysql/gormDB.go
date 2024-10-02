@@ -5,6 +5,7 @@ import "gorm.io/gorm"
 // 시나리오 상수 정의
 // 연인, 혼반, 가족, 다이어트, 회식, 친구
 const (
+	ScenarioAll    = 0
 	ScenarioCouple = 1 + iota
 	ScenarioSolo
 	ScenarioFamily
@@ -16,6 +17,7 @@ const (
 // 식사 시간 상수 정의
 // 아침, 점심, 저녁, 브런치, 간식, 야식
 const (
+	TimeAll      = 0
 	TimeMorning  = 1 + iota //아침
 	TimeLunch               //점심
 	TimeDinner              //저녁
@@ -27,6 +29,7 @@ const (
 // 음식 종류 상수 정의
 // 한식, 중식, 일식, 양식, 분식,베트남 음식, 인도 음식, 패스트 푸드, 디저트, 퓨전 요리
 const (
+	TypeAll        = 0
 	TypeKorean     = 1 + iota //한식
 	TypeChinese               //중식
 	TypeJapanese              //일식
@@ -42,6 +45,7 @@ const (
 // 기분/테마 상수 정의
 // 스트레스 해소, 피로 회복, 기분 전환, 제철 음식, 영양식, 특별한 날
 const (
+	ThemeAll             = 0
 	ThemeStressRelief    = 1 + iota // 스트레스 해소
 	ThemeFatigueRecovery            // 피로 회복
 	ThemeSpecialDay                 //특별한 날
@@ -51,6 +55,7 @@ const (
 // 맛 상수 정의
 // 매운맛, 감칠맛, 고소한맛, 단맛, 짠맛, 싱거운맛
 const (
+	FlavorAll    = 0
 	FlavorSpicy  = 1 + iota //매운맛
 	FlavorSavory            //감칠맛
 	FlavorNutty             //고소한맛

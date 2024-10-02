@@ -108,34 +108,53 @@ func CreateResMetaData(typeDTO []mysql.Types, timeDTO []mysql.Times, scenarioDTO
 	return res
 }
 
-func CreateSelectFoodDTO(e entity.SelectFoodEntity) *mysql.Foods {
-	typeID, err := mysql.GetTypeID(e.Type)
-	if err != nil {
-		fmt.Println(err)
+func CreateSelectFoodDTO(entity entity.SelectFoodEntity) *mysql.Foods {
+	var err error
+	typeID := 0
+	timeID := 0
+	secnarioID := 0
+	themeID := 0
+	flavorID := 0
+
+	if entity.Types != "" {
+		typeID, err = mysql.GetTypeID(entity.Types)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
-	timeID, err := mysql.GetTimeID(e.Time)
-	if err != nil {
-		fmt.Println(err)
+	if entity.Times != "" {
+		timeID, err = mysql.GetTimeID(entity.Times)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
-	secnarioID, err := mysql.GetScenarioID(e.Scenario)
-	if err != nil {
-		fmt.Println(err)
+	if entity.Scenarios != "" {
+		secnarioID, err = mysql.GetScenarioID(entity.Scenarios)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
-	themeID, err := mysql.GetThemeID(e.Theme)
-	if err != nil {
-		fmt.Println(err)
+	if entity.Themes != "" {
+		themeID, err = mysql.GetThemeID(entity.Themes)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
-	flavorID, err := mysql.GetFlavorID(e.Flavor)
-	if err != nil {
-		fmt.Println(err)
+	if entity.Flavors != "" {
+
+		flavorID, err = mysql.GetFlavorID(entity.Flavors)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
+
 	return &mysql.Foods{
 		TypeID:     typeID,
 		TimeID:     timeID,
 		ScenarioID: secnarioID,
 		ThemeID:    themeID,
 		FlavorID:   flavorID,
-		Name:       e.Name,
+		Name:       entity.Name,
 	}
 }
 func CreateFoodHistoryDTO(foodID, userID uint) *mysql.FoodHistory {
@@ -146,25 +165,43 @@ func CreateFoodHistoryDTO(foodID, userID uint) *mysql.FoodHistory {
 }
 
 func CreateRecommendFoodDTO(entity entity.RecommendFoodEntity, foodName string, foodImageID int) *mysql.Foods {
-	typeID, err := mysql.GetTypeID(entity.Type)
-	if err != nil {
-		fmt.Println(err)
+	var err error
+	typeID := 0
+	timeID := 0
+	secnarioID := 0
+	themeID := 0
+	flavorID := 0
+
+	if entity.Types != "" {
+		typeID, err = mysql.GetTypeID(entity.Types)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
-	timeID, err := mysql.GetTimeID(entity.Time)
-	if err != nil {
-		fmt.Println(err)
+	if entity.Times != "" {
+		timeID, err = mysql.GetTimeID(entity.Times)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
-	secnarioID, err := mysql.GetScenarioID(entity.Scenario)
-	if err != nil {
-		fmt.Println(err)
+	if entity.Scenarios != "" {
+		secnarioID, err = mysql.GetScenarioID(entity.Scenarios)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
-	themeID, err := mysql.GetThemeID(entity.Theme)
-	if err != nil {
-		fmt.Println(err)
+	if entity.Themes != "" {
+		themeID, err = mysql.GetThemeID(entity.Themes)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
-	flavorID, err := mysql.GetFlavorID(entity.Flavor)
-	if err != nil {
-		fmt.Println(err)
+	if entity.Flavors != "" {
+
+		flavorID, err = mysql.GetFlavorID(entity.Flavors)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
 
 	return &mysql.Foods{
@@ -189,34 +226,34 @@ func SplitAndRemoveEmpty(s string) []string {
 
 func CreateRecommendFoodQuestion(entity entity.RecommendFoodEntity) string {
 	var reqType string
-	if entity.Type == "" || entity.Type == "전체" {
+	if entity.Types == "" || entity.Types == "전체" {
 		reqType = "전체 음식"
 	} else {
-		reqType = entity.Type
+		reqType = entity.Types
 	}
 	var reqScenario string
-	if entity.Scenario == "" || entity.Scenario == "전체" {
-		reqScenario = "누구든지"
+	if entity.Scenarios == "" || entity.Scenarios == "전체" {
+		reqScenario = "어떤 상황이든"
 	} else {
-		reqScenario = entity.Scenario
+		reqScenario = entity.Scenarios
 	}
 	var reqTime string
-	if entity.Time == "" || entity.Time == "전체" {
+	if entity.Times == "" || entity.Times == "전체" {
 		reqTime = "아무때나"
 	} else {
-		reqTime = entity.Time
+		reqTime = entity.Times
 	}
 	var reqTheme string
-	if entity.Theme == "" || entity.Theme == "전체" {
+	if entity.Themes == "" || entity.Themes == "전체" {
 		reqTheme = "아무 테마"
 	} else {
-		reqTheme = entity.Theme
+		reqTheme = entity.Themes
 	}
 	var reqFlavor string
-	if entity.Flavor == "" || entity.Flavor == "전체" {
-		reqFlavor = "아무맛"
+	if entity.Flavors == "" || entity.Flavors == "전체" {
+		reqFlavor = "모든 맛"
 	} else {
-		reqFlavor = entity.Flavor
+		reqFlavor = entity.Flavors
 	}
 
 	questionType := fmt.Sprintf("어떤 종류의 음식 :  %s \n", reqType)

@@ -53,12 +53,12 @@ func (d *RecommendFoodHandler) Recommend(c echo.Context) error {
 
 	//business logic
 	entity := entity.RecommendFoodEntity{
-		Type:     req.Type,
-		Scenario: req.Scenario,
-		Time:     req.Time,
-		Theme:    req.Theme,
-		Flavor:   req.Flavor,
-		UserID:   uID,
+		Types:     req.Types,
+		Scenarios: req.Scenarios,
+		Times:     req.Times,
+		Themes:    req.Themes,
+		Flavors:   req.Flavors,
+		UserID:    uID,
 	}
 	if req.PreviousAnswer != "" {
 		entity.PreviousAnswer = req.PreviousAnswer

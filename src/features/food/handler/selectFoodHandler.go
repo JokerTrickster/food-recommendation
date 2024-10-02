@@ -53,12 +53,12 @@ func (d *SelectFoodHandler) Select(c echo.Context) error {
 
 	//business logic
 	e := entity.SelectFoodEntity{
-		Type:     req.Type,
-		Time:     req.Time,
+		Types:     req.Types,
+		Times:     req.Times,
 		Name:     req.Name,
-		Theme:    req.Theme,
-		Flavor:   req.Flavor,
-		Scenario: req.Scenario,
+		Themes:    req.Themes,
+		Flavors:   req.Flavors,
+		Scenarios: req.Scenarios,
 		UserID:   uID,
 	}
 
