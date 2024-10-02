@@ -46,6 +46,7 @@ func (d *RecommendFoodUseCase) Recommend(c context.Context, e entity.RecommendFo
 		genai.Text("반드시 음식 이름 1개만 추천해줘야 되며, 요리법, 재료, 가게 이름 등으로 대답해주면 안된다."),
 		genai.Text("예를들면 오늘 친구와 같이 점심에 매운 음식 이름을 추천받고 싶다면 대답으로 닭갈비 라고 하면 된다."),
 		genai.Text("응답을 해줄때 음식 이름인지 한번 더 확인 후 대답해줘"),
+		genai.Text("음식 이름을 응답해줄 때 이모티콘,특수문자(*&^$@~!@...) 등을 포함해서 대답해주면 안된다."),
 		genai.Text("지금부터 질문할게 대답해줘"),
 		genai.Text(question),
 	)
