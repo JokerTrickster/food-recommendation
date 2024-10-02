@@ -13,3 +13,7 @@ type IGetUserUseCase interface {
 type IUpdateUserUseCase interface {
 	Update(c context.Context, entity *entity.UpdateUserEntity) error
 }
+
+type IDeleteUserUseCase interface {
+	Delete(c context.Context, uID uint) error
+}

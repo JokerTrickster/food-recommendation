@@ -9,3 +9,7 @@ type IGetUserHandler interface {
 type IUpdateUserHandler interface {
 	Update(c echo.Context) error
 }
+
+type IDeleteUserHandler interface {
+	Delete(c echo.Context) error
+}

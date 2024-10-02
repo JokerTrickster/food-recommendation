@@ -2,29 +2,29 @@ package handler
 
 import (
 	_interface "main/features/user/model/interface"
+
 	mw "main/middleware"
 	"main/utils"
 	"net/http"
-	"strconv"
 
 	"github.com/labstack/echo/v4"
 )
 
-type GetUserHandler struct {
-	UseCase _interface.IGetUserUseCase
+type DeleteUserHandler struct {
+	UseCase _interface.IDeleteUserUseCase
 }
 
-func NewGetUserHandler(c *echo.Echo, useCase _interface.IGetUserUseCase) _interface.IGetUserHandler {
-	handler := &GetUserHandler{
+func NewDeleteUserHandler(c *echo.Echo, useCase _interface.IDeleteUserUseCase) _interface.IDeleteUserHandler {
+	handler := &DeleteUserHandler{
 		UseCase: useCase,
 	}
-	c.GET("/v0.1/users/:userID", handler.Get, mw.TokenChecker)
+	c.DELETE("/v0.1/users", handler.Delete, mw.TokenChecker)
 	return handler
 }
 
-// 유저 프로필 가져오기
-// @Router /v0.1/users/{userID} [get]
-// @Summary 유저 프로필 가져오기
+// 회원 탈퇴하기
+// @Router /v0.1/users [delete]
+// @Summary 회원 탈퇴하기
 // @Description
 // @Description ■ errCode with 400
 // @Description PARAM_BAD : 파라미터 오류
@@ -36,24 +36,18 @@ func NewGetUserHandler(c *echo.Echo, useCase _interface.IGetUserUseCase) _interf
 // @Description INTERNAL_DB : DB 처리 실패
 // @Description PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
 // @Param tkn header string true "accessToken"
-// @Param userID path string true "userID"
 // @Produce json
-// @Success 200 {object} response.ResGetUser
+// @Success 200 {object} bool
 // @Failure 400 {object} error
 // @Failure 500 {object} error
 // @Tags user
-func (d *GetUserHandler) Get(c echo.Context) error {
+func (d *DeleteUserHandler) Delete(c echo.Context) error {
 	ctx, uID, _ := utils.CtxGenerate(c)
-	pathUserID := c.Param("userID")
-	puID, _ := strconv.Atoi(pathUserID)
-	if pathUserID == "" || uID != uint(puID) {
-		return utils.ErrorMsg(ctx, utils.ErrBadParameter, utils.Trace(), "invalid user id", utils.ErrFromClient)
-	}
 
-	res, err := d.UseCase.Get(ctx, uID)
+	err := d.UseCase.Delete(ctx, uID)
 	if err != nil {
 		return err
 	}
 
-	return c.JSON(http.StatusOK, res)
+	return c.JSON(http.StatusOK, true)
 }
