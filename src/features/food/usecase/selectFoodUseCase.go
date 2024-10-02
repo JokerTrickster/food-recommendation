@@ -60,6 +60,7 @@ func (d *SelectFoodUseCase) Select(c context.Context, e entity.SelectFoodEntity)
 		genai.Text("사람들에게 재미요소로 알려줄려고 한다."),
 		genai.Text("최대 글자는 300글자 이내로 답변해주고 건강적으로 사주를 봐줘"),
 		genai.Text("예를 들면 2024년 9월 3일 김치찌개와 궁합 \n 날짜와 궁합에 대해서 설명..."),
+		genai.Text("응답을 해줄 때 특수문자을 넣어서 응답해주면 안된다."),
 		genai.Text("지금부터 질문할게"),
 		genai.Text(question),
 	)
