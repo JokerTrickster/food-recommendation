@@ -31,12 +31,8 @@ type IMetaFoodRepository interface {
 
 type IRankingFoodRepository interface {
 	RankingTop(ctx context.Context) ([]*entity.RankFoodRedis, error)
-	PreviousRanking(ctx context.Context, food string) (int, error)
-	FindRankingTop10FoodHistories(ctx context.Context) ([]*entity.RankFoodRedis, error)
+	FindRankingFoodHistories(ctx context.Context) ([]*entity.RankFoodRedis, error)
 	IncrementFoodRanking(ctx context.Context, redisKey string, foodName string, score float64) error
-	PreviousRankingExist(ctx context.Context) (int, error)
-	FindOneFoods(ctx context.Context, foodID int) (string, error)
-	ExpireRanking(ctx context.Context, key string) error
 }
 
 type IImageUploadFoodRepository interface {

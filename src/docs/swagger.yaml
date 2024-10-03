@@ -210,8 +210,6 @@ definitions:
         type: string
       rank:
         type: integer
-      rankChange:
-        type: string
     type: object
   response.RecommendFood:
     properties:

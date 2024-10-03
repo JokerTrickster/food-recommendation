@@ -31,11 +31,11 @@ func (g *SelectFoodRepository) InsertOneFoodHistory(ctx context.Context, foodHis
 	return nil
 }
 
-func (g *SelectFoodRepository) IncrementFoodRanking(ctx context.Context, foodID string, score float64) error {
+func (g *SelectFoodRepository) IncrementFoodRanking(ctx context.Context, name string, score float64) error {
 	redisKey := _redis.RankingKey
-	_, err := g.RedisClient.ZAdd(ctx, redisKey, redis.Z{Score: score, Member: foodID}).Result()
+	_, err := g.RedisClient.ZIncrBy(ctx, redisKey, score, name).Result()
 	if err != nil {
-		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(_errors.ErrServerError.Error()+err.Error(), foodID), utils.ErrFromRedis)
+		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(_errors.ErrServerError.Error()+err.Error(), name), utils.ErrFromRedis)
 	}
 	return nil
 }

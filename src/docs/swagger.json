@@ -1281,9 +1281,6 @@
                 },
                 "rank": {
                     "type": "integer"
-                },
-                "rankChange": {
-                    "type": "string"
                 }
             }
         },

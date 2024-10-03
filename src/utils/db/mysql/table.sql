@@ -134,6 +134,7 @@ CREATE TABLE food_histories (
     deleted_at TIMESTAMP NULL DEFAULT NULL,
     food_id INT,
     user_id INT,
+    name varchar(255),
     FOREIGN KEY (food_id) REFERENCES foods(id)
 );
 
