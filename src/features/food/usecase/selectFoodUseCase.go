@@ -3,7 +3,6 @@ package usecase
 import (
 	"context"
 	"encoding/json"
-	"strconv"
 	"strings"
 
 	"main/features/food/model/entity"
@@ -39,7 +38,7 @@ func (d *SelectFoodUseCase) Select(c context.Context, e entity.SelectFoodEntity)
 	foodDTO.ID = foodID
 
 	//디비에 저장한다.
-	foodHistoryDTO := CreateFoodHistoryDTO(foodID, e.UserID)
+	foodHistoryDTO := CreateFoodHistoryDTO(foodID, e.UserID, e.Name)
 	if err := d.Repository.InsertOneFoodHistory(ctx, foodHistoryDTO); err != nil {
 		return response.ResSelectFood{}, err
 	}
@@ -88,7 +87,7 @@ func (d *SelectFoodUseCase) Select(c context.Context, e entity.SelectFoodEntity)
 	}
 	//레디스 저장한다.
 
-	if err := d.Repository.IncrementFoodRanking(ctx, strconv.Itoa(int(foodDTO.ID)), 1); err != nil {
+	if err := d.Repository.IncrementFoodRanking(ctx, foodDTO.Name, 1); err != nil {
 		return response.ResSelectFood{}, err
 	}
 

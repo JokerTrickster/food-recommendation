@@ -157,10 +157,11 @@ func CreateSelectFoodDTO(entity entity.SelectFoodEntity) *mysql.Foods {
 		Name:       entity.Name,
 	}
 }
-func CreateFoodHistoryDTO(foodID, userID uint) *mysql.FoodHistory {
+func CreateFoodHistoryDTO(foodID, userID uint, name string) *mysql.FoodHistory {
 	return &mysql.FoodHistory{
 		FoodID: foodID,
 		UserID: userID,
+		Name:   name,
 	}
 }
 

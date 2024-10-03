@@ -149,8 +149,9 @@ type Foods struct {
 }
 type FoodHistory struct {
 	gorm.Model
-	UserID uint `json:"userID" gorm:"column:user_id"`
-	FoodID uint `json:"foodID" gorm:"column:food_id"`
+	UserID uint   `json:"userID" gorm:"column:user_id"`
+	FoodID uint   `json:"foodID" gorm:"column:food_id"`
+	Name   string `json:"name" gorm:"column:name"`
 }
 
 type MetaTables struct {

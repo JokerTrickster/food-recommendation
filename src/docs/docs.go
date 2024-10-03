@@ -1292,9 +1292,6 @@ const docTemplate = `{
                 },
                 "rank": {
                     "type": "integer"
-                },
-                "rankChange": {
-                    "type": "string"
                 }
             }
         },
