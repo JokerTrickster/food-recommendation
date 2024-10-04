@@ -5,7 +5,6 @@ type ResRankingFood struct {
 }
 
 type RankFood struct {
-	Rank       int    `json:"rank"`
-	Name       string `json:"name"`
-	RankChange string `json:"rankChange"`
+	Rank int    `json:"rank"`
+	Name string `json:"name"`
 }
