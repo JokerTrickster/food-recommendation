@@ -53,3 +53,7 @@ type IKakaoOauthAuthHandler interface {
 type INaverOauthAuthHandler interface {
 	NaverOauth(c echo.Context) error
 }
+
+type IRequestSignupAuthHandler interface {
+	RequestSignup(c echo.Context) error
+}

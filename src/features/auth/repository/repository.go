@@ -55,3 +55,7 @@ type KakaoOauthAuthRepository struct {
 type NaverOauthAuthRepository struct {
 	GormDB *gorm.DB
 }
+
+type RequestSignupAuthRepository struct {
+	GormDB *gorm.DB
+}

@@ -82,3 +82,9 @@ type INaverOauthAuthRepository interface {
 	InsertOneUser(ctx context.Context, user *mysql.Users) (*mysql.Users, error)
 	FindOneUser(ctx context.Context, userDTO *mysql.Users) (*mysql.Users, error)
 }
+
+type IRequestSignupAuthRepository interface {
+	FindOneUserByEmail(ctx context.Context, email string) error
+	InsertAuthCode(ctx context.Context, userAuthDTO mysql.UserAuths) error
+	DeleteAuthCodeByEmail(ctx context.Context, email string) error
+}
