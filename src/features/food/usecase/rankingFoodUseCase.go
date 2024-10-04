@@ -52,9 +52,8 @@ func (d *RankingFoodUseCase) Ranking(c context.Context) (response.ResRankingFood
 		}
 		rank := i + 1
 		rankFood := response.RankFood{
-			Rank:       rank,
-			Name:       food.Name,
-			RankChange: "new",
+			Rank: rank,
+			Name: food.Name,
 		}
 
 		res.Foods = append(res.Foods, rankFood)
