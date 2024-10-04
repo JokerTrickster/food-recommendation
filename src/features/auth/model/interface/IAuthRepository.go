@@ -10,6 +10,7 @@ type ISignupAuthRepository interface {
 	InsertOneUser(ctx context.Context, user mysql.Users) error
 	SaveToken(ctx context.Context, uID uint, accessToken, refreshToken string, refreshTknExpiredAt int64) error
 	DeleteToken(ctx context.Context, uID uint) error
+	VerifyAuthCode(ctx context.Context, email, code string) error
 }
 
 type ISigninAuthRepository interface {

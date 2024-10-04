@@ -91,6 +91,9 @@ definitions:
     type: object
   request.ReqSignup:
     properties:
+      authCode:
+        example: 인증코드
+        type: string
       birth:
         example: "1990-01-01"
         type: string
@@ -110,6 +113,7 @@ definitions:
         example: male / female
         type: string
     required:
+    - authCode
     - birth
     - email
     - name
