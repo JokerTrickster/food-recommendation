@@ -59,3 +59,6 @@ type IKakaoOauthAuthUseCase interface {
 type INaverOauthAuthUseCase interface {
 	NaverOauth(c context.Context, req *request.ReqNaverOauth) (response.ResNaverOauth, error)
 }
+type IRequestSignupAuthUseCase interface {
+	RequestSignup(c context.Context, entity entity.RequestSignupAuthEntity) (string, error)
+}
