@@ -1154,6 +1154,7 @@ const docTemplate = `{
         "request.ReqSignup": {
             "type": "object",
             "required": [
+                "authCode",
                 "birth",
                 "email",
                 "name",
@@ -1161,6 +1162,10 @@ const docTemplate = `{
                 "sex"
             ],
             "properties": {
+                "authCode": {
+                    "type": "string",
+                    "example": "인증코드"
+                },
                 "birth": {
                     "type": "string",
                     "example": "1990-01-01"

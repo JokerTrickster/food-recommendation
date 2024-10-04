@@ -7,4 +7,5 @@ type ReqSignup struct {
 	Name     string `json:"name" validate:"required" example:"홍길동"`
 	Sex      string `json:"sex" validate:"required,oneof=male female" example:"male / female"`
 	Birth    string `json:"birth" validate:"required,datetime=2006-01-02" example:"1990-01-01"`
+	AuthCode string `json:"authCode" validate:"required" example:"인증코드"`
 }

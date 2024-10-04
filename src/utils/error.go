@@ -60,6 +60,7 @@ const (
 	ErrUserAlreadyExisted = ErrType("USER_ALREADY_EXISTED")
 	ErrInvalidAccessToken = ErrType("INVALID_ACCESS_TOKEN")
 	ErrPasswordNotMatch   = ErrType("PASSWORD_NOT_MATCH")
+	ErrInvalidAuthCode    = ErrType("INVALID_AUTH_CODE")
 )
 
 // basic , game, room, auth error mapping
@@ -84,6 +85,7 @@ var ErrHttpCode = map[string]int{
 	//401
 	"TOKEN_BAD":            http.StatusUnauthorized,
 	"INVALID_ACCESS_TOKEN": http.StatusUnauthorized,
+	"INVALID_AUTH_CODE":    http.StatusUnauthorized,
 	//403
 	"PARTNER": http.StatusForbidden,
 
