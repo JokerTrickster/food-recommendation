@@ -52,18 +52,17 @@ func ImageUpload(ctx context.Context, file *multipart.FileHeader, filename strin
 		return fmt.Errorf("fail to load image - %v", err)
 	}
 
-	if meta.width < 1 || meta.height < 1 {
-		if (meta.width < 1 && meta.height < img.Bounds().Size().Y) ||
-			(meta.height < 1 && meta.width < img.Bounds().Size().X) {
-			img = imaging.Resize(img, meta.width, meta.height, imaging.Lanczos)
-		}
-	} else {
-		img = imaging.Fit(img, meta.width, meta.height, imaging.Lanczos)
-		//img = imaging.Fill(img, meta.width, meta.height, imaging.Center, imaging.Lanczos)
-	}
+	// 원본 비율 유지하면서 가로 크기 맞추기
+	resizedImg := imaging.Resize(img, meta.width, meta.height, imaging.Lanczos)
+
+	// 3:2 비율을 위해 높이 설정 (width:height = 3:2)
+	targetHeight := int(float64(meta.width) * 2.0 / 3.0)
+
+	// 원본 비율을 유지하며 3:2 비율로 자르기
+	finalImg := imaging.Fill(resizedImg, meta.width, targetHeight, imaging.Center, imaging.Lanczos)
 
 	buf := new(bytes.Buffer)
-	if err := imaging.Encode(buf, img, imaging.PNG, imaging.PNGCompressionLevel(png.BestCompression)); err != nil {
+	if err := imaging.Encode(buf, finalImg, imaging.PNG, imaging.PNGCompressionLevel(png.BestCompression)); err != nil {
 		return fmt.Errorf("fail to encode png image - %v", err)
 	}
 
