@@ -19,8 +19,8 @@ var imgMeta = map[ImgType]imgMetaStruct{
 		bucket:     func() string { return "dev-food-recommendation" },
 		domain:     func() string { return "dev-food-recommendation.s3.ap-northeast-2.amazonaws.com" },
 		path:       "images",
-		width:      512,
-		height:     512,
+		width:      512,//512 x 341
+		height:     341,
 		expireTime: 2 * time.Hour,
 	},
 	ImgTypeCategory: {
