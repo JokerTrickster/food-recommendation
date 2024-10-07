@@ -19,7 +19,7 @@ var imgMeta = map[ImgType]imgMetaStruct{
 		bucket:     func() string { return "dev-food-recommendation" },
 		domain:     func() string { return "dev-food-recommendation.s3.ap-northeast-2.amazonaws.com" },
 		path:       "images",
-		width:      512,//512 x 341
+		width:      512, //512 x 341
 		height:     341,
 		expireTime: 2 * time.Hour,
 	},
@@ -58,7 +58,8 @@ func ImageUpload(ctx context.Context, file *multipart.FileHeader, filename strin
 			img = imaging.Resize(img, meta.width, meta.height, imaging.Lanczos)
 		}
 	} else {
-		img = imaging.Fill(img, meta.width, meta.height, imaging.Center, imaging.Lanczos)
+		img = imaging.Fit(img, meta.width, meta.height, imaging.Lanczos)
+		//img = imaging.Fill(img, meta.width, meta.height, imaging.Center, imaging.Lanczos)
 	}
 
 	buf := new(bytes.Buffer)
