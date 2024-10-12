@@ -165,6 +165,6 @@ INSERT INTO scenarios (name, description,image) VALUES ('연인', '연인','scen
 INSERT INTO flavors (name, description,image) VALUES ('매운맛', '매운맛','flavors/spicy taste.png'), ('감칠맛', '감칠맛','flavors/umami.png'), ('고소한맛', '고소한맛','flavors/nutty taste.png'), ('단맛', '단맛','flavors/sweet taste.png'), ('짠맛', '짠맛','flavors/salty taste.png'), ('싱거운맛', '싱거운맛','flavors/bland taste.png');
 
 -- themes 테이블에 스트레스 해소, 피로 회복, 기분 전환, 제철 음식, 영양식, 특별한 날 순으로 저장하는 sql 문 만들어줘
-INSERT INTO themes (name, description,image) VALUES ('스트레스 해소', '스트레스 해소','themes/stress.png'), ('피로 회복', '피로 회복','themes/fatigue recovery.png'), ('특별한 날', '특별한 날','themes/mood refresh.png'), ('제철 음식', '제철 음식','themes/seasonal food.png');
+INSERT INTO themes (name, description,image) VALUES ('스트레스 해소', '스트레스 해소','themes/stress.png'), ('해장', '해장','themes/hangover.png'),('피로 회복', '피로 회복','themes/fatigue recovery.png'), ('특별한 날', '특별한 날','themes/mood refresh.png'), ('제철 음식', '제철 음식','themes/seasonal food.png');
 
 INSERT INTO users (email, password, name,birth, sex, provider) VALUES ('test@jokertrickster.com', 'asdasd123', '푸드픽맨','1990-01-01', 'male', 'test');
