@@ -5,12 +5,14 @@ type ResMetaData struct {
 	MetaData MetaData `json:"metaData"`
 }
 
+//상황 -> 시간 -> 종륲별 -> 맛 -> 기분/테마별
+
 type MetaData struct {
-	Types     []Category `json:"types"`
 	Scenarios []Category `json:"scenarios"`
 	Times     []Category `json:"times"`
-	Themes    []Category `json:"themes"`
+	Types     []Category `json:"types"`
 	Flavors   []Category `json:"flavors"`
+	Themes    []Category `json:"themes"`
 }
 
 type Category struct {
