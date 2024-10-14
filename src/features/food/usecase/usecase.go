@@ -44,29 +44,7 @@ func CreateSelectFoodQuestion(e entity.SelectFoodEntity) string {
 func CreateResMetaData(typeDTO []mysql.Types, timeDTO []mysql.Times, scenarioDTO []mysql.Scenarios, themesDTO []mysql.Themes, flavorDTO []mysql.Flavors) response.ResMetaData {
 	var res response.ResMetaData
 	var metaData response.MetaData
-	for _, t := range typeDTO {
-		category := response.Category{
-			Name: t.Name,
-		}
-		imageUrl, err := aws.ImageGetSignedURL(context.TODO(), t.Image, aws.ImgTypeCategory)
-		if err != nil {
-			return response.ResMetaData{}
-		}
-		category.Image = imageUrl
-		metaData.Types = append(metaData.Types, category)
-	}
-	for _, t := range timeDTO {
-		category := response.Category{
-			Name:  t.Name,
-			Image: t.Image,
-		}
-		imageUrl, err := aws.ImageGetSignedURL(context.TODO(), t.Image, aws.ImgTypeCategory)
-		if err != nil {
-			return response.ResMetaData{}
-		}
-		category.Image = imageUrl
-		metaData.Times = append(metaData.Times, category)
-	}
+	//상황 -> 시간 -> 종륲별 -> 맛 -> 기분/테마별
 	for _, t := range scenarioDTO {
 		category := response.Category{
 			Name:  t.Name,
@@ -79,7 +57,8 @@ func CreateResMetaData(typeDTO []mysql.Types, timeDTO []mysql.Times, scenarioDTO
 		category.Image = imageUrl
 		metaData.Scenarios = append(metaData.Scenarios, category)
 	}
-	for _, t := range themesDTO {
+
+	for _, t := range timeDTO {
 		category := response.Category{
 			Name:  t.Name,
 			Image: t.Image,
@@ -89,7 +68,18 @@ func CreateResMetaData(typeDTO []mysql.Types, timeDTO []mysql.Times, scenarioDTO
 			return response.ResMetaData{}
 		}
 		category.Image = imageUrl
-		metaData.Themes = append(metaData.Themes, category)
+		metaData.Times = append(metaData.Times, category)
+	}
+	for _, t := range typeDTO {
+		category := response.Category{
+			Name: t.Name,
+		}
+		imageUrl, err := aws.ImageGetSignedURL(context.TODO(), t.Image, aws.ImgTypeCategory)
+		if err != nil {
+			return response.ResMetaData{}
+		}
+		category.Image = imageUrl
+		metaData.Types = append(metaData.Types, category)
 	}
 	for _, t := range flavorDTO {
 		category := response.Category{
@@ -103,6 +93,19 @@ func CreateResMetaData(typeDTO []mysql.Types, timeDTO []mysql.Times, scenarioDTO
 		category.Image = imageUrl
 		metaData.Flavors = append(metaData.Flavors, category)
 	}
+	for _, t := range themesDTO {
+		category := response.Category{
+			Name:  t.Name,
+			Image: t.Image,
+		}
+		imageUrl, err := aws.ImageGetSignedURL(context.TODO(), t.Image, aws.ImgTypeCategory)
+		if err != nil {
+			return response.ResMetaData{}
+		}
+		category.Image = imageUrl
+		metaData.Themes = append(metaData.Themes, category)
+	}
+
 	res.MetaData = metaData
 	res.MetaKeys = []string{"types", "times", "scenarios", "themes", "flavors"}
 	return res
