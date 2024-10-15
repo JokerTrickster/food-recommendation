@@ -30,6 +30,10 @@ func InitServer() error {
 		fmt.Sprintf("google oauth 초기화 에러 : %s", err.Error())
 		return err
 	}
+	if err := InitKakaoOauth(); err != nil{
+		fmt.Sprintf("kakao oauth 초기화 에러 : %s", err.Error())
+		return err
+	}
 	if err := mysql.InitMySQL(); err != nil {
 		fmt.Sprintf("db 초기화 에러 : %s", err.Error())
 		return err

@@ -40,6 +40,7 @@ const (
 	ErrFromAwsSsm   = IErrFrom("aws_ssm")
 	ErrFromNaver    = IErrFrom("naver")
 	ErrFromGemini   = IErrFrom("gemini")
+	ErrFromKakao    = IErrFrom("kakao")
 )
 
 // basic error

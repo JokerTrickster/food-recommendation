@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"fmt"
 	_interface "main/features/auth/model/interface"
 	"main/features/auth/model/request"
 	"main/features/auth/model/response"
@@ -25,6 +26,7 @@ func (d *KakaoOauthAuthUseCase) KakaoOauth(c context.Context, req *request.ReqKa
 	// 토큰 검증
 	oauthData, err := utils.KakaoValidate(ctx, req.Token)
 	if err != nil {
+		fmt.Println(err)
 		return response.ResKakaoOauth{}, err
 	}
 
