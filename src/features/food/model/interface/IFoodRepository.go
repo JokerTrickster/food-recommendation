@@ -47,3 +47,7 @@ type IDailyRecommendFoodRepository interface {
 	FindOneFood(ctx context.Context, foodName string) (*mysql.Foods, error)
 	FindOneFoodImage(ctx context.Context, foodID int) (string, error)
 }
+
+type ISaveFoodRepository interface {
+	SaveFood(ctx context.Context, foodDTO *[]mysql.Foods) error
+}

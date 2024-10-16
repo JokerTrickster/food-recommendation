@@ -35,3 +35,7 @@ type EmptyImageFoodRepository struct {
 type DailyRecommendFoodRepository struct {
 	GormDB *gorm.DB
 }
+
+type SaveFoodRepository struct {
+	GormDB *gorm.DB
+}
