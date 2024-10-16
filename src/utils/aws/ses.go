@@ -14,6 +14,7 @@ type emailType string
 
 const (
 	emailTypePassword = emailType("password")
+	emailTypeAuth     = emailType("authCode")
 	emailTypeReport   = emailType("report")
 	emailTypeSignup   = emailType("signup")
 )
@@ -31,6 +32,18 @@ type ReqReportSES struct {
 	Reason string
 }
 
+func EmailSendAuthCode(email string, validateCode string) {
+	templateDataMap := map[string]string{
+		"code": validateCode,
+	}
+	templateDataJson, err := json.Marshal(templateDataMap)
+	if err != nil {
+		fmt.Println("Error marshaling template data:", err)
+		return
+	}
+
+	emailSend([]string{email}, emailTypeAuth, string(templateDataJson), "foodAuth")
+}
 func EmailSendPassword(email string, validateCode string) {
 	templateDataMap := map[string]string{
 		"randomValue": validateCode,

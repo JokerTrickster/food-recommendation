@@ -2,14 +2,15 @@ package usecase
 
 import (
 	"context"
-	"crypto/rand"
 	"encoding/base64"
 	"fmt"
 	"io/ioutil"
 	"main/features/auth/model/request"
 	"main/utils"
 	"main/utils/db/mysql"
+	"math/rand"
 	"net/http"
+	"time"
 )
 
 func CreateGoogleUserDTO(oauthData utils.OAuthData) *mysql.Users {
@@ -21,14 +22,16 @@ func CreateGoogleUserDTO(oauthData utils.OAuthData) *mysql.Users {
 	}
 }
 
-// 영문 + 숫자 6글자 랜덤값 생성
+// 숫자 5글자 랜덤값 생성
 func GeneratePasswordAuthCode() (string, error) {
-	b := make([]byte, 6)
-	_, err := rand.Read(b)
-	if err != nil {
-		return "", err
+	rand.Seed(time.Now().UnixNano()) // 난수 시드 초기화
+	code := make([]byte, 5)
+
+	for i := 0; i < 5; i++ {
+		code[i] = byte(rand.Intn(10) + '0') // 0부터 9까지 랜덤 숫자 생성
 	}
-	return base64.URLEncoding.EncodeToString(b), nil
+
+	return string(code), nil
 }
 
 func CreateTokenDTO(uID uint, accessToken string, accessTknExpiredAt int64, refreshToken string, refreshTknExpiredAt int64) mysql.Tokens {

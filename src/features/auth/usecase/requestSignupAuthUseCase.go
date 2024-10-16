@@ -52,7 +52,7 @@ func (d *RequestSignupAuthUseCase) RequestSignup(c context.Context, e entity.Req
 		return "", err
 	}
 	//TODO 4. 추후 이메일 전송
-	aws.EmailSendSignup(e.Email, authCode)
+	aws.EmailSendAuthCode(e.Email, authCode)
 
 	return authCode, nil
 }

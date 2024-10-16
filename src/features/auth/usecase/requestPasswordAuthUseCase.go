@@ -46,7 +46,7 @@ func (d *RequestPasswordAuthUseCase) RequestPassword(c context.Context, e entity
 		return "", err
 	}
 	//TODO 4. 추후 이메일 전송
-	aws.EmailSendPassword(e.Email, authCode)
+	aws.EmailSendAuthCode(e.Email, authCode)
 
 	return authCode, nil
 }
