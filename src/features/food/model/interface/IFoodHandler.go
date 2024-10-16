@@ -29,3 +29,7 @@ type IEmptyImageFoodHandler interface {
 type IDailyRecommendFoodHandler interface {
 	DailyRecommend(c echo.Context) error
 }
+
+type ISaveFoodHandler interface {
+	Save(c echo.Context) error
+}
