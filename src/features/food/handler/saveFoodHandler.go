@@ -48,7 +48,7 @@ func (d *SaveFoodHandler) Save(c echo.Context) error {
 		return err
 	}
 
-	err := d.UseCase.Save(context.TODO())
+	err := d.UseCase.Save(context.TODO(), req)
 	if err != nil {
 		return err
 	}

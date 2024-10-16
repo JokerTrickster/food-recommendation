@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"main/features/food/model/entity"
+	"main/features/food/model/request"
 	"main/features/food/model/response"
 	"main/utils/aws"
 	"main/utils/db/mysql"
@@ -272,4 +273,73 @@ func CreateRecommendFoodQuestion(entity entity.RecommendFoodEntity) string {
 	}
 
 	return question
+}
+
+func CreateFoodDTOList(req *request.ReqSaveFood) []*mysql.Foods {
+	var foods []*mysql.Foods
+	for _, f := range req.Foods {
+		food := mysql.Foods{
+			Name: f.Name,
+		}
+		foods = append(foods, &food)
+	}
+	return foods
+}
+
+func CreateSaveFoodImageDTO(food request.SaveFood) *mysql.FoodImages {
+	return &mysql.FoodImages{
+		Name:  food.Name,
+		Image: "food_default.png",
+	}
+}
+
+func CreateSaveFoodDTO(food request.SaveFood, foodImageID int) *mysql.Foods {
+	var err error
+	typeID := 0
+	timeID := 0
+	secnarioID := 0
+	themeID := 0
+	flavorID := 0
+
+	if food.Types != "" {
+		typeID, err = mysql.GetTypeID(food.Types)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+	if food.Times != "" {
+		timeID, err = mysql.GetTimeID(food.Times)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+	if food.Scenarios != "" {
+		secnarioID, err = mysql.GetScenarioID(food.Scenarios)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+	if food.Themes != "" {
+		themeID, err = mysql.GetThemeID(food.Themes)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+	if food.Flavors != "" {
+
+		flavorID, err = mysql.GetFlavorID(food.Flavors)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+
+	return &mysql.Foods{
+		TypeID:      typeID,
+		TimeID:      timeID,
+		ScenarioID:  secnarioID,
+		ThemeID:     themeID,
+		FlavorID:    flavorID,
+		Name:        food.Name,
+		FoodImageID: foodImageID,
+	}
 }

@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strings"
+	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/sesv2"
@@ -13,10 +15,11 @@ import (
 type emailType string
 
 const (
-	emailTypePassword = emailType("password")
-	emailTypeAuth     = emailType("authCode")
-	emailTypeReport   = emailType("report")
-	emailTypeSignup   = emailType("signup")
+	emailTypePassword       = emailType("password")
+	emailTypeAuth           = emailType("authCode")
+	emailTypeReport         = emailType("report")
+	emailTypeSignup         = emailType("signup")
+	emailTypeFoodNameReport = emailType("foodNameReport")
 )
 
 type sesMailData struct {
@@ -32,6 +35,20 @@ type ReqReportSES struct {
 	Reason string
 }
 
+func EmailSendFoodNameReport(foodNames []string) {
+	currentDate := time.Now().Format("01-02")
+	templateDataMap := map[string]string{
+		"currentDate": currentDate,
+		"foodList":    strings.Join(foodNames, ", "),
+	}
+	templateDataJson, err := json.Marshal(templateDataMap)
+	if err != nil {
+		fmt.Println("Error marshaling template data:", err)
+		return
+	}
+
+	emailSend([]string{"pkjhj485@gmail.com", "dtw7225@naver.com"}, emailTypeFoodNameReport, string(templateDataJson), "foodNameReport")
+}
 func EmailSendAuthCode(email string, validateCode string) {
 	templateDataMap := map[string]string{
 		"code": validateCode,

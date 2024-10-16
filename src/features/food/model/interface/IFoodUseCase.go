@@ -3,6 +3,7 @@ package _interface
 import (
 	"context"
 	"main/features/food/model/entity"
+	"main/features/food/model/request"
 	"main/features/food/model/response"
 )
 
@@ -37,5 +38,5 @@ type IDailyRecommendFoodUseCase interface {
 }
 
 type ISaveFoodUseCase interface {
-	Save(c context.Context) error
+	Save(c context.Context, req *request.ReqSaveFood) error
 }
