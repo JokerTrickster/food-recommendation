@@ -212,3 +212,12 @@ type Reports struct {
 	UserID int    `json:"userID" gorm:"column:user_id"`
 	Reason string `json:"reason" gorm:"column:reason"`
 }
+
+type Nutrients struct {
+	gorm.Model
+	FoodID       int     `json:"foodID" gorm:"column:food_id"`
+	Calorie      float64 `json:"calories" gorm:"column:calorie"`
+	Carbohydrate float64 `json:"carbohydrate" gorm:"column:carbohydrate"`
+	Protein      float64 `json:"protein" gorm:"column:protein"`
+	Fat          float64 `json:"fat" gorm:"column:fat"`
+}

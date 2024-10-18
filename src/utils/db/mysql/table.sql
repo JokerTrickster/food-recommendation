@@ -126,6 +126,20 @@ CREATE TABLE foods (
     FOREIGN KEY (food_image_id) REFERENCES food_images(id)
 );
 
+-- 영양소 테이블 칼로리, 탄수화물, 단백질, 지방 
+create table nutrients (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL DEFAULT NULL,
+    food_id INT,
+    calorie INT,
+    carbohydrate INT,
+    protein INT,
+    fat INT,
+    FOREIGN KEY (food_id) REFERENCES foods(id)
+);
+
 -- 유저에게 추천된 음식을 저장해야 된다.
 CREATE TABLE food_histories (
     id INT AUTO_INCREMENT PRIMARY KEY,
