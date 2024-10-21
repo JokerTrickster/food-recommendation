@@ -109,7 +109,7 @@ func CreateResMetaData(typeDTO []mysql.Types, timeDTO []mysql.Times, scenarioDTO
 
 	res.MetaData = metaData
 	res.MetaKeys = []string{"types", "times", "scenarios", "themes", "flavors"}
-	res.MetaKRKeys = []string{"종류", "시간", "상황", "테마", "맛"}
+	res.MetaKRKeys = []string{"종류별", "시간별", "상황별", "기분/테마별", "맛별"}
 	return res
 }
 
