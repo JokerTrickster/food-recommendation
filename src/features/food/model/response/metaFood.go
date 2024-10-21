@@ -1,8 +1,9 @@
 package response
 
 type ResMetaData struct {
-	MetaKeys []string `json:"metaKeys"`
-	MetaData MetaData `json:"metaData"`
+	MetaKeys   []string `json:"metaKeys"`
+	MetaKRKeys []string `json:"metaKRKeys"`
+	MetaData   MetaData `json:"metaData"`
 }
 
 //상황 -> 시간 -> 종륲별 -> 맛 -> 기분/테마별
