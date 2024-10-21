@@ -1518,6 +1518,12 @@ const docTemplate = `{
                 "metaData": {
                     "$ref": "#/definitions/response.MetaData"
                 },
+                "metaKRKeys": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "metaKeys": {
                     "type": "array",
                     "items": {
