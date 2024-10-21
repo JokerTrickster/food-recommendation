@@ -19,6 +19,7 @@ func CreateGoogleUserDTO(oauthData utils.OAuthData) *mysql.Users {
 		Password: "",
 		Provider: "google",
 		Birth:    "1990-01-01",
+		Name:     "임시푸드픽",
 	}
 }
 
