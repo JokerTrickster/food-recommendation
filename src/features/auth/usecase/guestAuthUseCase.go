@@ -21,7 +21,7 @@ func (d *GuestAuthUseCase) Guest(c context.Context) (response.ResGuest, error) {
 	ctx, cancel := context.WithTimeout(c, d.ContextTimeout)
 	defer cancel()
 	// user check
-	user, err := d.Repository.FindOneAndUpdateUser(ctx, "test@jokertrickster.com", "asdasd123")
+	user, err := d.Repository.FindOneAndUpdateUser(ctx, "test@test.com", "asdasd123")
 	if err != nil {
 		return response.ResGuest{}, err
 	}
