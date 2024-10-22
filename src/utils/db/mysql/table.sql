@@ -20,7 +20,8 @@ CREATE TABLE tokens (
     refresh_expired_at INT,
     user_id INT,
     access_token VARCHAR(255),
-    refresh_token VARCHAR(255)
+    refresh_token VARCHAR(255),
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE user_auths (
@@ -126,18 +127,18 @@ CREATE TABLE foods (
     FOREIGN KEY (food_image_id) REFERENCES food_images(id)
 );
 
--- 영양소 테이블 칼로리, 탄수화물, 단백질, 지방 
+-- 영양소 테이블 용량, 칼로리, 탄수화물, 단백질, 지방 
 create table nutrients (
     id INT AUTO_INCREMENT PRIMARY KEY,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP NULL DEFAULT NULL,
-    food_id INT,
-    calorie INT,
-    carbohydrate INT,
-    protein INT,
-    fat INT,
-    FOREIGN KEY (food_id) REFERENCES foods(id)
+    food_name varchar(255),
+    amount varchar(255),
+    calorie DECIMAL(10, 2),
+    carbohydrate DECIMAL(10, 2),
+    protein DECIMAL(10, 2),
+    fat DECIMAL(10, 2)
 );
 
 -- 유저에게 추천된 음식을 저장해야 된다.
@@ -149,7 +150,8 @@ CREATE TABLE food_histories (
     food_id INT,
     user_id INT,
     name varchar(255),
-    FOREIGN KEY (food_id) REFERENCES foods(id)
+    FOREIGN KEY (food_id) REFERENCES foods(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 -- 신고 테이블
@@ -159,7 +161,8 @@ CREATE TABLE reports (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP NULL DEFAULT NULL,
     user_id INT,
-    reason varchar(1000)
+    reason varchar(1000),
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 
