@@ -9,7 +9,6 @@ const (
 	ScenarioCouple = 1 + iota
 	ScenarioSolo
 	ScenarioFamily
-	ScenarioDiet
 	ScenarioCompany
 	ScenarioFriend
 )
@@ -21,7 +20,6 @@ const (
 	TimeMorning  = 1 + iota //아침
 	TimeLunch               //점심
 	TimeDinner              //저녁
-	TimeBrunch              //브런치
 	TimeSnack               //간식
 	TimeMidnight            //야식
 )
@@ -47,8 +45,9 @@ const (
 const (
 	ThemeAll             = 0
 	ThemeStressRelief    = 1 + iota // 스트레스 해소
+	ThemeHangover                   // 해장
 	ThemeFatigueRecovery            // 피로 회복
-	ThemeSpecialDay                 //특별한 날
+	ThemeDiet                       //다이어트
 	ThemeSeasonalFood               //제철 음식
 )
 
@@ -60,27 +59,24 @@ const (
 	FlavorSavory            //감칠맛
 	FlavorNutty             //고소한맛
 	FlavorSweet             //단맛
-	FlavorSalty             //짠맛
 	FlavorSour              //싱거운맛
 )
 
 // 맵 정의
 var ScenarioMap = map[string]int{
-	"연인":   ScenarioCouple,
-	"혼밥":   ScenarioSolo,
-	"가족":   ScenarioFamily,
-	"다이어트": ScenarioDiet,
-	"회식":   ScenarioCompany,
-	"친구":   ScenarioFriend,
+	"연인": ScenarioCouple,
+	"혼밥": ScenarioSolo,
+	"가족": ScenarioFamily,
+	"회식": ScenarioCompany,
+	"친구": ScenarioFriend,
 }
 
 var TimeMap = map[string]int{
-	"아침":  TimeMorning,
-	"점심":  TimeLunch,
-	"저녁":  TimeDinner,
-	"브런치": TimeBrunch,
-	"간식":  TimeSnack,
-	"야식":  TimeMidnight,
+	"아침": TimeMorning,
+	"점심": TimeLunch,
+	"저녁": TimeDinner,
+	"간식": TimeSnack,
+	"야식": TimeMidnight,
 }
 
 var TypeMap = map[string]int{
@@ -101,14 +97,14 @@ var FlavorMap = map[string]int{
 	"감칠맛":  FlavorSavory,
 	"고소한맛": FlavorNutty,
 	"단맛":   FlavorSweet,
-	"짠맛":   FlavorSalty,
 	"싱거운맛": FlavorSour,
 }
 
 var ThemeMap = map[string]int{
 	"스트레스 해소": ThemeStressRelief,
+	"해장":      ThemeHangover,
 	"피로 회복":   ThemeFatigueRecovery,
-	"특별한 날":   ThemeSpecialDay,
+	"다이어트":    ThemeDiet,
 	"제철 음식":   ThemeSeasonalFood,
 }
 
