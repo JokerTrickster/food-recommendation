@@ -629,12 +629,6 @@ const docTemplate = `{
                 "summary": "음식 이미지 업로드하기",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "food image ID",
-                        "name": "foodImageID",
-                        "in": "formData"
-                    },
-                    {
                         "type": "file",
                         "description": "음식 이미지 파일",
                         "name": "image",

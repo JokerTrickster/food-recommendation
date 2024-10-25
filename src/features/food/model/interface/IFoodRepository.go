@@ -36,7 +36,7 @@ type IRankingFoodRepository interface {
 }
 
 type IImageUploadFoodRepository interface {
-	FindOneAndUpdateFoodImages(ctx context.Context, foodID uint, filename string) error
+	FindOneAndUpdateFoodImages(ctx context.Context,foodName, fileName string) error
 }
 
 type IEmptyImageFoodRepository interface {

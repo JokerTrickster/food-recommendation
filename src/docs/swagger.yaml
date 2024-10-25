@@ -1025,10 +1025,6 @@ paths:
         INTERNAL_DB : DB 처리 실패
         GEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류
       parameters:
-      - description: food image ID
-        in: formData
-        name: foodImageID
-        type: string
       - description: 음식 이미지 파일
         in: formData
         name: image

@@ -67,7 +67,8 @@ const (
 
 // food error
 const (
-	ErrGeminiError = ErrType("GEMINI_INTERNAL_SERVER")
+	ErrGeminiError  = ErrType("GEMINI_INTERNAL_SERVER")
+	ErrFoodNotFound = ErrType("FOOD_NOT_FOUND")
 )
 
 // basic , game, room, auth error mapping
@@ -81,7 +82,7 @@ var ErrHttpCode = map[string]int{
 	"NOT_ENOUGH_CONDITION":      http.StatusBadRequest,
 	"PASSWORD_NOT_MATCH":        http.StatusBadRequest,
 	"INVALID_EMAIL_OR_PASSWORD": http.StatusBadRequest,
-	
+	"FOOD_NOT_FOUND":            http.StatusBadRequest,
 
 	//401 인증이 필요한 경우 (인증)
 	"TOKEN_BAD":            http.StatusUnauthorized,
