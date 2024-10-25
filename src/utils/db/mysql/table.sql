@@ -13,6 +13,9 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (email, password, name,birth, sex, provider) VALUES ('test@test.com', 'asdasd123', '푸드픽맨','1990-01-01', 'male', 'test');
+INSERT INTO users (email, password, name,birth, sex, provider) VALUES ('test01@test.com', 'asd123', '푸드픽맨','1990-01-01', 'male', 'test');
+INSERT INTO users (email, password, name,birth, sex, provider) VALUES ('test02@test.com', 'asd123', '푸드픽맨','1990-01-01', 'male', 'test');
+INSERT INTO users (email, password, name,birth, sex, provider) VALUES ('test03@test.com', 'asd123', '푸드픽맨','1990-01-01', 'male', 'test');
 INSERT INTO users (email, password, name,birth, sex, provider) VALUES ('ryan@gmail.com', 'asdasd123', '푸드픽맨','1990-01-01', 'male', 'test');
 INSERT INTO users (email, password, name,birth, sex, provider) VALUES ('joker@gmail.com', 'asdasd123', '푸드픽맨','1990-01-01', 'male', 'test');
 

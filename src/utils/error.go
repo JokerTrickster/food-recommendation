@@ -55,39 +55,42 @@ const (
 
 // auth error
 const (
-	ErrCodeNotFound       = ErrType("CODE_NOT_FOUND")
-	ErrUserNotFound       = ErrType("USER_NOT_FOUND")
-	ErrProfileNotFount    = ErrType("PROFILE_NOT_FOUND")
-	ErrUserAlreadyExisted = ErrType("USER_ALREADY_EXISTED")
-	ErrInvalidAccessToken = ErrType("INVALID_ACCESS_TOKEN")
-	ErrPasswordNotMatch   = ErrType("PASSWORD_NOT_MATCH")
-	ErrInvalidAuthCode    = ErrType("INVALID_AUTH_CODE")
+	ErrCodeNotFound           = ErrType("CODE_NOT_FOUND")
+	ErrUserNotFound           = ErrType("USER_NOT_FOUND")
+	ErrProfileNotFount        = ErrType("PROFILE_NOT_FOUND")
+	ErrUserAlreadyExisted     = ErrType("USER_ALREADY_EXISTED")
+	ErrInvalidAccessToken     = ErrType("INVALID_ACCESS_TOKEN")
+	ErrPasswordNotMatch       = ErrType("PASSWORD_NOT_MATCH")
+	ErrInvalidAuthCode        = ErrType("INVALID_AUTH_CODE")
+	ErrInvalidEmailOrPassword = ErrType("INVALID_EMAIL_OR_PASSWORD") //패스워드 또는 이메일이 잘못됐습니다.
 )
 
 // basic , game, room, auth error mapping
 var ErrHttpCode = map[string]int{
 	//400
-	"PARAM_BAD":            http.StatusBadRequest,
-	"USER_ALREADY_EXISTED": http.StatusBadRequest,
-	"BAD_REQUEST":          http.StatusBadRequest,
-	"NOT_ALL_USERS_READY":  http.StatusBadRequest,
-	"NOT_OWNER":            http.StatusBadRequest,
-	"NOT_FIRST_PLAYER":     http.StatusBadRequest,
-	"ROOM_NOT_FOUND":       http.StatusBadRequest,
-	"ROOM_USER_NOT_FOUND":  http.StatusBadRequest,
-	"USER_NOT_FOUND":       http.StatusBadRequest,
-	"PROFILE_NOT_FOUND":    http.StatusBadRequest,
-	"ROOM_FULL":            http.StatusBadRequest,
-	"NOT_LOAN_CARD":        http.StatusBadRequest,
-	"NOT_ENOUGH_CARD":      http.StatusBadRequest,
-	"NOT_ENOUGH_CONDITION": http.StatusBadRequest,
-	"PASSWORD_NOT_MATCH":   http.StatusBadRequest,
+	"PARAM_BAD":                 http.StatusBadRequest,
+	"USER_ALREADY_EXISTED":      http.StatusBadRequest,
+	"BAD_REQUEST":               http.StatusBadRequest,
+	"NOT_ALL_USERS_READY":       http.StatusBadRequest,
+	"NOT_OWNER":                 http.StatusBadRequest,
+	"NOT_FIRST_PLAYER":          http.StatusBadRequest,
+	"ROOM_NOT_FOUND":            http.StatusBadRequest,
+	"ROOM_USER_NOT_FOUND":       http.StatusBadRequest,
+	"USER_NOT_FOUND":            http.StatusBadRequest,
+	"PROFILE_NOT_FOUND":         http.StatusBadRequest,
+	"ROOM_FULL":                 http.StatusBadRequest,
+	"NOT_LOAN_CARD":             http.StatusBadRequest,
+	"NOT_ENOUGH_CARD":           http.StatusBadRequest,
+	"NOT_ENOUGH_CONDITION":      http.StatusBadRequest,
+	"PASSWORD_NOT_MATCH":        http.StatusBadRequest,
+	"INVALID_EMAIL_OR_PASSWORD": http.StatusBadRequest,
 
-	//401
+	//401 인증이 필요한 경우 (인증)
 	"TOKEN_BAD":            http.StatusUnauthorized,
 	"INVALID_ACCESS_TOKEN": http.StatusUnauthorized,
 	"INVALID_AUTH_CODE":    http.StatusUnauthorized,
-	//403
+
+	//403 인증은 됐으나 권한이 없는 경우 (인가)
 	"PARTNER": http.StatusForbidden,
 
 	//404
