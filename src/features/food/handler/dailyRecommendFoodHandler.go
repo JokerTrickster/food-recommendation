@@ -31,13 +31,16 @@ func NewDailyRecommendFoodHandler(c *echo.Echo, useCase _interface.IDailyRecomme
 // @Description
 // @Description ■ errCode with 400
 // @Description PARAM_BAD : 파라미터 오류
-// @Description USER_NOT_EXIST : 유저가 존재하지 않음
-// @Description USER_ALREADY_EXISTED : 유저가 이미 존재
+// @Description USER_NOT_FOUND : 유저가 존재하지 않음
+// @Description ■ errCode with 401
+// @Description INVALID_AUTH_CODE : 인증 코드 검증 실패
+// @Description TOKEN_BAD : 잘못된 토큰
+// @Description INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 // @Description
 // @Description ■ errCode with 500
 // @Description INTERNAL_SERVER : 내부 로직 처리 실패
 // @Description INTERNAL_DB : DB 처리 실패
-// @Description PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+// @Description GEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류
 // @Produce json
 // @Success 200 {object} response.ResDailyRecommendFood
 // @Failure 400 {object} error

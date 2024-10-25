@@ -24,6 +24,7 @@ func (g *CheckEmailAuthRepository) CheckEmail(ctx context.Context, email string)
 	if result.Error != nil && result.Error.Error() != gorm.ErrRecordNotFound.Error() {
 		return utils.ErrorMsg(ctx, utils.ErrUserNotFound, utils.Trace(), utils.HandleError(_errors.ErrUserNotFound.Error()+result.Error.Error(), email), utils.ErrFromClient)
 	}
+	
 	if result.RowsAffected == 1 {
 		return utils.ErrorMsg(ctx, utils.ErrUserAlreadyExisted, utils.Trace(), utils.HandleError(_errors.ErrUserAlreadyExisted.Error(), email), utils.ErrFromClient)
 	}

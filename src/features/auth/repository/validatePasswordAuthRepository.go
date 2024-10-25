@@ -20,7 +20,7 @@ func (g *ValidatePasswordAuthRepository) CheckAuthCode(ctx context.Context, emai
 	err := g.GormDB.WithContext(ctx).Model(&userAuth).Where("email = ? AND auth_code = ?", email, code).First(&userAuth).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return utils.ErrorMsg(ctx, utils.ErrCodeNotFound, utils.Trace(), utils.HandleError(_errors.ErrCodeNotFound.Error(), email, code), utils.ErrFromClient)
+			return utils.ErrorMsg(ctx, utils.ErrBadParameter, utils.Trace(), utils.HandleError(_errors.ErrCodeOrEmailNotFound.Error(), email, code), utils.ErrFromClient)
 		} else {
 			return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(err.Error(), email, code), utils.ErrFromMysqlDB)
 		}

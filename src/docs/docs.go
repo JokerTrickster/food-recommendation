@@ -17,7 +17,7 @@ const docTemplate = `{
     "paths": {
         "/v0.1/auth/email/check": {
             "get": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\nINVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
                 "produces": [
                     "application/json"
                 ],
@@ -54,7 +54,7 @@ const docTemplate = `{
         },
         "/v0.1/auth/google": {
             "get": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\nINVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
                 "produces": [
                     "application/json"
                 ],
@@ -82,7 +82,7 @@ const docTemplate = `{
         },
         "/v0.1/auth/google/callback": {
             "get": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\nINVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
                 "produces": [
                     "application/json"
                 ],
@@ -110,7 +110,7 @@ const docTemplate = `{
         },
         "/v0.1/auth/guest": {
             "post": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\nINVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
                 "produces": [
                     "application/json"
                 ],
@@ -138,7 +138,7 @@ const docTemplate = `{
         },
         "/v0.1/auth/kakao": {
             "post": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\nINVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
                 "produces": [
                     "application/json"
                 ],
@@ -177,7 +177,7 @@ const docTemplate = `{
         },
         "/v0.1/auth/logout": {
             "post": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\nINVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
                 "produces": [
                     "application/json"
                 ],
@@ -214,7 +214,7 @@ const docTemplate = `{
         },
         "/v0.1/auth/naver": {
             "post": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\nINVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
                 "produces": [
                     "application/json"
                 ],
@@ -253,7 +253,7 @@ const docTemplate = `{
         },
         "/v0.1/auth/password/request": {
             "post": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\nINVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
                 "produces": [
                     "application/json"
                 ],
@@ -292,7 +292,7 @@ const docTemplate = `{
         },
         "/v0.1/auth/password/validate": {
             "post": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\nINVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
                 "produces": [
                     "application/json"
                 ],
@@ -331,7 +331,7 @@ const docTemplate = `{
         },
         "/v0.1/auth/signin": {
             "post": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\nINVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
                 "produces": [
                     "application/json"
                 ],
@@ -370,7 +370,7 @@ const docTemplate = `{
         },
         "/v0.1/auth/signup": {
             "post": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\nINVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
                 "produces": [
                     "application/json"
                 ],
@@ -409,7 +409,7 @@ const docTemplate = `{
         },
         "/v0.1/auth/signup/request": {
             "post": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\nINVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
                 "produces": [
                     "application/json"
                 ],
@@ -448,7 +448,7 @@ const docTemplate = `{
         },
         "/v0.1/auth/token/reissue": {
             "put": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\nINVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
                 "produces": [
                     "application/json"
                 ],
@@ -487,7 +487,7 @@ const docTemplate = `{
         },
         "/v0.1/foods": {
             "post": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nGEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류",
                 "produces": [
                     "application/json"
                 ],
@@ -526,7 +526,7 @@ const docTemplate = `{
         },
         "/v0.1/foods/daily-recommend": {
             "get": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nGEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류",
                 "produces": [
                     "application/json"
                 ],
@@ -554,7 +554,7 @@ const docTemplate = `{
         },
         "/v0.1/foods/empty-image": {
             "get": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nGEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류",
                 "produces": [
                     "application/json"
                 ],
@@ -582,7 +582,7 @@ const docTemplate = `{
         },
         "/v0.1/foods/history": {
             "get": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nGEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류",
                 "produces": [
                     "application/json"
                 ],
@@ -619,7 +619,7 @@ const docTemplate = `{
         },
         "/v0.1/foods/image": {
             "post": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nGEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류",
                 "produces": [
                     "application/json"
                 ],
@@ -661,7 +661,7 @@ const docTemplate = `{
         },
         "/v0.1/foods/meta": {
             "get": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nGEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류",
                 "produces": [
                     "application/json"
                 ],
@@ -689,7 +689,7 @@ const docTemplate = `{
         },
         "/v0.1/foods/rank": {
             "get": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nGEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류",
                 "produces": [
                     "application/json"
                 ],
@@ -717,7 +717,7 @@ const docTemplate = `{
         },
         "/v0.1/foods/recommend": {
             "post": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nGEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류",
                 "produces": [
                     "application/json"
                 ],
@@ -763,7 +763,7 @@ const docTemplate = `{
         },
         "/v0.1/foods/select": {
             "post": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nGEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류",
                 "produces": [
                     "application/json"
                 ],
@@ -855,7 +855,7 @@ const docTemplate = `{
         },
         "/v0.1/users": {
             "delete": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\nPASSWORD_NOT_MATCH : 패스워드가 일치하지 않음\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
                 "produces": [
                     "application/json"
                 ],
@@ -892,7 +892,7 @@ const docTemplate = `{
         },
         "/v0.1/users/profile": {
             "put": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
                 "produces": [
                     "application/json"
                 ],
@@ -938,7 +938,7 @@ const docTemplate = `{
         },
         "/v0.1/users/{userID}": {
             "get": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
                 "produces": [
                     "application/json"
                 ],
@@ -982,7 +982,7 @@ const docTemplate = `{
         },
         "/v0.2/auth/google": {
             "post": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\nINVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
                 "produces": [
                     "application/json"
                 ],
@@ -1021,7 +1021,7 @@ const docTemplate = `{
         },
         "/v0.2/auth/google/callback": {
             "get": {
-                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_EXIST : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\nUSER_ALREADY_EXISTED : 유저가 이미 존재\nINVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패",
                 "produces": [
                     "application/json"
                 ],

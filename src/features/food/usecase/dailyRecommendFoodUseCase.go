@@ -67,7 +67,7 @@ func (d *DailyRecommendFoodUseCase) DailyRecommend(c context.Context) (response.
 		}
 
 	} else {
-		return response.ResDailyRecommendFood{}, utils.ErrorMsg(ctx, utils.ErrNotFound, utils.Trace(), _errors.ErrFoodNotFound.Error(), utils.ErrFromGemini)
+		return response.ResDailyRecommendFood{}, utils.ErrorMsg(ctx, utils.ErrGeminiError, utils.Trace(), _errors.ErrFoodNotFound.Error(), utils.ErrFromGemini)
 	}
 	res := response.ResDailyRecommendFood{}
 	//db에서 가져온다.
