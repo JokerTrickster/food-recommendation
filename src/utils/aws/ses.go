@@ -46,8 +46,7 @@ func EmailSendFoodUploadReport(successFoodList, failedFoodList []string) {
 		fmt.Println("Error marshaling template data:", err)
 		return
 	}
-	//"dtw7225@naver.com"
-	emailSend([]string{"pkjhj485@gmail.com"}, emailTypeFoodNameReport, string(templateDataJson), "foodUploadReport")
+	emailSend([]string{"pkjhj485@gmail.com", "dtw7225@naver.com"}, emailTypeFoodNameReport, string(templateDataJson), "foodUploadReport")
 }
 func EmailSendFoodNameReport(foodNames []string) {
 	currentDate := time.Now().Format("01-02")
