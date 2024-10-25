@@ -391,7 +391,13 @@ paths:
       description: |-
         ■ errCode with 400
         PARAM_BAD : 파라미터 오류
+        USER_NOT_EXIST : 유저가 존재하지 않음
         USER_ALREADY_EXISTED : 유저가 이미 존재
+        INVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
@@ -426,6 +432,11 @@ paths:
         PARAM_BAD : 파라미터 오류
         USER_NOT_EXIST : 유저가 존재하지 않음
         USER_ALREADY_EXISTED : 유저가 이미 존재
+        INVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
@@ -453,6 +464,11 @@ paths:
         PARAM_BAD : 파라미터 오류
         USER_NOT_EXIST : 유저가 존재하지 않음
         USER_ALREADY_EXISTED : 유저가 이미 존재
+        INVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
@@ -480,6 +496,11 @@ paths:
         PARAM_BAD : 파라미터 오류
         USER_NOT_EXIST : 유저가 존재하지 않음
         USER_ALREADY_EXISTED : 유저가 이미 존재
+        INVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
@@ -507,6 +528,11 @@ paths:
         PARAM_BAD : 파라미터 오류
         USER_NOT_EXIST : 유저가 존재하지 않음
         USER_ALREADY_EXISTED : 유저가 이미 존재
+        INVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
@@ -541,6 +567,11 @@ paths:
         PARAM_BAD : 파라미터 오류
         USER_NOT_EXIST : 유저가 존재하지 않음
         USER_ALREADY_EXISTED : 유저가 이미 존재
+        INVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
@@ -575,6 +606,11 @@ paths:
         PARAM_BAD : 파라미터 오류
         USER_NOT_EXIST : 유저가 존재하지 않음
         USER_ALREADY_EXISTED : 유저가 이미 존재
+        INVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
@@ -609,6 +645,11 @@ paths:
         PARAM_BAD : 파라미터 오류
         USER_NOT_EXIST : 유저가 존재하지 않음
         USER_ALREADY_EXISTED : 유저가 이미 존재
+        INVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
@@ -643,6 +684,11 @@ paths:
         PARAM_BAD : 파라미터 오류
         USER_NOT_EXIST : 유저가 존재하지 않음
         USER_ALREADY_EXISTED : 유저가 이미 존재
+        INVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
@@ -677,6 +723,11 @@ paths:
         PARAM_BAD : 파라미터 오류
         USER_NOT_EXIST : 유저가 존재하지 않음
         USER_ALREADY_EXISTED : 유저가 이미 존재
+        INVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
@@ -711,6 +762,11 @@ paths:
         PARAM_BAD : 파라미터 오류
         USER_NOT_EXIST : 유저가 존재하지 않음
         USER_ALREADY_EXISTED : 유저가 이미 존재
+        INVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
@@ -745,6 +801,11 @@ paths:
         PARAM_BAD : 파라미터 오류
         USER_NOT_EXIST : 유저가 존재하지 않음
         USER_ALREADY_EXISTED : 유저가 이미 존재
+        INVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
@@ -779,6 +840,11 @@ paths:
         PARAM_BAD : 파라미터 오류
         USER_NOT_EXIST : 유저가 존재하지 않음
         USER_ALREADY_EXISTED : 유저가 이미 존재
+        INVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
@@ -811,13 +877,16 @@ paths:
       description: |-
         ■ errCode with 400
         PARAM_BAD : 파라미터 오류
-        USER_NOT_EXIST : 유저가 존재하지 않음
-        USER_ALREADY_EXISTED : 유저가 이미 존재
+        USER_NOT_FOUND : 유저가 존재하지 않음
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
         INTERNAL_DB : DB 처리 실패
-        PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+        GEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류
       parameters:
       - description: 이름, 시간, 상황, 맛, 테마, 종류
         in: body
@@ -846,13 +915,16 @@ paths:
       description: |-
         ■ errCode with 400
         PARAM_BAD : 파라미터 오류
-        USER_NOT_EXIST : 유저가 존재하지 않음
-        USER_ALREADY_EXISTED : 유저가 이미 존재
+        USER_NOT_FOUND : 유저가 존재하지 않음
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
         INTERNAL_DB : DB 처리 실패
-        PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+        GEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류
       produces:
       - application/json
       responses:
@@ -874,13 +946,16 @@ paths:
       description: |-
         ■ errCode with 400
         PARAM_BAD : 파라미터 오류
-        USER_NOT_EXIST : 유저가 존재하지 않음
-        USER_ALREADY_EXISTED : 유저가 이미 존재
+        USER_NOT_FOUND : 유저가 존재하지 않음
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
         INTERNAL_DB : DB 처리 실패
-        PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+        GEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류
       produces:
       - application/json
       responses:
@@ -902,13 +977,16 @@ paths:
       description: |-
         ■ errCode with 400
         PARAM_BAD : 파라미터 오류
-        USER_NOT_EXIST : 유저가 존재하지 않음
-        USER_ALREADY_EXISTED : 유저가 이미 존재
+        USER_NOT_FOUND : 유저가 존재하지 않음
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
         INTERNAL_DB : DB 처리 실패
-        PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+        GEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류
       parameters:
       - description: accessToken
         in: header
@@ -936,13 +1014,16 @@ paths:
       description: |-
         ■ errCode with 400
         PARAM_BAD : 파라미터 오류
-        USER_NOT_EXIST : 유저가 존재하지 않음
-        USER_ALREADY_EXISTED : 유저가 이미 존재
+        USER_NOT_FOUND : 유저가 존재하지 않음
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
         INTERNAL_DB : DB 처리 실패
-        PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+        GEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류
       parameters:
       - description: food image ID
         in: formData
@@ -973,13 +1054,16 @@ paths:
       description: |-
         ■ errCode with 400
         PARAM_BAD : 파라미터 오류
-        USER_NOT_EXIST : 유저가 존재하지 않음
-        USER_ALREADY_EXISTED : 유저가 이미 존재
+        USER_NOT_FOUND : 유저가 존재하지 않음
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
         INTERNAL_DB : DB 처리 실패
-        PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+        GEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류
       produces:
       - application/json
       responses:
@@ -1001,13 +1085,16 @@ paths:
       description: |-
         ■ errCode with 400
         PARAM_BAD : 파라미터 오류
-        USER_NOT_EXIST : 유저가 존재하지 않음
-        USER_ALREADY_EXISTED : 유저가 이미 존재
+        USER_NOT_FOUND : 유저가 존재하지 않음
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
         INTERNAL_DB : DB 처리 실패
-        PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+        GEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류
       produces:
       - application/json
       responses:
@@ -1029,13 +1116,16 @@ paths:
       description: |-
         ■ errCode with 400
         PARAM_BAD : 파라미터 오류
-        USER_NOT_EXIST : 유저가 존재하지 않음
-        USER_ALREADY_EXISTED : 유저가 이미 존재
+        USER_NOT_FOUND : 유저가 존재하지 않음
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
         INTERNAL_DB : DB 처리 실패
-        PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+        GEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류
       parameters:
       - description: accessToken
         in: header
@@ -1069,13 +1159,16 @@ paths:
       description: |-
         ■ errCode with 400
         PARAM_BAD : 파라미터 오류
-        USER_NOT_EXIST : 유저가 존재하지 않음
-        USER_ALREADY_EXISTED : 유저가 이미 존재
+        USER_NOT_FOUND : 유저가 존재하지 않음
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
         INTERNAL_DB : DB 처리 실패
-        PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+        GEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류
       parameters:
       - description: accessToken
         in: header
@@ -1149,8 +1242,12 @@ paths:
       description: |-
         ■ errCode with 400
         PARAM_BAD : 파라미터 오류
-        USER_NOT_EXIST : 유저가 존재하지 않음
-        USER_ALREADY_EXISTED : 유저가 이미 존재
+        USER_NOT_FOUND : 유저가 존재하지 않음
+        PASSWORD_NOT_MATCH : 패스워드가 일치하지 않음
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
@@ -1183,8 +1280,11 @@ paths:
       description: |-
         ■ errCode with 400
         PARAM_BAD : 파라미터 오류
-        USER_NOT_EXIST : 유저가 존재하지 않음
-        USER_ALREADY_EXISTED : 유저가 이미 존재
+        USER_NOT_FOUND : 유저가 존재하지 않음
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
@@ -1222,8 +1322,11 @@ paths:
       description: |-
         ■ errCode with 400
         PARAM_BAD : 파라미터 오류
-        USER_NOT_EXIST : 유저가 존재하지 않음
-        USER_ALREADY_EXISTED : 유저가 이미 존재
+        USER_NOT_FOUND : 유저가 존재하지 않음
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
@@ -1264,6 +1367,11 @@ paths:
         PARAM_BAD : 파라미터 오류
         USER_NOT_EXIST : 유저가 존재하지 않음
         USER_ALREADY_EXISTED : 유저가 이미 존재
+        INVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
@@ -1298,6 +1406,11 @@ paths:
         PARAM_BAD : 파라미터 오류
         USER_NOT_EXIST : 유저가 존재하지 않음
         USER_ALREADY_EXISTED : 유저가 이미 존재
+        INVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
 
         ■ errCode with 500
         INTERNAL_SERVER : 내부 로직 처리 실패
