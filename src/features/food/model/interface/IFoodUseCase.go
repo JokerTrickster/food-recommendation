@@ -40,3 +40,7 @@ type IDailyRecommendFoodUseCase interface {
 type ISaveFoodUseCase interface {
 	Save(c context.Context, req *request.ReqSaveFood) error
 }
+
+type ICheckImageUploadFoodUseCase interface {
+	CheckImageUpload(c context.Context, req *request.ReqCheckImageUploadFood) error
+}

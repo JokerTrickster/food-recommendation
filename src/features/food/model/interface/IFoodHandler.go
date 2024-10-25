@@ -33,3 +33,6 @@ type IDailyRecommendFoodHandler interface {
 type ISaveFoodHandler interface {
 	Save(c echo.Context) error
 }
+type ICheckImageUploadFoodHandler interface {
+	CheckImageUpload(c echo.Context) error
+}

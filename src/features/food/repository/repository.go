@@ -39,3 +39,7 @@ type DailyRecommendFoodRepository struct {
 type SaveFoodRepository struct {
 	GormDB *gorm.DB
 }
+
+type CheckImageUploadFoodRepository struct {
+	GormDB *gorm.DB
+}

@@ -36,7 +36,7 @@ type IRankingFoodRepository interface {
 }
 
 type IImageUploadFoodRepository interface {
-	FindOneAndUpdateFoodImages(ctx context.Context,foodName, fileName string) error
+	FindOneAndUpdateFoodImages(ctx context.Context, foodName, fileName string) error
 }
 
 type IEmptyImageFoodRepository interface {
@@ -51,4 +51,7 @@ type IDailyRecommendFoodRepository interface {
 type ISaveFoodRepository interface {
 	SaveFood(ctx context.Context, foodDTO *mysql.Foods) error
 	FindOneOrCreateFoodImage(ctx context.Context, foodImageDTO *mysql.FoodImages) (*mysql.FoodImages, error)
+}
+
+type ICheckImageUploadFoodRepository interface {
 }
