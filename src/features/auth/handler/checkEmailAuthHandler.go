@@ -28,7 +28,7 @@ func NewCheckEmailAuthHandler(c *echo.Echo, useCase _interface.ICheckEmailAuthUs
 // @Description
 // @Description ■ errCode with 400
 // @Description PARAM_BAD : 파라미터 오류
-// @Description USER_NOT_EXIST : 유저가 존재하지 않음
+// @Description USER_NOT_FOUND : 유저가 존재하지 않음
 // @Description USER_ALREADY_EXISTED : 유저가 이미 존재
 // @Description INVALID_EMAIL_OR_PASSWORD : 비밀번호 또는 이메일 잘못 요청
 // @Description ■ errCode with 401

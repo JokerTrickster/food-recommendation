@@ -81,6 +81,7 @@ var ErrHttpCode = map[string]int{
 	"NOT_ENOUGH_CONDITION":      http.StatusBadRequest,
 	"PASSWORD_NOT_MATCH":        http.StatusBadRequest,
 	"INVALID_EMAIL_OR_PASSWORD": http.StatusBadRequest,
+	
 
 	//401 인증이 필요한 경우 (인증)
 	"TOKEN_BAD":            http.StatusUnauthorized,
