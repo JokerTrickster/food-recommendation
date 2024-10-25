@@ -65,21 +65,18 @@ const (
 	ErrInvalidEmailOrPassword = ErrType("INVALID_EMAIL_OR_PASSWORD") //패스워드 또는 이메일이 잘못됐습니다.
 )
 
+// food error
+const (
+	ErrGeminiError = ErrType("GEMINI_INTERNAL_SERVER")
+)
+
 // basic , game, room, auth error mapping
 var ErrHttpCode = map[string]int{
 	//400
 	"PARAM_BAD":                 http.StatusBadRequest,
 	"USER_ALREADY_EXISTED":      http.StatusBadRequest,
 	"BAD_REQUEST":               http.StatusBadRequest,
-	"NOT_ALL_USERS_READY":       http.StatusBadRequest,
-	"NOT_OWNER":                 http.StatusBadRequest,
-	"NOT_FIRST_PLAYER":          http.StatusBadRequest,
-	"ROOM_NOT_FOUND":            http.StatusBadRequest,
-	"ROOM_USER_NOT_FOUND":       http.StatusBadRequest,
 	"USER_NOT_FOUND":            http.StatusBadRequest,
-	"PROFILE_NOT_FOUND":         http.StatusBadRequest,
-	"ROOM_FULL":                 http.StatusBadRequest,
-	"NOT_LOAN_CARD":             http.StatusBadRequest,
 	"NOT_ENOUGH_CARD":           http.StatusBadRequest,
 	"NOT_ENOUGH_CONDITION":      http.StatusBadRequest,
 	"PASSWORD_NOT_MATCH":        http.StatusBadRequest,
@@ -97,9 +94,9 @@ var ErrHttpCode = map[string]int{
 	"NOT_FOUND": http.StatusNotFound,
 
 	//500
-	"INTERNAL_SERVER":            http.StatusInternalServerError,
-	"INTERNAL_DB":                http.StatusInternalServerError,
-	"PLAYER_STATE_CHANGE_FAILED": http.StatusInternalServerError,
+	"INTERNAL_SERVER":        http.StatusInternalServerError,
+	"INTERNAL_DB":            http.StatusInternalServerError,
+	"GEMINI_INTERNAL_SERVER": http.StatusInternalServerError,
 }
 
 func ErrorParsing(data string) Err {

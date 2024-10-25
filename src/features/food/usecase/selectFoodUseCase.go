@@ -83,7 +83,7 @@ func (d *SelectFoodUseCase) Select(c context.Context, e entity.SelectFoodEntity)
 		}
 
 	} else {
-		return response.ResSelectFood{}, utils.ErrorMsg(ctx, utils.ErrNotFound, utils.Trace(), _errors.ErrFoodNotFound.Error(), utils.ErrFromGemini)
+		return response.ResSelectFood{}, utils.ErrorMsg(ctx, utils.ErrGeminiError, utils.Trace(), _errors.ErrFoodNotFound.Error(), utils.ErrFromGemini)
 	}
 	//레디스 저장한다.
 

@@ -71,7 +71,7 @@ func (d *RecommendFoodUseCase) Recommend(c context.Context, e entity.RecommendFo
 		}
 
 	} else {
-		return response.ResRecommendFood{}, utils.ErrorMsg(ctx, utils.ErrNotFound, utils.Trace(), _errors.ErrFoodNotFound.Error(), utils.ErrFromGemini)
+		return response.ResRecommendFood{}, utils.ErrorMsg(ctx, utils.ErrGeminiError, utils.Trace(), _errors.ErrFoodNotFound.Error(), utils.ErrFromGemini)
 	}
 	res := response.ResRecommendFood{}
 	//db에 저장
