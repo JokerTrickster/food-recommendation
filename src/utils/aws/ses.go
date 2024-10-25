@@ -15,11 +15,12 @@ import (
 type emailType string
 
 const (
-	emailTypePassword       = emailType("password")
-	emailTypeAuth           = emailType("authCode")
-	emailTypeReport         = emailType("report")
-	emailTypeSignup         = emailType("signup")
-	emailTypeFoodNameReport = emailType("foodNameReport")
+	emailTypePassword         = emailType("password")
+	emailTypeAuth             = emailType("authCode")
+	emailTypeReport           = emailType("report")
+	emailTypeSignup           = emailType("signup")
+	emailTypeFoodNameReport   = emailType("foodNameReport")
+	emailTypeFoodUploadReport = emailType("foodUploadReport")
 )
 
 type sesMailData struct {
@@ -35,6 +36,19 @@ type ReqReportSES struct {
 	Reason string
 }
 
+func EmailSendFoodUploadReport(successFoodList, failedFoodList []string) {
+	templateDataMap := map[string]string{
+		"successFoodList": strings.Join(successFoodList, ", "),
+		"failedFoodList":  strings.Join(failedFoodList, ", "),
+	}
+	templateDataJson, err := json.Marshal(templateDataMap)
+	if err != nil {
+		fmt.Println("Error marshaling template data:", err)
+		return
+	}
+	//"dtw7225@naver.com"
+	emailSend([]string{"pkjhj485@gmail.com"}, emailTypeFoodNameReport, string(templateDataJson), "foodUploadReport")
+}
 func EmailSendFoodNameReport(foodNames []string) {
 	currentDate := time.Now().Format("01-02")
 	templateDataMap := map[string]string{
