@@ -4,7 +4,6 @@ import (
 	"context"
 	"main/features/food/model/entity"
 	_interface "main/features/food/model/interface"
-	"strconv"
 
 	"net/http"
 
@@ -39,7 +38,6 @@ func NewImageUploadFoodHandler(c *echo.Echo, useCase _interface.IImageUploadFood
 // @Description INTERNAL_SERVER : 내부 로직 처리 실패
 // @Description INTERNAL_DB : DB 처리 실패
 // @Description GEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류
-// @Param foodImageID formData string false "food image ID"
 // @Param image formData file false "음식 이미지 파일"
 // @Produce json
 // @Success 200 {object} bool
@@ -52,14 +50,8 @@ func (d *ImageUploadFoodHandler) ImageUpload(c echo.Context) error {
 	if err != nil {
 		return err
 	}
-
-	foodImageID, err := strconv.Atoi(c.FormValue("foodImageID"))
-	if err != nil {
-		return err
-	}
 	entity := entity.ImageUploadFoodEntity{
-		FoodID: foodImageID,
-		Image:  file,
+		Image: file,
 	}
 
 	//business logic

@@ -59,9 +59,10 @@ func ImageUpload(ctx context.Context, file *multipart.FileHeader, filename strin
 	}
 
 	_, err = awsClientS3Uploader.Upload(ctx, &s3.PutObjectInput{
-		Bucket: aws.String(bucket),
-		Key:    aws.String(fmt.Sprintf("%s/%s", meta.path, filename)),
-		Body:   buf,
+		Bucket:      aws.String(bucket),
+		Key:         aws.String(fmt.Sprintf("%s/%s", meta.path, filename)),
+		Body:        buf,
+		ContentType: aws.String("image/png"),
 	})
 	if err != nil {
 		return fmt.Errorf("fail to upload image to s3 - bucket:%s / key:%s/%s", bucket, meta.path, filename)
