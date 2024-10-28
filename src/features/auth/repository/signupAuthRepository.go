@@ -47,15 +47,15 @@ func (g *SignupAuthRepository) UserCheckByEmail(ctx context.Context, email strin
 		return utils.ErrorMsg(ctx, utils.ErrUserAlreadyExisted, utils.Trace(), utils.HandleError(_errors.ErrUserAlreadyExisted.Error(), email), utils.ErrFromClient)
 	}
 }
-func (g *SignupAuthRepository) InsertOneUser(ctx context.Context, user mysql.Users) error {
+func (g *SignupAuthRepository) InsertOneUser(ctx context.Context, user mysql.Users) (uint, error) {
 	result := g.GormDB.WithContext(ctx).Create(&user)
 	if result.RowsAffected == 0 {
-		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError("failed user insert", user), utils.ErrFromMysqlDB)
+		return 0, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError("failed user insert", user), utils.ErrFromMysqlDB)
 	}
 	if result.Error != nil {
-		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(result.Error.Error(), user), utils.ErrFromMysqlDB)
+		return 0, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(result.Error.Error(), user), utils.ErrFromMysqlDB)
 	}
-	return nil
+	return user.ID, nil
 }
 
 func (g *SignupAuthRepository) VerifyAuthCode(ctx context.Context, email, code string) error {

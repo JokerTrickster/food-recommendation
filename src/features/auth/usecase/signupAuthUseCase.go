@@ -38,11 +38,11 @@ func (d *SignupAuthUseCase) Signup(c context.Context, req *request.ReqSignup) (r
 	user := CreateSignupUser(req)
 
 	// 유저 정보 insert
-	err = d.Repository.InsertOneUser(ctx, user)
+	uID, err := d.Repository.InsertOneUser(ctx, user)
 	if err != nil {
 		return response.ResSignup{}, err
 	}
-
+	user.ID = uID
 	// token create
 	accessToken, _, refreshToken, refreshTknExpiredAt, err := utils.GenerateToken(user.Email, user.ID)
 	if err != nil {

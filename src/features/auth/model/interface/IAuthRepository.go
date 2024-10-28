@@ -7,7 +7,7 @@ import (
 
 type ISignupAuthRepository interface {
 	UserCheckByEmail(ctx context.Context, email string) error
-	InsertOneUser(ctx context.Context, user mysql.Users) error
+	InsertOneUser(ctx context.Context, user mysql.Users) (uint, error)
 	SaveToken(ctx context.Context, uID uint, accessToken, refreshToken string, refreshTknExpiredAt int64) error
 	DeleteToken(ctx context.Context, uID uint) error
 	VerifyAuthCode(ctx context.Context, email, code string) error
