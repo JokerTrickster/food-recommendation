@@ -144,7 +144,7 @@ create table nutrients (
     deleted_at TIMESTAMP NULL DEFAULT NULL,
     food_name varchar(255),
     amount varchar(255),
-    calorie DECIMAL(10, 2),
+    kcal DECIMAL(10, 2),
     carbohydrate DECIMAL(10, 2),
     protein DECIMAL(10, 2),
     fat DECIMAL(10, 2)

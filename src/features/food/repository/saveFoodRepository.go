@@ -58,3 +58,11 @@ func (d *SaveFoodRepository) FindOneOrCreateFoodImage(ctx context.Context, foodI
 	// 조회된 데이터를 반환
 	return &foodImage, nil
 }
+
+func (d *SaveFoodRepository) SaveNutrient(ctx context.Context, nutrientDTO *mysql.Nutrients) error {
+	// 데이터 저장
+	if err := d.GormDB.WithContext(ctx).Create(&nutrientDTO).Error; err != nil {
+		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(_errors.ErrServerError.Error()+err.Error(), nutrientDTO), utils.ErrFromMysqlDB)
+	}
+	return nil
+}

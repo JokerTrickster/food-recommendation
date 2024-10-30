@@ -1340,11 +1340,26 @@ const docTemplate = `{
                 "name"
             ],
             "properties": {
+                "amount": {
+                    "type": "string"
+                },
+                "carbohydrate": {
+                    "type": "number"
+                },
+                "fat": {
+                    "type": "number"
+                },
                 "flavors": {
                     "type": "string"
                 },
+                "kcal": {
+                    "type": "number"
+                },
                 "name": {
                     "type": "string"
+                },
+                "protein": {
+                    "type": "number"
                 },
                 "scenarios": {
                     "type": "string"

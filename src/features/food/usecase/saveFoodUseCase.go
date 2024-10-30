@@ -34,6 +34,11 @@ func (d *SaveFoodUseCase) Save(c context.Context, req *request.ReqSaveFood) erro
 		if err != nil {
 			return err
 		}
+		nutirentDTO := CreateSaveNutrientDTO(food)
+		err = d.Repository.SaveNutrient(ctx, nutirentDTO)
+		if err != nil {
+			return err
+		}
 		foods = append(foods, food.Name)
 	}
 
