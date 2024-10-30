@@ -344,3 +344,14 @@ func CreateSaveFoodDTO(food request.SaveFood, foodImageID int) *mysql.Foods {
 		FoodImageID: foodImageID,
 	}
 }
+
+func CreateSaveNutrientDTO(food request.SaveFood) *mysql.Nutrients {
+	return &mysql.Nutrients{
+		FoodName:     food.Name,
+		Kcal:         food.Kcal,
+		Fat:          food.Fat,
+		Carbohydrate: food.Carbohydrate,
+		Protein:      food.Protein,
+		Amount:       food.Amount,
+	}
+}

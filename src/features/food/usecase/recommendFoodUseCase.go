@@ -29,7 +29,7 @@ func NewRecommendFoodUseCase(repo _interface.IRecommendFoodRepository, timeout t
 func (d *RecommendFoodUseCase) Recommend(c context.Context, e entity.RecommendFoodEntity) (response.ResRecommendFood, error) {
 	ctx, cancel := context.WithTimeout(c, d.ContextTimeout)
 	defer cancel()
-
+	
 	//음식 추천 로직 구현
 	client, err := genai.NewClient(ctx, option.WithAPIKey(utils.GeminiID))
 	if err != nil {

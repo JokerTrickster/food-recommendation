@@ -213,7 +213,7 @@ type Nutrients struct {
 	gorm.Model
 	FoodName     string  `json:"foodName" gorm:"column:food_name"`
 	Amount       string  `json:"amount" gorm:"column:amount"`
-	Calorie      float64 `json:"calories" gorm:"column:calorie"`
+	Kcal         float64 `json:"kcal" gorm:"column:kcal"`
 	Carbohydrate float64 `json:"carbohydrate" gorm:"column:carbohydrate"`
 	Protein      float64 `json:"protein" gorm:"column:protein"`
 	Fat          float64 `json:"fat" gorm:"column:fat"`
