@@ -61,6 +61,20 @@
             font-size: 14px;
             color: #444;
         }
+
+        .link-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .link-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
     </style>
 </head>
 
@@ -77,6 +91,11 @@
         <div class="card failure">
             <h2>업로드 실패한 음식</h2>
             <div class="food-list">{{failedFoodList}}</div>
+        </div>
+
+        <div class="link-container">
+            <a href="https://drive.google.com/drive/folders/1dDuC5IM8fQ1GNUyFaLfAvmKQhpU8fWgX?usp=drive_link"
+                class="link-button">음식 업로드 하러 문서 이동 버튼</a>
         </div>
     </div>
 </body>
