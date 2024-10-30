@@ -142,7 +142,7 @@ create table nutrients (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP NULL DEFAULT NULL,
-    food_name varchar(255),
+    food_name varchar(255) UNIQUE,
     amount varchar(255),
     kcal DECIMAL(10, 2),
     carbohydrate DECIMAL(10, 2),
