@@ -9,7 +9,8 @@ CREATE TABLE users (
     password VARCHAR(255),
     birth DATE,
     sex varchar(50),
-    provider VARCHAR(50)
+    provider VARCHAR(50),
+    role varchar(200)
 );
 
 INSERT INTO users (email, password, name,birth, sex, provider) VALUES ('test@test.com', 'asdasd123', '푸드픽맨','1990-01-01', 'male', 'test');
