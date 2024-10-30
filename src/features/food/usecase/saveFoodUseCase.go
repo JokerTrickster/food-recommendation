@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"fmt"
 
 	_interface "main/features/food/model/interface"
 	"main/features/food/model/request"
@@ -34,10 +35,13 @@ func (d *SaveFoodUseCase) Save(c context.Context, req *request.ReqSaveFood) erro
 		if err != nil {
 			return err
 		}
-		nutirentDTO := CreateSaveNutrientDTO(food)
-		err = d.Repository.SaveNutrient(ctx, nutirentDTO)
-		if err != nil {
-			return err
+		if food.Amount != "" {
+			nutirentDTO := CreateSaveNutrientDTO(food)
+			err = d.Repository.SaveNutrient(ctx, nutirentDTO)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
 		}
 		foods = append(foods, food.Name)
 	}
