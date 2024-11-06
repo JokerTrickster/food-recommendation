@@ -56,3 +56,6 @@ type ISaveFoodRepository interface {
 
 type ICheckImageUploadFoodRepository interface {
 }
+
+type IV1RecommendFoodRepository interface {
+}

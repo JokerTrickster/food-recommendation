@@ -44,3 +44,7 @@ type ISaveFoodUseCase interface {
 type ICheckImageUploadFoodUseCase interface {
 	CheckImageUpload(c context.Context, req *request.ReqCheckImageUploadFood) error
 }
+
+type IV1RecommendFoodUseCase interface {
+	V1Recommend(c context.Context, entity entity.V1RecommendFoodEntity) (response.ResV1RecommendFood, error)
+}
