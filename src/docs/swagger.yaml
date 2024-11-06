@@ -151,6 +151,27 @@ definitions:
       sex:
         type: string
     type: object
+  request.ReqV1RecommendFood:
+    properties:
+      flavors:
+        example: 매운맛
+        type: string
+      previousAnswer:
+        example: 김치찌개 떡볶이 치킨
+        type: string
+      scenarios:
+        example: 혼밥
+        type: string
+      themes:
+        example: 스트레스 해소
+        type: string
+      times:
+        example: 점심
+        type: string
+      types:
+        example: 한식
+        type: string
+    type: object
   request.ReqV02GoogleOauth:
     properties:
       token:
@@ -386,6 +407,13 @@ definitions:
       refreshToken:
         type: string
     type: object
+  response.ResV1RecommendFood:
+    properties:
+      foodNames:
+        items:
+          $ref: '#/definitions/response.V1RecommendFood'
+        type: array
+    type: object
   response.ResV02GoogleOauth:
     properties:
       accessToken:
@@ -403,6 +431,13 @@ definitions:
         type: string
       userID:
         type: integer
+    type: object
+  response.V1RecommendFood:
+    properties:
+      image:
+        type: string
+      name:
+        type: string
     type: object
 info:
   contact: {}
@@ -1492,4 +1527,47 @@ paths:
       summary: google oauth 로그인 콜백
       tags:
       - auth
+  /v1.1/foods/recommend:
+    post:
+      description: |-
+        ■ errCode with 400
+        PARAM_BAD : 파라미터 오류
+        USER_NOT_FOUND : 유저가 존재하지 않음
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
+
+        ■ errCode with 500
+        INTERNAL_SERVER : 내부 로직 처리 실패
+        INTERNAL_DB : DB 처리 실패
+        GEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류
+      parameters:
+      - description: accessToken
+        in: header
+        name: tkn
+        required: true
+        type: string
+      - description: type
+        in: body
+        name: type
+        required: true
+        schema:
+          $ref: '#/definitions/request.ReqV1RecommendFood'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ResV1RecommendFood'
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: 음식 추천 받기
+      tags:
+      - food
 swagger: "2.0"

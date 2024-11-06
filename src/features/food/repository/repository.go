@@ -43,3 +43,7 @@ type SaveFoodRepository struct {
 type CheckImageUploadFoodRepository struct {
 	GormDB *gorm.DB
 }
+
+type V1RecommendFoodRepository struct {
+	GormDB *gorm.DB
+}

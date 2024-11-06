@@ -1,13 +1,17 @@
 package usecase
 
 import (
+	"bytes"
 	"context"
 	"fmt"
+	"io/ioutil"
 	"main/features/food/model/entity"
 	"main/features/food/model/request"
 	"main/features/food/model/response"
+	"main/utils"
 	"main/utils/aws"
 	"main/utils/db/mysql"
+	"net/http"
 	"strings"
 	"time"
 )
@@ -354,4 +358,35 @@ func CreateSaveNutrientDTO(food request.SaveFood) *mysql.Nutrients {
 		Protein:      food.Protein,
 		Amount:       food.Amount,
 	}
+}
+
+func HttpCallRecommendNameApi(ctx context.Context, lambdaUrl string, requestBody []byte) error {
+
+	// HTTP POST 요청 생성
+	req, err := http.NewRequestWithContext(ctx, "POST", lambdaUrl, bytes.NewBuffer(requestBody))
+	if err != nil {
+		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), utils.HandleError(err.Error(), requestBody), utils.ErrFromInternal)
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	// HTTP 클라이언트로 요청 보내기
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), utils.HandleError(err.Error(), requestBody), utils.ErrFromInternal)
+	}
+	defer resp.Body.Close()
+
+	// 응답 읽기
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), utils.HandleError(err.Error(), requestBody), utils.ErrFromInternal)
+	}
+	if resp.StatusCode != 200 {
+		return utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), utils.HandleError(string(body), requestBody), utils.ErrFromInternal)
+	}
+
+	fmt.Printf("응답 상태 코드: %d\n", resp.StatusCode)
+	fmt.Printf("응답 본문: %s\n", string(body))
+	return nil
 }
