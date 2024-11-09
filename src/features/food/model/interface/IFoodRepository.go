@@ -58,4 +58,9 @@ type ICheckImageUploadFoodRepository interface {
 }
 
 type IV1RecommendFoodRepository interface {
+	FindOneV1RecommendFood(ctx context.Context, query string) (*mysql.Foods, error)
+	SaveRecommendFood(ctx context.Context, foodDTO *mysql.Foods) (*mysql.Foods, error)
+	FindOneOrCreateFoodImage(ctx context.Context, foodImageDTO *mysql.FoodImages) (*mysql.FoodImages, error)
+	CountV1RecommendFood(ctx context.Context, query string) (int, error)
+	FindOneFoodImage(ctx context.Context, foodID int) (string, error)
 }

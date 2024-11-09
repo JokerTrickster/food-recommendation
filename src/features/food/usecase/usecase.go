@@ -390,3 +390,130 @@ func HttpCallRecommendNameApi(ctx context.Context, lambdaUrl string, requestBody
 	fmt.Printf("응답 본문: %s\n", string(body))
 	return nil
 }
+
+func CreateV1RecommendFoodQuestion(entity entity.V1RecommendFoodEntity) string {
+	var reqType string
+	if entity.Types == "" || entity.Types == "전체" {
+		reqType = "전체 음식"
+	} else {
+		reqType = entity.Types
+	}
+	var reqScenario string
+	if entity.Scenarios == "" || entity.Scenarios == "전체" {
+		reqScenario = "어떤 상황이든"
+	} else {
+		reqScenario = entity.Scenarios
+	}
+	var reqTime string
+	if entity.Times == "" || entity.Times == "전체" {
+		reqTime = "아무때나"
+	} else {
+		reqTime = entity.Times
+	}
+	var reqTheme string
+	if entity.Themes == "" || entity.Themes == "전체" {
+		reqTheme = "아무 테마"
+	} else {
+		reqTheme = entity.Themes
+	}
+	var reqFlavor string
+	if entity.Flavors == "" || entity.Flavors == "전체" {
+		reqFlavor = "모든 맛"
+	} else {
+		reqFlavor = entity.Flavors
+	}
+
+	questionType := fmt.Sprintf("어떤 종류의 음식 :  %s \n", reqType)
+	questionScenario := fmt.Sprintf("누구와 함께 : %s \n", reqScenario)
+	questionTime := fmt.Sprintf("언제 : %s \n", reqTime)
+	questionTheme := fmt.Sprintf("어떤 테마 : %s \n", reqTheme)
+	questionFlavor := fmt.Sprintf("어떤 맛 : %s \n", reqFlavor)
+	today := time.Now().Format("2006-01-02")
+	question := fmt.Sprintf("%s와 어울리는 %s, %s, %s, %s, %s, 음식 이름 1개만 추천해줘 설명 필요없고 이름만 추천해줘", today, questionType, questionScenario, questionTime, questionTheme, questionFlavor)
+	if entity.PreviousAnswer != "" {
+		question += fmt.Sprintf("이전에 추천받은 음식은 제외하고 알려줘 이전 추천 음식 이름 : %s", entity.PreviousAnswer)
+	}
+
+	return question
+}
+
+func CreateRecommendQuery(entity entity.V1RecommendFoodEntity) string {
+	var query string = "SELECT name FROM foods WHERE "
+	if entity.Types != "" {
+		query += fmt.Sprintf("type_id = (SELECT id FROM types WHERE name = '%s') AND ", entity.Types)
+	}
+	if entity.Times != "" {
+		query += fmt.Sprintf("time_id = (SELECT id FROM times WHERE name = '%s') AND ", entity.Times)
+	}
+	if entity.Scenarios != "" {
+		query += fmt.Sprintf("scenario_id = (SELECT id FROM scenarios WHERE name = '%s') AND ", entity.Scenarios)
+	}
+	if entity.Themes != "" {
+		query += fmt.Sprintf("theme_id = (SELECT id FROM themes WHERE name = '%s') AND ", entity.Themes)
+	}
+	if entity.Flavors != "" {
+		query += fmt.Sprintf("flavor_id = (SELECT id FROM flavors WHERE name = '%s') AND ", entity.Flavors)
+	}
+	query = strings.TrimSuffix(query, " AND ")
+	return query
+}
+
+func CreateV1RecommendFoodImageDTO(entity entity.V1RecommendFoodEntity, foodName string) *mysql.FoodImages {
+
+	return &mysql.FoodImages{
+		Name:  foodName,
+		Image: "food_default.png",
+	}
+}
+
+func CreateV1RecommendFoodDTO(entity entity.V1RecommendFoodEntity, foodName string, foodImageID int) *mysql.Foods {
+	var err error
+	typeID := 0
+	timeID := 0
+	secnarioID := 0
+	themeID := 0
+	flavorID := 0
+
+	if entity.Types != "" {
+		typeID, err = mysql.GetTypeID(entity.Types)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+	if entity.Times != "" {
+		timeID, err = mysql.GetTimeID(entity.Times)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+	if entity.Scenarios != "" {
+		secnarioID, err = mysql.GetScenarioID(entity.Scenarios)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+	if entity.Themes != "" {
+		themeID, err = mysql.GetThemeID(entity.Themes)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+	if entity.Flavors != "" {
+
+		flavorID, err = mysql.GetFlavorID(entity.Flavors)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+
+	return &mysql.Foods{
+		TypeID:      typeID,
+		TimeID:      timeID,
+		ScenarioID:  secnarioID,
+		ThemeID:     themeID,
+		FlavorID:    flavorID,
+		Name:        foodName,
+		FoodImageID: foodImageID,
+	}
+
+}
