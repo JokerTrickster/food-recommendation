@@ -434,10 +434,20 @@ definitions:
     type: object
   response.V1RecommendFood:
     properties:
+      amount:
+        type: string
+      carbohydrate:
+        type: number
+      fat:
+        type: number
       image:
         type: string
+      kcal:
+        type: number
       name:
         type: string
+      protein:
+        type: number
     type: object
 info:
   contact: {}

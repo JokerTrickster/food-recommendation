@@ -107,14 +107,10 @@ func (d *V1RecommendFoodUseCase) V1Recommend(c context.Context, e entity.V1Recom
 		}
 		return aiRes, nil
 	} else {
-		res := response.ResV1RecommendFood{}
 		query += " ORDER BY RAND() LIMIT 1"
 		food, err := d.Repository.FindOneV1RecommendFood(ctx, query)
 		if err != nil {
 			return response.ResV1RecommendFood{}, err
-		}
-		ResFood := response.V1RecommendFood{
-			Name: food.Name,
 		}
 		//food image ID로 이미지 URL을 가져온다.
 		image, err := d.Repository.FindOneFoodImage(ctx, food.FoodImageID)
@@ -125,8 +121,11 @@ func (d *V1RecommendFoodUseCase) V1Recommend(c context.Context, e entity.V1Recom
 		if err != nil {
 			return response.ResV1RecommendFood{}, err
 		}
-		ResFood.Image = imageUrl
-		res.FoodNames = append(res.FoodNames, ResFood)
+		nutrientDTO, err := d.Repository.FindOneNutrient(ctx, food.Name)
+		if err != nil {
+			return response.ResV1RecommendFood{}, err
+		}
+		res := CreateRes1Recommend(food, imageUrl, nutrientDTO)
 		return res, nil
 	}
 }

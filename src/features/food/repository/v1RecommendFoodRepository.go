@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"errors"
+	"fmt"
 	_errors "main/features/food/model/errors"
 	_interface "main/features/food/model/interface"
 	"main/utils"
@@ -16,11 +17,20 @@ func NewV1RecommendFoodRepository(gormDB *gorm.DB) _interface.IV1RecommendFoodRe
 }
 
 func (d *V1RecommendFoodRepository) FindOneV1RecommendFood(ctx context.Context, query string) (*mysql.Foods, error) {
-	var food mysql.Foods // 포인터가 아닌 구조체로 초기화
-	err := d.GormDB.WithContext(ctx).Raw(query).Scan(&food).Error
-	if err != nil {
-		return nil, err
+	food := mysql.Foods{} // 포인터가 아닌 구조체로 초기화
+	result := d.GormDB.WithContext(ctx).Raw(query).Scan(&food)
+
+	if result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return nil, fmt.Errorf("no records found for the given query")
+		}
+		return nil, result.Error
 	}
+
+	if result.RowsAffected == 0 {
+		return nil, fmt.Errorf("no records found for the given query")
+	}
+
 	return &food, nil // 반환할 때 포인터로 반환
 }
 
@@ -83,4 +93,13 @@ func (d *V1RecommendFoodRepository) FindOneFoodImage(ctx context.Context, id int
 		return "", err
 	}
 	return foodImage.Image, nil
+}
+
+func (d *V1RecommendFoodRepository) FindOneNutrient(ctx context.Context, foodName string) (*mysql.Nutrients, error) {
+	nutrient := mysql.Nutrients{}
+	err := d.GormDB.WithContext(ctx).Where("food_name = ?", foodName).First(&nutrient).Error
+	if err != nil {
+		return nil, err
+	}
+	return &nutrient, nil
 }

@@ -22,7 +22,7 @@ func InitMySQL() error {
 	var connectionString string
 	var err error
 	isLocal := os.Getenv("IS_LOCAL")
-	if isLocal == "false" {
+	if isLocal == "true" {
 		// MySQL 연결 문자열
 		connectionString = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
 			os.Getenv("MYSQL_USER"),

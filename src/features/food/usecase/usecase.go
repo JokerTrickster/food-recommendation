@@ -438,7 +438,7 @@ func CreateV1RecommendFoodQuestion(entity entity.V1RecommendFoodEntity) string {
 }
 
 func CreateRecommendQuery(entity entity.V1RecommendFoodEntity) string {
-	var query string = "SELECT name FROM foods WHERE "
+	var query string = "SELECT * FROM foods WHERE "
 	if entity.Types != "" {
 		query += fmt.Sprintf("type_id = (SELECT id FROM types WHERE name = '%s') AND ", entity.Types)
 	}
@@ -516,4 +516,19 @@ func CreateV1RecommendFoodDTO(entity entity.V1RecommendFoodEntity, foodName stri
 		FoodImageID: foodImageID,
 	}
 
+}
+
+func CreateRes1Recommend(food *mysql.Foods, imageUrl string, nutrientDTO *mysql.Nutrients) response.ResV1RecommendFood {
+	res := response.ResV1RecommendFood{}
+	foodRes := response.V1RecommendFood{
+		Name:         food.Name,
+		Image:        imageUrl,
+		Amount:       nutrientDTO.Amount,
+		Kcal:         nutrientDTO.Kcal,
+		Carbohydrate: nutrientDTO.Carbohydrate,
+		Protein:      nutrientDTO.Protein,
+		Fat:          nutrientDTO.Fat,
+	}
+	res.FoodNames = append(res.FoodNames, foodRes)
+	return res
 }

@@ -1794,11 +1794,26 @@ const docTemplate = `{
         "response.V1RecommendFood": {
             "type": "object",
             "properties": {
+                "amount": {
+                    "type": "string"
+                },
+                "carbohydrate": {
+                    "type": "number"
+                },
+                "fat": {
+                    "type": "number"
+                },
                 "image": {
                     "type": "string"
                 },
+                "kcal": {
+                    "type": "number"
+                },
                 "name": {
                     "type": "string"
+                },
+                "protein": {
+                    "type": "number"
                 }
             }
         }
