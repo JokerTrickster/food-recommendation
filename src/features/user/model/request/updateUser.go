@@ -6,4 +6,5 @@ type ReqUpdateUser struct {
 	Name         string `json:"name" `
 	NewPassword  string `json:"newPassword" `
 	PrevPassword string `json:"prevPassword" `
+	Push         *bool  `json:"push" `
 }
