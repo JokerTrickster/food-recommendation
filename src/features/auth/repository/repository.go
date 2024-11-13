@@ -59,3 +59,7 @@ type NaverOauthAuthRepository struct {
 type RequestSignupAuthRepository struct {
 	GormDB *gorm.DB
 }
+
+type SaveFCMTokenAuthRepository struct {
+	GormDB *gorm.DB
+}

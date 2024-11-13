@@ -218,3 +218,9 @@ type Nutrients struct {
 	Protein      float64 `json:"protein" gorm:"column:protein"`
 	Fat          float64 `json:"fat" gorm:"column:fat"`
 }
+
+type UserTokens struct {
+	gorm.Model
+	UserID uint   `json:"userID" gorm:"column:user_id"`
+	Token  string `json:"token" gorm:"column:token"`
+}

@@ -57,3 +57,7 @@ type INaverOauthAuthHandler interface {
 type IRequestSignupAuthHandler interface {
 	RequestSignup(c echo.Context) error
 }
+
+type ISaveFCMTokenAuthHandler interface {
+	SaveFCMToken(c echo.Context) error
+}

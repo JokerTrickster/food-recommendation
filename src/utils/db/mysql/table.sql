@@ -194,4 +194,12 @@ INSERT INTO flavors (name, description,image) VALUES ('매운맛', '매운맛','
 INSERT INTO themes (name, description,image) VALUES ('스트레스 해소', '스트레스 해소','themes/stress.png'), ('해장', '해장','themes/hangover.png'),('피로 회복', '피로 회복','themes/fatigue recovery.png'), ('다이어트', '다이어트','themes/diet.png'), ('제철 음식', '제철 음식','themes/seasonal food.png');
 
 
-
+CREATE TABLE user_tokens (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL DEFAULT NULL,
+    user_id INT,
+    token varchar(1000),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);

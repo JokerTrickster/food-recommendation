@@ -89,3 +89,7 @@ type IRequestSignupAuthRepository interface {
 	InsertAuthCode(ctx context.Context, userAuthDTO mysql.UserAuths) error
 	DeleteAuthCodeByEmail(ctx context.Context, email string) error
 }
+
+type ISaveFCMTokenAuthRepository interface {
+	SaveFCMToken(ctx context.Context,userTokenDTO *mysql.UserTokens) error
+}
