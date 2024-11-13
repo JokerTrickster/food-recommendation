@@ -100,3 +100,10 @@ func getGoogleUserInfo(ctx context.Context, accessToken string) ([]byte, error) 
 
 	return content, nil
 }
+
+func CreateSaveFCMTokenDTO(uID uint, req *request.ReqSaveFCMToken) *mysql.UserTokens {
+	return &mysql.UserTokens{
+		UserID: uID,
+		Token:  req.Token,
+	}
+}

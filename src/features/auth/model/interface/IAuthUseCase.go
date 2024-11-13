@@ -62,3 +62,7 @@ type INaverOauthAuthUseCase interface {
 type IRequestSignupAuthUseCase interface {
 	RequestSignup(c context.Context, entity entity.RequestSignupAuthEntity) (string, error)
 }
+
+type ISaveFCMTokenAuthUseCase interface {
+	SaveFCMToken(c context.Context, uID uint, req *request.ReqSaveFCMToken) error
+}

@@ -24,4 +24,5 @@ func NewAuthHandler(c *echo.Echo) {
 	NewKakaoOauthAuthHandler(c, usecase.NewKakaoOauthAuthUseCase(repository.NewKakaoOauthAuthRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 	NewNaverOauthAuthHandler(c, usecase.NewNaverOauthAuthUseCase(repository.NewNaverOauthAuthRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 	NewRequestSignupAuthHandler(c, usecase.NewRequestSignupAuthUseCase(repository.NewRequestSignupAuthRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
+	NewSaveFCMTokenAuthHandler(c, usecase.NewSaveFCMTokenAuthUseCase(repository.NewSaveFCMTokenAuthRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 }
