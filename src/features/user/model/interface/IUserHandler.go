@@ -13,3 +13,6 @@ type IUpdateUserHandler interface {
 type IDeleteUserHandler interface {
 	Delete(c echo.Context) error
 }
+type IMessageUserHandler interface {
+	Message(c echo.Context) error
+}

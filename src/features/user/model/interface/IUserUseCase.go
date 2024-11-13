@@ -3,6 +3,7 @@ package _interface
 import (
 	"context"
 	"main/features/user/model/entity"
+	"main/features/user/model/request"
 	"main/features/user/model/response"
 )
 
@@ -16,4 +17,7 @@ type IUpdateUserUseCase interface {
 
 type IDeleteUserUseCase interface {
 	Delete(c context.Context, uID uint) error
+}
+type IMessageUserUseCase interface {
+	Message(c context.Context, uID uint, req *request.ReqMessageUser) error
 }

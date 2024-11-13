@@ -12,4 +12,5 @@ func NewUserHandler(c *echo.Echo) {
 	NewGetUserHandler(c, usecase.NewGetUserUseCase(repository.NewGetUserRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 	NewUpdateUserHandler(c, usecase.NewUpdateUserUseCase(repository.NewUpdateUserRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 	NewDeleteUserHandler(c, usecase.NewDeleteUserUseCase(repository.NewDeleteUserRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
+	NewMessageUserHandler(c, usecase.NewMessageUserUseCase(repository.NewMessageUserRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 }

@@ -17,3 +17,6 @@ type IUpdateUserRepository interface {
 type IDeleteUserRepository interface {
 	DeleteUser(ctx context.Context, uID uint) error
 }
+type IMessageUserRepository interface {
+	FindOnePushToken(ctx context.Context, uID uint) (string, error)
+}
