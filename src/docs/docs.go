@@ -969,6 +969,52 @@ const docTemplate = `{
                 }
             }
         },
+        "/v0.1/users/message": {
+            "post": {
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "유저 메시지 전송하기",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "accessToken",
+                        "name": "tkn",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "수정한 데이터만 전달",
+                        "name": "json",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ReqMessageUser"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
+        },
         "/v0.1/users/profile": {
             "put": {
                 "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nPLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패",
@@ -1204,6 +1250,17 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.ReqMessageUser": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "title": {
                     "type": "string"
                 }
             }

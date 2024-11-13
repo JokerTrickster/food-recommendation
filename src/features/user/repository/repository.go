@@ -12,3 +12,7 @@ type UpdateUserRepository struct {
 type DeleteUserRepository struct {
 	GormDB *gorm.DB
 }
+
+type MessageUserRepository struct {
+	GormDB *gorm.DB
+}
