@@ -71,6 +71,9 @@ func (d *UpdateUserHandler) Update(c echo.Context) error {
 		entity.NewPassword = req.NewPassword
 		entity.PrevPassword = req.PrevPassword
 	}
+	if req.Push != nil {
+		entity.Push = req.Push
+	}
 
 	err := d.UseCase.Update(ctx, &entity)
 	if err != nil {

@@ -1464,6 +1464,9 @@ const docTemplate = `{
                 "prevPassword": {
                     "type": "string"
                 },
+                "push": {
+                    "type": "boolean"
+                },
                 "sex": {
                     "type": "string"
                 }

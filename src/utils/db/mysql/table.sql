@@ -10,6 +10,7 @@ CREATE TABLE users (
     birth DATE,
     sex varchar(50),
     provider VARCHAR(50),
+    push BOOLEAN DEFAULT TRUE,
     role varchar(200)
 );
 

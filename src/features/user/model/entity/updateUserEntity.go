@@ -8,4 +8,5 @@ type UpdateUserEntity struct {
 	Email        string `json:"email"`
 	PrevPassword string `json:"prevPassword"`
 	NewPassword  string `json:"newPassword"`
+	Push         *bool  `json:"push"`
 }

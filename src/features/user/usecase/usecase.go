@@ -30,6 +30,10 @@ func CreateUpdateUserDTO(entity *entity.UpdateUserEntity) (*mysql.Users, error) 
 	if entity.PrevPassword != "" && entity.NewPassword != "" {
 		result.Password = entity.NewPassword
 	}
+	if entity.Push != nil {
+		result.Push = entity.Push
+	}
+
 	return result, nil
 }
 
