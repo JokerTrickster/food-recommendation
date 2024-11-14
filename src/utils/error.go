@@ -41,6 +41,7 @@ const (
 	ErrFromNaver    = IErrFrom("naver")
 	ErrFromGemini   = IErrFrom("gemini")
 	ErrFromKakao    = IErrFrom("kakao")
+	ErrFromFirebase = IErrFrom("firebase")
 )
 
 // basic error
