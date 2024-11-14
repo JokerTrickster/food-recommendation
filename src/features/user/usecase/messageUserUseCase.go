@@ -2,17 +2,13 @@ package usecase
 
 import (
 	"context"
-	"fmt"
 	"log"
 	_interface "main/features/user/model/interface"
 	"main/features/user/model/request"
-	"main/utils/aws"
+	"main/utils"
 	"time"
 
-	firebase "firebase.google.com/go"
 	"firebase.google.com/go/messaging"
-
-	"google.golang.org/api/option"
 )
 
 type MessageUserUseCase struct {
@@ -38,30 +34,6 @@ func (d *MessageUserUseCase) Message(c context.Context, uID uint, req *request.R
 
 	// 3. 푸시를 보낸다.
 
-	// 4. 메시지를 저장한다.
-
-	serviceKey, err := aws.AwsSsmGetParam("firebase_service_key")
-	if err != nil {
-		fmt.Println(err)
-		return err
-	}
-
-	// 서비스 계정 JSON 키를 byte 배열로 변환합니다.
-	credentials := []byte(serviceKey)
-
-	opt := option.WithCredentialsJSON(credentials)
-	app, err := firebase.NewApp(ctx, nil, opt)
-	if err != nil {
-		log.Fatalf("error initializing app: %v", err)
-		return err
-	}
-
-	client, err := app.Messaging(ctx)
-	if err != nil {
-		log.Fatalf("error getting Messaging client: %v", err)
-		return err
-	}
-
 	// 메시지 생성
 	message := &messaging.Message{
 		Token: token,
@@ -72,13 +44,14 @@ func (d *MessageUserUseCase) Message(c context.Context, uID uint, req *request.R
 	}
 
 	// 메시지 전송
-	response, err := client.Send(ctx, message)
+	response, err := utils.MessageClient.Send(ctx, message)
 	if err != nil {
 		log.Printf("error sending message: %v", err)
 		return err
 	}
 
 	log.Printf("Successfully sent message: %s", response)
+	// 4. 메시지를 저장한다.
 
 	return nil
 }
