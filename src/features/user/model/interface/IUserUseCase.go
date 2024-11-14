@@ -21,3 +21,7 @@ type IDeleteUserUseCase interface {
 type IMessageUserUseCase interface {
 	Message(c context.Context, uID uint, req *request.ReqMessageUser) error
 }
+
+type IUpdateProfileUserUseCase interface {
+	UpdateProfile(c context.Context, e *entity.UpdateProfileUserEntity) (response.ResUpdateProfileUser, error)
+}

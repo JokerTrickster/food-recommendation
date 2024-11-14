@@ -5,4 +5,6 @@ type ResGetUser struct {
 	Birth string `json:"birth"`
 	Sex   string `json:"sex"`
 	Email string `json:"email"`
+	Push  *bool  `json:"push"`
+	Image string `json:"image"`
 }

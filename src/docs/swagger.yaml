@@ -329,8 +329,12 @@ definitions:
         type: string
       email:
         type: string
+      image:
+        type: string
       name:
         type: string
+      push:
+        type: boolean
       sex:
         type: string
     type: object
@@ -419,6 +423,11 @@ definitions:
       accessToken:
         type: string
       refreshToken:
+        type: string
+    type: object
+  response.ResUpdateProfileUser:
+    properties:
+      image:
         type: string
     type: object
   response.ResV1RecommendFood:
@@ -1560,6 +1569,47 @@ paths:
           description: Internal Server Error
           schema: {}
       summary: 유저 프로필 저장하기
+      tags:
+      - user
+  /v0.1/users/profiles/image:
+    post:
+      description: |-
+        ■ errCode with 400
+        PARAM_BAD : 파라미터 오류
+        USER_NOT_FOUND : 유저가 존재하지 않음
+        ■ errCode with 401
+        INVALID_AUTH_CODE : 인증 코드 검증 실패
+        TOKEN_BAD : 잘못된 토큰
+        INVALID_ACCESS_TOKEN : 잘못된 액세스 토큰
+
+        ■ errCode with 500
+        INTERNAL_SERVER : 내부 로직 처리 실패
+        INTERNAL_DB : DB 처리 실패
+        PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
+      parameters:
+      - description: accessToken
+        in: header
+        name: tkn
+        required: true
+        type: string
+      - description: 프로필 이미지 파일
+        in: formData
+        name: image
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ResUpdateProfileUser'
+        "400":
+          description: Bad Request
+          schema: {}
+        "500":
+          description: Internal Server Error
+          schema: {}
+      summary: 유저 프로필 이미지 저장하기
       tags:
       - user
   /v0.2/auth/google:

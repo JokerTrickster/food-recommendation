@@ -132,6 +132,7 @@ type Users struct {
 	Sex      string `json:"sex" gorm:"column:sex"`
 	Provider string `json:"provider" gorm:"column:provider"`
 	Push     *bool  `json:"push" gorm:"column:push"`
+	Image    string `json:"image" gorm:"column:image"`
 }
 
 type Foods struct {
