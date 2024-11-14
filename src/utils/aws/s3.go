@@ -31,6 +31,14 @@ var imgMeta = map[ImgType]imgMetaStruct{
 		height:     62,
 		expireTime: 2 * time.Hour,
 	},
+	ImgTypeProfile: {
+		bucket:     func() string { return "dev-food-recommendation" },
+		domain:     func() string { return "dev-food-recommendation.s3.ap-northeast-2.amazonaws.com" },
+		path:       "profiles",
+		width:      128,
+		height:     128,
+		expireTime: 2 * time.Hour,
+	},
 }
 
 func ImageUpload(ctx context.Context, file *multipart.FileHeader, filename string, imgType ImgType) error {

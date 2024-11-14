@@ -11,6 +11,7 @@ CREATE TABLE users (
     sex varchar(50),
     provider VARCHAR(50),
     push BOOLEAN DEFAULT TRUE,
+    image varchar(1000) DEFAULT 'profile_default.png',
     role varchar(200)
 );
 

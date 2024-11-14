@@ -25,6 +25,7 @@ type ImgType uint8
 const (
 	ImgTypeFood     = ImgType(0)
 	ImgTypeCategory = ImgType(1)
+	ImgTypeProfile  = ImgType(2)
 )
 
 type imgMetaStruct struct {

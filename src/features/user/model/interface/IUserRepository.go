@@ -20,3 +20,7 @@ type IDeleteUserRepository interface {
 type IMessageUserRepository interface {
 	FindOnePushToken(ctx context.Context, uID uint) (string, error)
 }
+
+type IUpdateProfileUserRepository interface {
+	UpdateProfileImage(ctx context.Context, uID uint, fileName string) error
+}

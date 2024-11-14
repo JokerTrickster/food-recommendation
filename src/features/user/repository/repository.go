@@ -16,3 +16,7 @@ type DeleteUserRepository struct {
 type MessageUserRepository struct {
 	GormDB *gorm.DB
 }
+
+type UpdateProfileUserRepository struct {
+	GormDB *gorm.DB
+}
