@@ -2,19 +2,15 @@ package usecase
 
 import (
 	"context"
-	"encoding/json"
-	"main/features/food/model/entity"
 	"main/features/food/model/response"
 	"main/utils/aws"
 
-	_errors "main/features/food/model/errors"
 	_interface "main/features/food/model/interface"
 	"main/utils"
 	"strings"
 	"time"
 
-	"github.com/google/generative-ai-go/genai"
-	"google.golang.org/api/option"
+	"github.com/sashabaranov/go-openai"
 )
 
 type DailyRecommendFoodUseCase struct {
@@ -30,47 +26,67 @@ func (d *DailyRecommendFoodUseCase) DailyRecommend(c context.Context) (response.
 	ctx, cancel := context.WithTimeout(c, d.ContextTimeout)
 	defer cancel()
 
-	//음식 추천 로직 구현
-	client, err := genai.NewClient(ctx, option.WithAPIKey(utils.GeminiID))
-	if err != nil {
-		return response.ResDailyRecommendFood{}, utils.ErrorMsg(ctx, utils.ErrPartner, utils.Trace(), _errors.ErrGeminiError.Error()+err.Error(), utils.ErrFromGemini)
+	//
+
+	// 음식 추천 로직 구현
+	client := openai.NewClient(utils.OpenAIKey)
+	if client == nil {
+		return response.ResDailyRecommendFood{}, utils.ErrorMsg(ctx, utils.ErrPartner, utils.Trace(), "OpenAI Client 초기화 실패", utils.ErrFromChatGPT)
 	}
-	model := client.GenerativeModel("gemini-1.5-flash")
-	//데이터 가공
+
+	// 데이터 가공
 	question := CreateDailyRecommendFoodQuestion()
-	resp, err := model.GenerateContent(
-		ctx,
-		genai.Text("너는 한국에 살고 있고 맛있는 요리 음식을 알려주는 전문가이다."),
-		genai.Text("오늘 날짜와 궁합이 좋을거 같은 음식 이름을 3개 추천해줘"),
-		genai.Text("예를 들어서 '피자 치킨 탕수육' 이런식으로 음식 이름 사이에 공백을 추가해서 3개만 대답해주면 된다."),
-		genai.Text("반드시 음식 이름만 추천해줘야 된다. 요리법, 재료, 가게 이름 등으로 대답해주면 안된다."),
-		genai.Text("지금부터 질문할게 대답해줘"),
-		genai.Text(question),
-	)
 
+	// 프롬프트 생성
+	messages := []openai.ChatCompletionMessage{
+		{
+			Role:    openai.ChatMessageRoleSystem,
+			Content: "너는 한국에 살고 있고 사람들이 많이 먹는 음식 이름을 알고 있는 전문가이다.",
+		},
+		{
+			Role:    openai.ChatMessageRoleUser,
+			Content: "오늘 날짜와 궁합이 좋을 것 같은 음식 이름을 3개 추천해줘.",
+		},
+		{
+			Role:    openai.ChatMessageRoleUser,
+			Content: "예를 들어서 '피자 치킨 탕수육' 이런 식으로 음식 이름 사이에 공백을 추가해서 3개만 대답해주면 된다. 음식 이름 사이에 공백을 추가하지 않으면 1개로 인식한다.",
+		},
+		{
+			Role:    openai.ChatMessageRoleUser,
+			Content: "한식, 중식, 일식, 양식, 패스트 푸드 중 추천해주면 된다.",
+		},
+		{
+			Role:    openai.ChatMessageRoleUser,
+			Content: "지금부터 질문할게 대답해줘:",
+		},
+		{
+			Role:    openai.ChatMessageRoleUser,
+			Content: question,
+		},
+	}
+
+	// ChatCompletion 호출
+	resp, err := client.CreateChatCompletion(ctx, openai.ChatCompletionRequest{
+		Model:    openai.GPT3Dot5Turbo,
+		Messages: messages,
+	})
 	if err != nil {
-		return response.ResDailyRecommendFood{}, utils.ErrorMsg(ctx, utils.ErrPartner, utils.Trace(), _errors.ErrGeminiError.Error()+err.Error(), utils.ErrFromGemini)
+		return response.ResDailyRecommendFood{}, utils.ErrorMsg(ctx, utils.ErrPartner, utils.Trace(), err.Error(), utils.ErrFromChatGPT)
 	}
-	gptRes := make([]string, 0)
-	// 출력 부분 수정
-	if len(resp.Candidates) > 0 {
-		marshalResponse, _ := json.MarshalIndent(resp, "", "  ")
-		var generateResponse entity.ContentResponse
-		if err := json.Unmarshal(marshalResponse, &generateResponse); err != nil {
-			return response.ResDailyRecommendFood{}, utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), _errors.ErrServerError.Error()+err.Error(), utils.ErrFromInternal)
-		}
-		for _, cad := range *generateResponse.Candidates {
-			if cad.Content != nil {
-				cleanedString := strings.Trim(cad.Content.Parts[0], "[] \n")
-				gptRes = SplitAndRemoveEmpty(cleanedString)
-			}
-		}
 
+	gptRes := make([]string, 0)
+
+	// 응답 처리
+	if len(resp.Choices) > 0 {
+		content := resp.Choices[0].Message.Content
+		cleanedString := strings.Trim(content, "[] \n")
+		gptRes = SplitAndRemoveEmpty(cleanedString)
 	} else {
-		return response.ResDailyRecommendFood{}, utils.ErrorMsg(ctx, utils.ErrGeminiError, utils.Trace(), _errors.ErrFoodNotFound.Error(), utils.ErrFromGemini)
+		return response.ResDailyRecommendFood{}, utils.ErrorMsg(ctx, utils.ErrPartner, utils.Trace(), "응답이 존재하지 않습니다.", utils.ErrFromChatGPT)
 	}
+
 	res := response.ResDailyRecommendFood{}
-	//db에서 가져온다.
+	// DB에서 가져오기
 	for i, foodName := range gptRes {
 		if i == 3 {
 			break
@@ -98,5 +114,6 @@ func (d *DailyRecommendFoodUseCase) DailyRecommend(c context.Context) (response.
 		food.Image = imageUrl
 		res.DilayFoods = append(res.DilayFoods, food)
 	}
+
 	return res, nil
 }
