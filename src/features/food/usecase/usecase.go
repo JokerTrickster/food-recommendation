@@ -12,6 +12,7 @@ import (
 	"main/utils/aws"
 	"main/utils/db/mysql"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -394,25 +395,25 @@ func HttpCallRecommendNameApi(ctx context.Context, lambdaUrl string, requestBody
 func CreateV1RecommendFoodQuestion(entity entity.V1RecommendFoodEntity) string {
 	var reqType string
 	if entity.Types == "" || entity.Types == "전체" {
-		reqType = "전체 음식"
+		reqType = "전체 음식(한식, 중식, 일식, 양식, 분식, 베트남 음식, 인도 음식, 퓨전 요리)"
 	} else {
 		reqType = entity.Types
 	}
 	var reqScenario string
 	if entity.Scenarios == "" || entity.Scenarios == "전체" {
-		reqScenario = "어떤 상황이든"
+		reqScenario = "어떤 상황이든(가족, 연인, 친구, 혼자, 회식)"
 	} else {
 		reqScenario = entity.Scenarios
 	}
 	var reqTime string
 	if entity.Times == "" || entity.Times == "전체" {
-		reqTime = "아무때나"
+		reqTime = "아무때나(아침, 점심, 저녁, 야식)"
 	} else {
 		reqTime = entity.Times
 	}
 	var reqTheme string
 	if entity.Themes == "" || entity.Themes == "전체" {
-		reqTheme = "아무 테마"
+		reqTheme = "아무 테마(스트레스 해소, 해장, 피로 회복, 다이어트, 제철 음식)"
 	} else {
 		reqTheme = entity.Themes
 	}
@@ -531,4 +532,50 @@ func CreateRes1Recommend(food *mysql.Foods, imageUrl string, nutrientDTO *mysql.
 	}
 	res.FoodNames = append(res.FoodNames, foodRes)
 	return res
+}
+
+// 응답 파싱 함수
+func ParseFoodResponse(foodResponse []string) (string, *mysql.Nutrients, error) {
+	// 공백으로 구분하여 분리
+	foodName := foodResponse[0]
+	amount := foodResponse[1]
+	kcal := foodResponse[2]
+	carbohydrate := foodResponse[3]
+	protein := foodResponse[4]
+	fat := foodResponse[5]
+
+	nutrition := &mysql.Nutrients{
+		FoodName: foodName,
+		Amount:   amount,
+		Kcal: func() float64 {
+			kcalFloat, err := strconv.ParseFloat(kcal, 64)
+			if err != nil {
+				return 0
+			}
+			return kcalFloat
+		}(),
+		Carbohydrate: func() float64 {
+			carbohydrateFloat, err := strconv.ParseFloat(carbohydrate, 64)
+			if err != nil {
+				return 0
+			}
+			return carbohydrateFloat
+		}(),
+		Protein: func() float64 {
+			proteinFloat, err := strconv.ParseFloat(protein, 64)
+			if err != nil {
+				return 0
+			}
+			return proteinFloat
+		}(),
+		Fat: func() float64 {
+			fatFloat, err := strconv.ParseFloat(fat, 64)
+			if err != nil {
+				return 0
+			}
+			return fatFloat
+		}(),
+	}
+
+	return foodName, nutrition, nil
 }

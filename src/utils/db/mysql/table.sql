@@ -184,7 +184,7 @@ INSERT INTO meta_tables (table_name, table_description) VALUES ('scenarios', '�
 INSERT INTO times (name, description,image) VALUES ('아침', '아침','times/breakfast.png'), ('점심', '점심','times/lunch.png'), ('저녁', '저녁','times/dinner.png'), ('간식', '간식','times/snack.png'), ('야식', '야식','times/late night snack.png');
 
 -- types 테이블에 한식, 중식, 일식, 양식, 분식,베트남 음식, 인도 음식, 패스트 푸드, 디저트, 퓨전 요리 순으로 저장하는 sql 문 만들어줘
-INSERT INTO types (name, description,image) VALUES ('한식', '한식','types/korean food.png'), ('중식', '중식','types/chinese food.png'), ('일식', '일식','types/japanese food.png'), ('양식', '양식','types/western food.png'), ('분식', '분식','types/korean street food.png'), ('베트남 음식', '베트남 음식','types/vietnamese food.png'), ('인도 음식', '인도 음식','types/indian food.png'), ('패스트 푸드', '패스트 푸드','types/fast food.png'), ('디저트', '디저트','types/dessert.png'), ('퓨전 요리', '퓨전 요리','types/fusion cuisine.png');
+INSERT INTO types (name, description,image) VALUES ('한식', '한식','types/korean food.png'), ('중식', '중식','types/chinese food.png'), ('일식', '일식','types/japanese food.png'), ('양식', '양식','types/western food.png'), ('분식', '분식','types/korean street food.png'),  ('패스트 푸드', '패스트 푸드','types/fast food.png'),('베트남 음식', '베트남 음식','types/vietnamese food.png'), ('인도 음식', '인도 음식','types/indian food.png'), ('디저트', '디저트','types/dessert.png'), ('퓨전 요리', '퓨전 요리','types/fusion cuisine.png');
 
 -- scenarios 테이블에 연인, 혼반, 가족, 다이어트, 회식, 친구 순으로 저장하는 sql 문 만들어줘
 INSERT INTO scenarios (name, description,image) VALUES ('연인', '연인','scenarios/couple.png'), ('혼밥', '혼밥','scenarios/eating alone.png'), ('가족', '가족','scenarios/family.png'), ('회식', '회식','scenarios/company dinner.png'), ('친구', '친구','scenarios/friend.png');

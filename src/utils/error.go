@@ -42,6 +42,7 @@ const (
 	ErrFromGemini   = IErrFrom("gemini")
 	ErrFromKakao    = IErrFrom("kakao")
 	ErrFromFirebase = IErrFrom("firebase")
+	ErrFromChatGPT  = IErrFrom("chatGPT")
 )
 
 // basic error

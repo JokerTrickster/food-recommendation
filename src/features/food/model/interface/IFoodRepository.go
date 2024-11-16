@@ -64,4 +64,5 @@ type IV1RecommendFoodRepository interface {
 	CountV1RecommendFood(ctx context.Context, query string) (int, error)
 	FindOneFoodImage(ctx context.Context, foodID int) (string, error)
 	FindOneNutrient(ctx context.Context, foodName string) (*mysql.Nutrients, error)
+	FindOneAndSaveNutrient(ctx context.Context, nutrientDTO *mysql.Nutrients) (*mysql.Nutrients,error)
 }

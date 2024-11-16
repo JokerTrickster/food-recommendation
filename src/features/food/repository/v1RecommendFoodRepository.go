@@ -103,3 +103,19 @@ func (d *V1RecommendFoodRepository) FindOneNutrient(ctx context.Context, foodNam
 	}
 	return &nutrient, nil
 }
+
+func (d *V1RecommendFoodRepository) FindOneAndSaveNutrient(ctx context.Context, nutrientDTO *mysql.Nutrients) (*mysql.Nutrients, error) {
+	nutrient := mysql.Nutrients{}
+	err := d.GormDB.WithContext(ctx).Where("food_name = ?", nutrientDTO.FoodName).First(&nutrient).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			// 데이터가 없을 경우 저장
+			if err := d.GormDB.WithContext(ctx).Create(&nutrientDTO).Error; err != nil {
+				return nil, err
+			}
+			return nutrientDTO, nil
+		}
+		return nil, err
+	}
+	return &nutrient, nil
+}
