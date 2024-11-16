@@ -2,7 +2,6 @@ package utils
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"main/utils/aws"
 	"net/http"
@@ -40,6 +39,7 @@ var authProviderName map[AuthProvider]string = map[AuthProvider]string{
 }
 var authMeta tAuthMeta
 var httpClient = http.DefaultClient
+var OpenAIKey string
 
 func InitGoogleOauth() error {
 	clientID, err := getClientID()
@@ -65,6 +65,10 @@ func InitGoogleOauth() error {
 	authMeta.GoogleAndID = []string{"706198886562-8bv6bg4dnahtub52keb0v6runkfojbpe.apps.googleusercontent.com"}
 	//eyJhbGciOiJSUzI1NiIsImtpZCI6ImQ3YjkzOTc3MWE3ODAwYzQxM2Y5MDA1MTAxMmQ5NzU5ODE5MTZkNzEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI3MDYxOTg4ODY1NjItcXVzazB0dWJmZnVna3N2YWhucWY0dmpybjRzNTVkZ3EuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI3MDYxOTg4ODY1NjItOGJ2NmJnNGRuYWh0dWI1MmtlYjB2NnJ1bmtmb2picGUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTQxNTU5MDMxNDQ3ODkxNDY5NDciLCJlbWFpbCI6ImEwMTAyODE4Mjc5NkBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IuydtOyasOyjvCIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQ2c4b2NKeFJTT1VabTE3dHhPOXpwWTdVTEFBNVdOREEybFhpeDRvdkg5TG1SQXh0LWdRaWdLVD1zOTYtYyIsImdpdmVuX25hbWUiOiLsmrDso7wiLCJmYW1pbHlfbmFtZSI6IuydtCIsImlhdCI6MTcyNjEwODQyMiwiZXhwIjoxNzI2MTEyMDIyfQ.FwecqOnBoHNhBCdjqVDKv9ltXqepgMvjPQQAmOOSFCJDy-NrwAU-dZCYKi3xqW928HOEjIwXhSiXqkQU9CDwq80yABzVALTaw7-js8YaFz-mp7mNXCpdBj2PY5OWRC_O9inJJwq6TQn_PgiELBMRwG7-B79No7Pkosfz1mxJcUCMesq0yXQQypVQfoFEciSeRuz4cBRMbNgE-TDMsjtCom2gkTJqnlR7ka4RcGKItp0MLo6fOBug-50k2xezs2yH2NyBUZYlc
 
+	OpenAIKey, err = aws.AwsSsmGetParam("openai_api_key")
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -134,18 +138,4 @@ func isGoogleIdAndNotExisted(key string) bool {
 		}
 	}
 	return true
-}
-
-func InitAuth() error {
-	authMetaString, iErr := aws.AwsSsmGetParam(fmt.Sprintf("%s_food_oauth", Env.Env))
-	if iErr != nil {
-		return iErr
-	}
-	if err := json.Unmarshal([]byte(authMetaString), &authMeta); err != nil {
-		return ErrorMsg(context.TODO(), ErrInternalServer, Trace(), fmt.Sprintf("auth meta not available - %+v", authMetaString), ErrFromAwsSsm)
-	}
-	if err := ValidateStruct(authMeta); err != nil {
-		return ErrorMsg(context.TODO(), ErrInternalServer, Trace(), fmt.Sprintf("auth meta not valid - %+v", authMeta), ErrFromAwsSsm)
-	}
-	return nil
 }
