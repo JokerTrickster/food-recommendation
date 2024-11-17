@@ -33,3 +33,11 @@ func (d *DailyRecommendFoodRepository) FindOneFoodImage(ctx context.Context, foo
 	}
 	return foodImage.Image, nil
 }
+
+func (d *DailyRecommendFoodRepository) FindRandomFoods(ctx context.Context, limit int) ([]*mysql.Foods, error) {
+	foods := []*mysql.Foods{}
+	if err := d.GormDB.WithContext(ctx).Model(&mysql.Foods{}).Order("RAND()").Limit(limit).Find(&foods).Error; err != nil {
+		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(err.Error(), limit), utils.ErrFromMysqlDB)
+	}
+	return foods, nil
+}

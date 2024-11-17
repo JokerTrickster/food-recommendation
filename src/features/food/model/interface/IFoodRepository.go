@@ -46,6 +46,7 @@ type IEmptyImageFoodRepository interface {
 type IDailyRecommendFoodRepository interface {
 	FindOneFood(ctx context.Context, foodName string) (*mysql.Foods, error)
 	FindOneFoodImage(ctx context.Context, foodID int) (string, error)
+	FindRandomFoods(ctx context.Context, limit int) ([]*mysql.Foods, error)
 }
 
 type ISaveFoodRepository interface {
@@ -64,5 +65,5 @@ type IV1RecommendFoodRepository interface {
 	CountV1RecommendFood(ctx context.Context, query string) (int, error)
 	FindOneFoodImage(ctx context.Context, foodID int) (string, error)
 	FindOneNutrient(ctx context.Context, foodName string) (*mysql.Nutrients, error)
-	FindOneAndSaveNutrient(ctx context.Context, nutrientDTO *mysql.Nutrients) (*mysql.Nutrients,error)
+	FindOneAndSaveNutrient(ctx context.Context, nutrientDTO *mysql.Nutrients) (*mysql.Nutrients, error)
 }
