@@ -19,6 +19,7 @@ type IDeleteUserRepository interface {
 }
 type IMessageUserRepository interface {
 	FindOnePushToken(ctx context.Context, uID uint) (string, error)
+	FindOneAlarm(ctx context.Context, uID uint) (bool, error)
 }
 
 type IUpdateProfileUserRepository interface {

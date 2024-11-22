@@ -20,3 +20,12 @@ func (d *MessageUserRepository) FindOnePushToken(ctx context.Context, uID uint) 
 	}
 	return userToken.Token, nil
 }
+
+func (d *MessageUserRepository) FindOneAlarm(ctx context.Context, uID uint) (bool, error) {
+	var user *mysql.Users
+	err := d.GormDB.Where("id = ?", uID).First(&user).Error
+	if err != nil {
+		return false, err
+	}
+	return *user.Push, nil
+}

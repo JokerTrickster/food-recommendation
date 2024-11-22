@@ -19,7 +19,7 @@ type IDeleteUserUseCase interface {
 	Delete(c context.Context, uID uint) error
 }
 type IMessageUserUseCase interface {
-	Message(c context.Context, uID uint, req *request.ReqMessageUser) error
+	Message(c context.Context, req *request.ReqMessageUser) error
 }
 
 type IUpdateProfileUserUseCase interface {
