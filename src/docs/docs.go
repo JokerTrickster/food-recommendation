@@ -981,13 +981,6 @@ const docTemplate = `{
                 "summary": "유저 메시지 전송하기",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "accessToken",
-                        "name": "tkn",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
                         "description": "수정한 데이터만 전달",
                         "name": "json",
                         "in": "body",
@@ -1303,8 +1296,14 @@ const docTemplate = `{
                 "message": {
                     "type": "string"
                 },
+                "role": {
+                    "type": "string"
+                },
                 "title": {
                     "type": "string"
+                },
+                "userId": {
+                    "type": "integer"
                 }
             }
         },

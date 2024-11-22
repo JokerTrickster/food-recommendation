@@ -1,10 +1,10 @@
 package handler
 
 import (
+	"context"
 	_interface "main/features/user/model/interface"
 	"main/features/user/model/request"
 
-	mw "main/middleware"
 	"main/utils"
 	"net/http"
 
@@ -19,7 +19,7 @@ func NewMessageUserHandler(c *echo.Echo, useCase _interface.IMessageUserUseCase)
 	handler := &MessageUserHandler{
 		UseCase: useCase,
 	}
-	c.POST("/v0.1/users/message", handler.Message, mw.TokenChecker)
+	c.POST("/v0.1/users/message", handler.Message)
 	return handler
 }
 
@@ -39,7 +39,6 @@ func NewMessageUserHandler(c *echo.Echo, useCase _interface.IMessageUserUseCase)
 // @Description INTERNAL_SERVER : 내부 로직 처리 실패
 // @Description INTERNAL_DB : DB 처리 실패
 // @Description PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
-// @Param tkn header string true "accessToken"
 // @param json body request.ReqMessageUser true "수정한 데이터만 전달"
 // @Produce json
 // @Success 200 {object} bool
@@ -47,12 +46,12 @@ func NewMessageUserHandler(c *echo.Echo, useCase _interface.IMessageUserUseCase)
 // @Failure 500 {object} error
 // @Tags user
 func (d *MessageUserHandler) Message(c echo.Context) error {
-	ctx, uID, _ := utils.CtxGenerate(c)
+	ctx := context.Background()
 	req := &request.ReqMessageUser{}
 	if err := utils.ValidateReq(c, req); err != nil {
 		return err
 	}
-	err := d.UseCase.Message(ctx, uID, req)
+	err := d.UseCase.Message(ctx, req)
 	if err != nil {
 		return err
 	}

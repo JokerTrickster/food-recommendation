@@ -19,8 +19,12 @@ definitions:
     properties:
       message:
         type: string
+      role:
+        type: string
       title:
         type: string
+      userId:
+        type: integer
     type: object
   request.ReqNaverOauth:
     properties:
@@ -1501,11 +1505,6 @@ paths:
         INTERNAL_DB : DB 처리 실패
         PLAYER_STATE_CHANGE_FAILED : 플레이어 상태 변경 실패
       parameters:
-      - description: accessToken
-        in: header
-        name: tkn
-        required: true
-        type: string
       - description: 수정한 데이터만 전달
         in: body
         name: json

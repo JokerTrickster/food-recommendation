@@ -20,14 +20,25 @@ func NewMessageUserUseCase(repo _interface.IMessageUserRepository, timeout time.
 	return &MessageUserUseCase{Repository: repo, ContextTimeout: timeout}
 }
 
-func (d *MessageUserUseCase) Message(c context.Context, uID uint, req *request.ReqMessageUser) error {
+func (d *MessageUserUseCase) Message(c context.Context, req *request.ReqMessageUser) error {
 	ctx, cancel := context.WithTimeout(c, d.ContextTimeout)
 	defer cancel()
 
+	// 어드민 유저인지 체크한다.
+	if req.Role != "foodadmin" {
+		return utils.ErrorMsg(ctx, utils.ErrBadParameter, utils.Trace(), utils.HandleError("only food admin can send message", req), utils.ErrFromClient)
+	}
 	// 1. 알람 여부를 체크한다.
+	alertEnabled, err := d.Repository.FindOneAlarm(ctx, uint(req.UserID))
+	if err != nil {
+		return err
+	}
+	if !alertEnabled {
+		return utils.ErrorMsg(ctx, utils.ErrBadParameter, utils.Trace(), utils.HandleError("user has disabled alert", req), utils.ErrFromClient)
+	}
 
 	// 2. 푸시 토큰을 가져온다.
-	token, err := d.Repository.FindOnePushToken(ctx, uID)
+	token, err := d.Repository.FindOnePushToken(ctx, uint(req.UserID))
 	if err != nil {
 		return err
 	}
