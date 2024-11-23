@@ -429,11 +429,11 @@ func CreateV1RecommendFoodQuestion(entity entity.V1RecommendFoodEntity) string {
 	questionTime := fmt.Sprintf("언제 : %s \n", reqTime)
 	questionTheme := fmt.Sprintf("어떤 테마 : %s \n", reqTheme)
 	questionFlavor := fmt.Sprintf("어떤 맛 : %s \n", reqFlavor)
-	today := time.Now().Format("2006-01-02")
-	question := fmt.Sprintf("%s와 어울리는 %s, %s, %s, %s, %s, 음식 이름 1개만 추천해줘 설명 필요없고 이름만 추천해줘", today, questionType, questionScenario, questionTime, questionTheme, questionFlavor)
+	question := fmt.Sprintf("%s, %s, %s, %s, %s, 음식 이름 추천해줘 음식 이름에 공백이 있으면 안된다.", questionType, questionScenario, questionTime, questionTheme, questionFlavor)
 	if entity.PreviousAnswer != "" {
 		question += fmt.Sprintf("이전에 추천받은 음식은 제외하고 알려줘 이전 추천 음식 이름 : %s", entity.PreviousAnswer)
 	}
+	fmt.Println(question)
 
 	return question
 }
@@ -456,6 +456,7 @@ func CreateRecommendQuery(entity entity.V1RecommendFoodEntity) string {
 		query += fmt.Sprintf("flavor_id = (SELECT id FROM flavors WHERE name = '%s') AND ", entity.Flavors)
 	}
 	query = strings.TrimSuffix(query, " AND ")
+	fmt.Println(query)
 	return query
 }
 

@@ -90,7 +90,7 @@ func (d *V1RecommendFoodRepository) FindOneFoodImage(ctx context.Context, id int
 	foodImage := mysql.FoodImages{}
 	err := d.GormDB.WithContext(ctx).Where("id = ?", id).First(&foodImage).Error
 	if err != nil {
-		return "", err
+		return "", utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(_errors.ErrServerError.Error()+err.Error(), id), utils.ErrFromMysqlDB)
 	}
 	return foodImage.Image, nil
 }
@@ -99,7 +99,7 @@ func (d *V1RecommendFoodRepository) FindOneNutrient(ctx context.Context, foodNam
 	nutrient := mysql.Nutrients{}
 	err := d.GormDB.WithContext(ctx).Where("food_name = ?", foodName).First(&nutrient).Error
 	if err != nil {
-		return nil, err
+		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(_errors.ErrServerError.Error()+err.Error(), foodName), utils.ErrFromMysqlDB)
 	}
 	return &nutrient, nil
 }
@@ -115,7 +115,7 @@ func (d *V1RecommendFoodRepository) FindOneAndSaveNutrient(ctx context.Context, 
 			}
 			return nutrientDTO, nil
 		}
-		return nil, err
+		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(_errors.ErrServerError.Error()+err.Error(), nutrientDTO), utils.ErrFromMysqlDB)
 	}
 	return &nutrient, nil
 }
