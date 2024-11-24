@@ -20,3 +20,7 @@ type IMessageUserHandler interface {
 type IUpdateProfileUserHandler interface {
 	UpdateProfile(c echo.Context) error
 }
+
+type IAllMessageUserHandler interface {
+	AllMessage(c echo.Context) error
+}

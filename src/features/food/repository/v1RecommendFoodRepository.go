@@ -3,7 +3,6 @@ package repository
 import (
 	"context"
 	"errors"
-	"fmt"
 	_errors "main/features/food/model/errors"
 	_interface "main/features/food/model/interface"
 	"main/utils"
@@ -22,13 +21,13 @@ func (d *V1RecommendFoodRepository) FindOneV1RecommendFood(ctx context.Context, 
 
 	if result.Error != nil {
 		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-			return nil, fmt.Errorf("no records found for the given query")
+			return nil, utils.ErrorMsg(ctx, utils.ErrFoodNotFound, utils.Trace(), "no matching record found", utils.ErrFromClient)
 		}
 		return nil, result.Error
 	}
 
 	if result.RowsAffected == 0 {
-		return nil, fmt.Errorf("no records found for the given query")
+		return nil, utils.ErrorMsg(ctx, utils.ErrFoodNotFound, utils.Trace(), "no matching record found", utils.ErrFromClient)
 	}
 
 	return &food, nil // 반환할 때 포인터로 반환
@@ -82,7 +81,7 @@ func (d *V1RecommendFoodRepository) CountV1RecommendFood(ctx context.Context, qu
 	// Count를 Raw 쿼리와 함께 사용하는 대신, GORM의 쿼리 빌더를 사용
 	err := d.GormDB.WithContext(ctx).Raw(query).Scan(&foods).Error
 	if err != nil {
-		return 0, err
+		return 0, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(_errors.ErrServerError.Error()+err.Error(), query), utils.ErrFromMysqlDB)
 	}
 	return len(foods), nil
 }
@@ -111,7 +110,7 @@ func (d *V1RecommendFoodRepository) FindOneAndSaveNutrient(ctx context.Context, 
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			// 데이터가 없을 경우 저장
 			if err := d.GormDB.WithContext(ctx).Create(&nutrientDTO).Error; err != nil {
-				return nil, err
+				return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(_errors.ErrServerError.Error()+err.Error(), nutrientDTO), utils.ErrFromMysqlDB)
 			}
 			return nutrientDTO, nil
 		}

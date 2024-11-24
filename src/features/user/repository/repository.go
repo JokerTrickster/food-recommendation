@@ -20,3 +20,7 @@ type MessageUserRepository struct {
 type UpdateProfileUserRepository struct {
 	GormDB *gorm.DB
 }
+
+type AllMessageUserRepository struct {
+	GormDB *gorm.DB
+}

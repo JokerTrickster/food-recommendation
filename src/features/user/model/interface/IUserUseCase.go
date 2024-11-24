@@ -25,3 +25,7 @@ type IMessageUserUseCase interface {
 type IUpdateProfileUserUseCase interface {
 	UpdateProfile(c context.Context, e *entity.UpdateProfileUserEntity) (response.ResUpdateProfileUser, error)
 }
+
+type IAllMessageUserUseCase interface {
+	AllMessage(c context.Context, req *request.ReqAllMessageUser) error
+}

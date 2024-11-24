@@ -25,3 +25,8 @@ type IMessageUserRepository interface {
 type IUpdateProfileUserRepository interface {
 	UpdateProfileImage(ctx context.Context, uID uint, fileName string) error
 }
+
+type IAllMessageUserRepository interface {
+	FindUsersForNotifications(ctx context.Context) ([]*mysql.Users, error)
+	FindOnePushToken(ctx context.Context, uID uint) (string, error)
+}
