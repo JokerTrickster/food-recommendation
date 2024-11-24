@@ -10,4 +10,5 @@ import (
 
 func NewSystemHandler(c *echo.Echo) {
 	NewReportSystemHandler(c, usecase.NewReportSystemUseCase(repository.NewReportSystemRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
+	NewFoodReportSystemHandler(c, usecase.NewFoodReportSystemUseCase(repository.NewFoodReportSystemRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 }
