@@ -33,7 +33,7 @@ func (d *ReportSystemUseCase) Report(c context.Context, uID uint, req *request.R
 		UserID: strconv.Itoa(int(uID)),
 		Reason: string(req.Reason),
 	}
-	go aws.EmailSendReport([]string{"pkjhj485@gmail.com", "dtw7225@naver.com"}, reqReport)
+	go aws.EmailSendReport([]string{"pkjhj485@gmail.com", "dtw7225@naver.com", "ohhyejin1213@naver.com"}, reqReport)
 
 	return nil
 }

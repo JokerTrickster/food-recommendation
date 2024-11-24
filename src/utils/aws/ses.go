@@ -36,6 +36,20 @@ type ReqReportSES struct {
 	Reason string
 }
 
+
+func EmailSendFoodInfoEmptyReport(imageEmpty, nutrientEmpty []string) {
+	templateDataMap := map[string][]string{
+		"imageMissingFoods": imageEmpty,
+		"nutrientMissingFoods":  nutrientEmpty,
+	}
+	templateDataJson, err := json.Marshal(templateDataMap)
+	if err != nil {
+		fmt.Println("Error marshaling template data:", err)
+		return
+	}
+
+	emailSend([]string{"pkjhj485@gmail.com", "dtw7225@naver.com", "ohhyejin1213@naver.com"}, emailTypeFoodNameReport, string(templateDataJson), "foodInfoEmptyReport")
+}
 func EmailSendFoodUploadReport(successFoodList, failedFoodList []string) {
 	templateDataMap := map[string]string{
 		"successFoodList": strings.Join(successFoodList, ", "),
