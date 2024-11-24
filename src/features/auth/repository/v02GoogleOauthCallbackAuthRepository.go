@@ -60,6 +60,6 @@ func (g *V02GoogleOauthCallbackAuthRepository) FindOneAndUpdateUser(ctx context.
 		return &user, nil
 	} else {
 		// 그 외의 에러 처리
-		return nil, result.Error
+		return nil, utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), fmt.Sprintf("유저 데이터 조회 실패 %v", result.Error), utils.ErrFromInternal)
 	}
 }

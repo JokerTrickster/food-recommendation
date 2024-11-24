@@ -2,6 +2,7 @@ package repository
 
 import (
 	_interface "main/features/user/model/interface"
+	"main/utils"
 	"main/utils/db/mysql"
 
 	"golang.org/x/net/context"
@@ -16,7 +17,7 @@ func (d *MessageUserRepository) FindOnePushToken(ctx context.Context, uID uint) 
 	var userToken *mysql.UserTokens
 	err := d.GormDB.Where("user_id = ?", uID).First(&userToken).Error
 	if err != nil {
-		return "", err
+		return "", utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError("error finding push token", err), utils.ErrFromMysqlDB)
 	}
 	return userToken.Token, nil
 }
@@ -25,7 +26,7 @@ func (d *MessageUserRepository) FindOneAlarm(ctx context.Context, uID uint) (boo
 	var user *mysql.Users
 	err := d.GormDB.Where("id = ?", uID).First(&user).Error
 	if err != nil {
-		return false, err
+		return false, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError("error finding user", err), utils.ErrFromMysqlDB)
 	}
 	return *user.Push, nil
 }
