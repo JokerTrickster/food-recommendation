@@ -42,9 +42,6 @@ definitions:
     type: object
   request.ReqRecommendFood:
     properties:
-      flavors:
-        example: 매운맛
-        type: string
       previousAnswer:
         example: 김치찌개 떡볶이 치킨
         type: string
@@ -101,9 +98,6 @@ definitions:
     type: object
   request.ReqSelectFood:
     properties:
-      flavors:
-        example: 매운맛
-        type: string
       name:
         example: 된장찌개
         type: string
@@ -180,9 +174,6 @@ definitions:
     type: object
   request.ReqV1RecommendFood:
     properties:
-      flavors:
-        example: 매운맛
-        type: string
       previousAnswer:
         example: 김치찌개 떡볶이 치킨
         type: string
@@ -221,8 +212,6 @@ definitions:
         type: number
       fat:
         type: number
-      flavors:
-        type: string
       kcal:
         type: number
       name:
@@ -272,8 +261,6 @@ definitions:
     properties:
       created:
         type: string
-      flavor:
-        type: string
       name:
         type: string
       scenario:
@@ -287,10 +274,6 @@ definitions:
     type: object
   response.MetaData:
     properties:
-      flavors:
-        items:
-          $ref: '#/definitions/response.Category'
-        type: array
       scenarios:
         items:
           $ref: '#/definitions/response.Category'

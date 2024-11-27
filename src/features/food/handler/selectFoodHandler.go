@@ -60,7 +60,6 @@ func (d *SelectFoodHandler) Select(c echo.Context) error {
 		Times:     req.Times,
 		Name:      req.Name,
 		Themes:    req.Themes,
-		Flavors:   req.Flavors,
 		Scenarios: req.Scenarios,
 		UserID:    uID,
 	}

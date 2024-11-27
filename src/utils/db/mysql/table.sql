@@ -100,16 +100,6 @@ CREATE TABLE scenarios (
     description VARCHAR(255)
 );
 
--- 매운맛, 감칠맛, 고소한맛, 단맛, 짠맛, 싱거운맛 
-CREATE TABLE flavors(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    deleted_at TIMESTAMP NULL DEFAULT NULL,
-    name VARCHAR(50) NOT NULL UNIQUE,
-    image varchar(255) default 'category_default.png',
-    description VARCHAR(255)    
-);
 
 -- 스트레스 해소, 피로 회복, 기분 전환, 제철 음식, 영양식, 특별한 날
 CREATE TABLE themes(
@@ -134,7 +124,6 @@ CREATE TABLE foods (
     type_id INT,
     scenario_id INT,
     theme_id INT,
-    flavor_id INT,
     FOREIGN KEY (food_image_id) REFERENCES food_images(id)
 );
 
@@ -177,8 +166,8 @@ CREATE TABLE reports (
 );
 
 
--- meta table에 types, scenarios, times, themes, flavors 테이블을 저장하는 sql 문 만들어줘
-INSERT INTO meta_tables (table_name, table_description) VALUES ('scenarios', '상황별'),('times', '시간별'),('types', '종류별'),('flavors', '맛별'),('themes', '기분/테마별');
+-- meta table에 types, scenarios, times, themes 테이블을 저장하는 sql 문 만들어줘
+INSERT INTO meta_tables (table_name, table_description) VALUES ('scenarios', '상황별'),('times', '시간별'),('types', '종류별'),('themes', '기분/테마별');
 
 -- times 테이블에 아침, 점심, 저녁, 브런치, 간식, 야식 순으로 저장하는 sql 문 만들어줘
 INSERT INTO times (name, description,image) VALUES ('아침', '아침','times/breakfast.png'), ('점심', '점심','times/lunch.png'), ('저녁', '저녁','times/dinner.png'), ('간식', '간식','times/snack.png'), ('야식', '야식','times/late night snack.png');
@@ -189,8 +178,6 @@ INSERT INTO types (name, description,image) VALUES ('한식', '한식','types/ko
 -- scenarios 테이블에 연인, 혼반, 가족, 다이어트, 회식, 친구 순으로 저장하는 sql 문 만들어줘
 INSERT INTO scenarios (name, description,image) VALUES ('연인', '연인','scenarios/couple.png'), ('혼밥', '혼밥','scenarios/eating alone.png'), ('가족', '가족','scenarios/family.png'), ('회식', '회식','scenarios/company dinner.png'), ('친구', '친구','scenarios/friend.png');
 
--- flavors 테이블에 매운맛, 감칠맛, 고소한맛, 단맛, 짠맛, 싱거운맛 순으로 저장하는 sql 문 만들어줘
-INSERT INTO flavors (name, description,image) VALUES ('매운맛', '매운맛','flavors/spicy taste.png'), ('감칠맛', '감칠맛','flavors/umami.png'), ('고소한맛', '고소한맛','flavors/nutty taste.png'), ('단맛', '단맛','flavors/sweet taste.png'), ('싱거운맛', '싱거운맛','flavors/bland taste.png');
 
 -- themes 테이블에 스트레스 해소, 피로 회복, 기분 전환, 제철 음식, 영양식, 특별한 날 순으로 저장하는 sql 문 만들어줘
 INSERT INTO themes (name, description,image) VALUES ('스트레스 해소', '스트레스 해소','themes/stress.png'), ('해장', '해장','themes/hangover.png'),('피로 회복', '피로 회복','themes/fatigue recovery.png'), ('다이어트', '다이어트','themes/diet.png'), ('제철 음식', '제철 음식','themes/seasonal food.png');

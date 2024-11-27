@@ -47,7 +47,7 @@ func CreateSelectFoodQuestion(e entity.SelectFoodEntity) string {
 	return question
 }
 
-func CreateResMetaData(typeDTO []mysql.Types, timeDTO []mysql.Times, scenarioDTO []mysql.Scenarios, themesDTO []mysql.Themes, flavorDTO []mysql.Flavors) response.ResMetaData {
+func CreateResMetaData(typeDTO []mysql.Types, timeDTO []mysql.Times, scenarioDTO []mysql.Scenarios, themesDTO []mysql.Themes) response.ResMetaData {
 	var res response.ResMetaData
 	var metaData response.MetaData
 	//상황 -> 시간 -> 종륲별 -> 맛 -> 기분/테마별
@@ -87,18 +87,7 @@ func CreateResMetaData(typeDTO []mysql.Types, timeDTO []mysql.Times, scenarioDTO
 		category.Image = imageUrl
 		metaData.Types = append(metaData.Types, category)
 	}
-	for _, t := range flavorDTO {
-		category := response.Category{
-			Name:  t.Name,
-			Image: t.Image,
-		}
-		imageUrl, err := aws.ImageGetSignedURL(context.TODO(), t.Image, aws.ImgTypeCategory)
-		if err != nil {
-			return response.ResMetaData{}
-		}
-		category.Image = imageUrl
-		metaData.Flavors = append(metaData.Flavors, category)
-	}
+
 	for _, t := range themesDTO {
 		category := response.Category{
 			Name:  t.Name,
@@ -113,8 +102,8 @@ func CreateResMetaData(typeDTO []mysql.Types, timeDTO []mysql.Times, scenarioDTO
 	}
 
 	res.MetaData = metaData
-	res.MetaKeys = []string{"types", "times", "scenarios", "themes", "flavors"}
-	res.MetaKRKeys = []string{"종류별", "시간별", "상황별", "기분/테마별", "맛별"}
+	res.MetaKeys = []string{"types", "times", "scenarios", "themes"}
+	res.MetaKRKeys = []string{"종류별", "시간별", "상황별", "기분/테마별"}
 	return res
 }
 
@@ -124,7 +113,6 @@ func CreateSelectFoodDTO(entity entity.SelectFoodEntity) *mysql.Foods {
 	timeID := 0
 	secnarioID := 0
 	themeID := 0
-	flavorID := 0
 
 	if entity.Types != "" {
 		typeID, err = mysql.GetTypeID(entity.Types)
@@ -150,20 +138,12 @@ func CreateSelectFoodDTO(entity entity.SelectFoodEntity) *mysql.Foods {
 			fmt.Println(err)
 		}
 	}
-	if entity.Flavors != "" {
-
-		flavorID, err = mysql.GetFlavorID(entity.Flavors)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
 
 	return &mysql.Foods{
 		TypeID:     typeID,
 		TimeID:     timeID,
 		ScenarioID: secnarioID,
 		ThemeID:    themeID,
-		FlavorID:   flavorID,
 		Name:       entity.Name,
 	}
 }
@@ -181,7 +161,6 @@ func CreateRecommendFoodDTO(entity entity.RecommendFoodEntity, foodName string, 
 	timeID := 0
 	secnarioID := 0
 	themeID := 0
-	flavorID := 0
 
 	if entity.Types != "" {
 		typeID, err = mysql.GetTypeID(entity.Types)
@@ -207,20 +186,12 @@ func CreateRecommendFoodDTO(entity entity.RecommendFoodEntity, foodName string, 
 			fmt.Println(err)
 		}
 	}
-	if entity.Flavors != "" {
-
-		flavorID, err = mysql.GetFlavorID(entity.Flavors)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
 
 	return &mysql.Foods{
 		TypeID:      typeID,
 		TimeID:      timeID,
 		ScenarioID:  secnarioID,
 		ThemeID:     themeID,
-		FlavorID:    flavorID,
 		Name:        foodName,
 		FoodImageID: foodImageID,
 	}
@@ -260,20 +231,13 @@ func CreateRecommendFoodQuestion(entity entity.RecommendFoodEntity) string {
 	} else {
 		reqTheme = entity.Themes
 	}
-	var reqFlavor string
-	if entity.Flavors == "" || entity.Flavors == "전체" {
-		reqFlavor = "모든 맛"
-	} else {
-		reqFlavor = entity.Flavors
-	}
 
 	questionType := fmt.Sprintf("어떤 종류의 음식 :  %s \n", reqType)
 	questionScenario := fmt.Sprintf("누구와 함께 : %s \n", reqScenario)
 	questionTime := fmt.Sprintf("언제 : %s \n", reqTime)
 	questionTheme := fmt.Sprintf("어떤 테마 : %s \n", reqTheme)
-	questionFlavor := fmt.Sprintf("어떤 맛 : %s \n", reqFlavor)
 	today := time.Now().Format("2006-01-02")
-	question := fmt.Sprintf("%s와 어울리는 %s, %s, %s, %s, %s, 음식 이름 1개만 추천해줘 설명 필요없고 이름만 추천해줘", today, questionType, questionScenario, questionTime, questionTheme, questionFlavor)
+	question := fmt.Sprintf("%s와 어울리는 %s, %s, %s, %s 음식 이름 1개만 추천해줘 설명 필요없고 이름만 추천해줘", today, questionType, questionScenario, questionTime, questionTheme)
 	if entity.PreviousAnswer != "" {
 		question += fmt.Sprintf("이전에 추천받은 음식은 제외하고 알려줘 이전 추천 음식 이름 : %s", entity.PreviousAnswer)
 	}
@@ -305,7 +269,6 @@ func CreateSaveFoodDTO(food request.SaveFood, foodImageID int) *mysql.Foods {
 	timeID := 0
 	secnarioID := 0
 	themeID := 0
-	flavorID := 0
 
 	if food.Types != "" {
 		typeID, err = mysql.GetTypeID(food.Types)
@@ -331,20 +294,12 @@ func CreateSaveFoodDTO(food request.SaveFood, foodImageID int) *mysql.Foods {
 			fmt.Println(err)
 		}
 	}
-	if food.Flavors != "" {
-
-		flavorID, err = mysql.GetFlavorID(food.Flavors)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
 
 	return &mysql.Foods{
 		TypeID:      typeID,
 		TimeID:      timeID,
 		ScenarioID:  secnarioID,
 		ThemeID:     themeID,
-		FlavorID:    flavorID,
 		Name:        food.Name,
 		FoodImageID: foodImageID,
 	}
@@ -417,19 +372,12 @@ func CreateV1RecommendFoodQuestion(entity entity.V1RecommendFoodEntity) string {
 	} else {
 		reqTheme = entity.Themes
 	}
-	var reqFlavor string
-	if entity.Flavors == "" || entity.Flavors == "전체" {
-		reqFlavor = "모든 맛"
-	} else {
-		reqFlavor = entity.Flavors
-	}
 
 	questionType := fmt.Sprintf("어떤 종류의 음식 :  %s \n", reqType)
 	questionScenario := fmt.Sprintf("누구와 함께 : %s \n", reqScenario)
 	questionTime := fmt.Sprintf("언제 : %s \n", reqTime)
 	questionTheme := fmt.Sprintf("어떤 테마 : %s \n", reqTheme)
-	questionFlavor := fmt.Sprintf("어떤 맛 : %s \n", reqFlavor)
-	question := fmt.Sprintf("%s, %s, %s, %s, %s, 음식 이름 추천해줘 음식 이름에 공백이 있으면 안된다.", questionType, questionScenario, questionTime, questionTheme, questionFlavor)
+	question := fmt.Sprintf("%s, %s, %s, %s 음식 이름 추천해줘 음식 이름에 공백이 있으면 안된다.", questionType, questionScenario, questionTime, questionTheme)
 	if entity.PreviousAnswer != "" {
 		question += fmt.Sprintf("이전에 추천받은 음식은 제외하고 알려줘 이전 추천 음식 이름 : %s", entity.PreviousAnswer)
 	}
@@ -452,9 +400,7 @@ func CreateRecommendQuery(entity entity.V1RecommendFoodEntity) string {
 	if entity.Themes != "" {
 		query += fmt.Sprintf("theme_id = (SELECT id FROM themes WHERE name = '%s') AND ", entity.Themes)
 	}
-	if entity.Flavors != "" {
-		query += fmt.Sprintf("flavor_id = (SELECT id FROM flavors WHERE name = '%s') AND ", entity.Flavors)
-	}
+
 	query = strings.TrimSuffix(query, " AND ")
 	fmt.Println(query)
 	return query
@@ -474,7 +420,6 @@ func CreateV1RecommendFoodDTO(entity entity.V1RecommendFoodEntity, foodName stri
 	timeID := 0
 	secnarioID := 0
 	themeID := 0
-	flavorID := 0
 
 	if entity.Types != "" {
 		typeID, err = mysql.GetTypeID(entity.Types)
@@ -500,20 +445,12 @@ func CreateV1RecommendFoodDTO(entity entity.V1RecommendFoodEntity, foodName stri
 			fmt.Println(err)
 		}
 	}
-	if entity.Flavors != "" {
-
-		flavorID, err = mysql.GetFlavorID(entity.Flavors)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
 
 	return &mysql.Foods{
 		TypeID:      typeID,
 		TimeID:      timeID,
 		ScenarioID:  secnarioID,
 		ThemeID:     themeID,
-		FlavorID:    flavorID,
 		Name:        foodName,
 		FoodImageID: foodImageID,
 	}

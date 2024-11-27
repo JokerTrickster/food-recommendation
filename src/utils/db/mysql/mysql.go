@@ -108,13 +108,6 @@ func GetScenarioID(name string) (int, error) {
 	return id, nil
 }
 
-func GetFlavorID(name string) (int, error) {
-	id, exists := FlavorMap[name]
-	if !exists {
-		return 0, fmt.Errorf("맛 이름을 찾을 수 없습니다: %s", name)
-	}
-	return id, nil
-}
 func GetThemeID(name string) (int, error) {
 	id, exists := ThemeMap[name]
 	if !exists {
@@ -154,10 +147,7 @@ func GetTypeKey(val int) (string, bool) {
 	key, ok := TypeReverseMap[val]
 	return key, ok
 }
-func GetFlavorKey(val int) (string, bool) {
-	key, ok := FlavorReverseMap[val]
-	return key, ok
-}
+
 func GetThemeKey(val int) (string, bool) {
 	key, ok := ThemeReverseMap[val]
 	return key, ok
@@ -172,9 +162,6 @@ func InitMeta() {
 	}
 	for k, v := range TypeMap {
 		TypeReverseMap[v] = k
-	}
-	for k, v := range FlavorMap {
-		FlavorReverseMap[v] = k
 	}
 	for k, v := range ThemeMap {
 		ThemeReverseMap[v] = k

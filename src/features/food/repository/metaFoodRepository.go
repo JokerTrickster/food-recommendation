@@ -44,11 +44,3 @@ func (g *MetaFoodRepository) FindAllThemesMeta(ctx context.Context) ([]mysql.The
 	}
 	return themesDTO, nil
 }
-
-func (g *MetaFoodRepository) FindAllFlavorMeta(ctx context.Context) ([]mysql.Flavors, error) {
-	var flavorDTO []mysql.Flavors
-	if err := g.GormDB.WithContext(ctx).Find(&flavorDTO).Error; err != nil {
-		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(_errors.ErrServerError.Error()+err.Error()), utils.ErrFromMysqlDB)
-	}
-	return flavorDTO, nil
-}
