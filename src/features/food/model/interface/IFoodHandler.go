@@ -39,3 +39,6 @@ type ICheckImageUploadFoodHandler interface {
 type IV1RecommendFoodHandler interface {
 	V1Recommend(c echo.Context) error
 }
+type IV12RecommendFoodHandler interface {
+	V12Recommend(c echo.Context) error
+}
