@@ -60,7 +60,6 @@ func (d *RecommendFoodHandler) Recommend(c echo.Context) error {
 		Scenarios: req.Scenarios,
 		Times:     req.Times,
 		Themes:    req.Themes,
-		Flavors:   req.Flavors,
 		UserID:    uID,
 	}
 	if req.PreviousAnswer != "" {

@@ -51,17 +51,6 @@ const (
 	ThemeSeasonalFood           //제철 음식
 )
 
-// 맛 상수 정의
-// 매운맛, 감칠맛, 고소한맛, 단맛, 짠맛, 싱거운맛
-const (
-	FlavorAll    = 0
-	FlavorSpicy  = iota //매운맛
-	FlavorSavory        //감칠맛
-	FlavorNutty         //고소한맛
-	FlavorSweet         //단맛
-	FlavorSour          //싱거운맛
-)
-
 // 맵 정의
 var ScenarioMap = map[string]int{
 	"연인": ScenarioCouple,
@@ -92,14 +81,6 @@ var TypeMap = map[string]int{
 	"퓨전 요리":  TypeFusion,
 }
 
-var FlavorMap = map[string]int{
-	"매운맛":  FlavorSpicy,
-	"감칠맛":  FlavorSavory,
-	"고소한맛": FlavorNutty,
-	"단맛":   FlavorSweet,
-	"싱거운맛": FlavorSour,
-}
-
 var ThemeMap = map[string]int{
 	"스트레스 해소": ThemeStressRelief,
 	"해장":      ThemeHangover,
@@ -112,7 +93,6 @@ var ThemeMap = map[string]int{
 var ScenarioReverseMap = make(map[int]string)
 var TimeReverseMap = make(map[int]string)
 var TypeReverseMap = make(map[int]string)
-var FlavorReverseMap = make(map[int]string)
 var ThemeReverseMap = make(map[int]string)
 
 type Tokens struct {
@@ -143,7 +123,6 @@ type Foods struct {
 	TimeID      int    `json:"timeID" gorm:"column:time_id"`
 	TypeID      int    `json:"typeID" gorm:"column:type_id"`
 	ThemeID     int    `json:"themeID" gorm:"column:theme_id"`
-	FlavorID    int    `json:"flavorID" gorm:"column:flavor_id"`
 }
 type FoodHistory struct {
 	gorm.Model
@@ -179,12 +158,6 @@ type Types struct {
 	Description string `json:"description" gorm:"column:description"`
 }
 
-type Flavors struct {
-	gorm.Model
-	Name        string `json:"name" gorm:"column:name"`
-	Image       string `json:"image" gorm:"column:image"`
-	Description string `json:"description" gorm:"column:description"`
-}
 type Themes struct {
 	gorm.Model
 	Name        string `json:"name" gorm:"column:name"`

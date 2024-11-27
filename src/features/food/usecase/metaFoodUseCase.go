@@ -36,12 +36,8 @@ func (d *MetaFoodUseCase) Meta(c context.Context) (response.ResMetaData, error) 
 	if err != nil {
 		return response.ResMetaData{}, err
 	}
-	flavorDTO, err := d.Repository.FindAllFlavorMeta(ctx)
-	if err != nil {
-		return response.ResMetaData{}, err
-	}
 
-	res := CreateResMetaData(typeDTO, timeDTO, scenarioDTO, themesDTO, flavorDTO)
+	res := CreateResMetaData(typeDTO, timeDTO, scenarioDTO, themesDTO)
 
 	return res, nil
 }

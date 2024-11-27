@@ -1399,10 +1399,6 @@ const docTemplate = `{
         "request.ReqRecommendFood": {
             "type": "object",
             "properties": {
-                "flavors": {
-                    "type": "string",
-                    "example": "매운맛"
-                },
                 "previousAnswer": {
                     "type": "string",
                     "example": "김치찌개 떡볶이 치킨"
@@ -1488,10 +1484,6 @@ const docTemplate = `{
         "request.ReqSelectFood": {
             "type": "object",
             "properties": {
-                "flavors": {
-                    "type": "string",
-                    "example": "매운맛"
-                },
                 "name": {
                     "type": "string",
                     "example": "된장찌개"
@@ -1606,10 +1598,6 @@ const docTemplate = `{
         "request.ReqV1RecommendFood": {
             "type": "object",
             "properties": {
-                "flavors": {
-                    "type": "string",
-                    "example": "매운맛"
-                },
                 "previousAnswer": {
                     "type": "string",
                     "example": "김치찌개 떡볶이 치킨"
@@ -1660,9 +1648,6 @@ const docTemplate = `{
                 },
                 "fat": {
                     "type": "number"
-                },
-                "flavors": {
-                    "type": "string"
                 },
                 "kcal": {
                     "type": "number"
@@ -1737,9 +1722,6 @@ const docTemplate = `{
                 "created": {
                     "type": "string"
                 },
-                "flavor": {
-                    "type": "string"
-                },
                 "name": {
                     "type": "string"
                 },
@@ -1760,12 +1742,6 @@ const docTemplate = `{
         "response.MetaData": {
             "type": "object",
             "properties": {
-                "flavors": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/response.Category"
-                    }
-                },
                 "scenarios": {
                     "type": "array",
                     "items": {

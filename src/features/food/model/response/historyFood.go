@@ -10,6 +10,5 @@ type HistoryFood struct {
 	Time     string `json:"time"`
 	Scenario string `json:"scenario"`
 	Theme    string `json:"theme"`
-	Flavor   string `json:"flavor"`
 	Created  string `json:"created"`
 }

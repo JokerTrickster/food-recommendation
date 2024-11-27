@@ -12,7 +12,6 @@ type MetaData struct {
 	Scenarios []Category `json:"scenarios"`
 	Times     []Category `json:"times"`
 	Types     []Category `json:"types"`
-	Flavors   []Category `json:"flavors"`
 	Themes    []Category `json:"themes"`
 }
 

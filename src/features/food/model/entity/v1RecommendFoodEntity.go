@@ -5,7 +5,6 @@ type V1RecommendFoodEntity struct {
 	Scenarios      string `json:"scenarios"`
 	Times          string `json:"times"`
 	Themes         string `json:"themes"`
-	Flavors        string `json:"flavors"`
 	UserID         uint   `json:"userID"`
 	PreviousAnswer string `json:"previousAnswer"`
 }

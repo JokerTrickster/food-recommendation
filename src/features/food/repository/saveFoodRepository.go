@@ -18,7 +18,7 @@ func NewSaveFoodRepository(gormDB *gorm.DB) _interface.ISaveFoodRepository {
 func (d *SaveFoodRepository) SaveFood(ctx context.Context, foodDTO *mysql.Foods) error {
 	foods := mysql.Foods{}
 	// 존재 여부 확인
-	err := d.GormDB.WithContext(ctx).Model(&foods).Where("name = ? AND time_id = ? AND type_id = ? AND scenario_id = ? and theme_id = ? and flavor_id = ?", foodDTO.Name, foodDTO.TimeID, foodDTO.TypeID, foodDTO.ScenarioID, foodDTO.ThemeID, foodDTO.FlavorID).First(&foods).Error
+	err := d.GormDB.WithContext(ctx).Model(&foods).Where("name = ? AND time_id = ? AND type_id = ? AND scenario_id = ? and theme_id = ? ", foodDTO.Name, foodDTO.TimeID, foodDTO.TypeID, foodDTO.ScenarioID, foodDTO.ThemeID).First(&foods).Error
 
 	if err == nil {
 		// 데이터가 이미 존재함

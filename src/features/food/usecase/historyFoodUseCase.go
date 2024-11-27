@@ -54,10 +54,6 @@ func (d *HistoryFoodUseCase) History(c context.Context, userID uint) (response.R
 		if !ok {
 			return response.ResHistoryFood{}, utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), _errors.ErrServerError.Error()+" themeID is not valid", utils.ErrFromInternal)
 		}
-		flavorID, ok := mysql.GetFlavorKey(foodDTO.FlavorID)
-		if !ok {
-			return response.ResHistoryFood{}, utils.ErrorMsg(ctx, utils.ErrInternalServer, utils.Trace(), _errors.ErrServerError.Error()+" flavorID is not valid", utils.ErrFromInternal)
-		}
 
 		food := response.HistoryFood{
 			Name:     foodDTO.Name,
@@ -65,7 +61,6 @@ func (d *HistoryFoodUseCase) History(c context.Context, userID uint) (response.R
 			Time:     timeID,
 			Scenario: scenarioID,
 			Theme:    themeID,
-			Flavor:   flavorID,
 			Created:  foodHistory.CreatedAt.Format("2006-01-02 15:04:05"),
 		}
 		foods = append(foods, food)

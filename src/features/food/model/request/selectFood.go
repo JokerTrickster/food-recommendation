@@ -5,6 +5,5 @@ type ReqSelectFood struct {
 	Scenarios string `json:"scenarios" example:"혼밥"` // 전체 , 혼밥, 가족, 친구들
 	Times     string `json:"times" example:"점심"`
 	Themes    string `json:"themes" example:"스트레스 해소"`
-	Flavors   string `json:"flavors" example:"매운맛"`
 	Name      string `json:"name" example:"된장찌개"`
 }
