@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"image"
 	"image/png"
 	"math/rand"
 	"mime/multipart"
@@ -59,10 +60,37 @@ func ImageUpload(ctx context.Context, file *multipart.FileHeader, filename strin
 	if err != nil {
 		return fmt.Errorf("fail to load image - %v", err)
 	}
-	img = imaging.Fill(img, meta.width, meta.height, imaging.Center, imaging.Lanczos)
+
+	// Step 3: 이미지 크기 가져오기
+	imgWidth := img.Bounds().Dx()
+	imgHeight := img.Bounds().Dy()
+
+	// Step 4: 1.5배 확대된 크기 계산
+	scaleFactor := 2.0
+	zoomedWidth := int(float64(meta.width) * scaleFactor)
+	zoomedHeight := int(float64(meta.height) * scaleFactor)
+
+	// 중심 기준 자르기 영역 계산
+	startX := (imgWidth - zoomedWidth) / 2
+	startY := (imgHeight - zoomedHeight) / 2
+
+	// 자르기 범위를 초과하지 않도록 보정
+	if startX < 0 {
+		startX = 0
+		zoomedWidth = imgWidth
+	}
+	if startY < 0 {
+		startY = 0
+		zoomedHeight = imgHeight
+	}
+	// 확대된 영역으로 자르기
+	croppedImg := imaging.Crop(img, image.Rect(startX, startY, startX+zoomedWidth, startY+zoomedHeight))
+
+	// Step 5: 자른 이미지를 meta 크기로 다시 조정 (필요시)
+	finalImg := imaging.Resize(croppedImg, meta.width, meta.height, imaging.Lanczos)
 
 	buf := new(bytes.Buffer)
-	if err := imaging.Encode(buf, img, imaging.PNG, imaging.PNGCompressionLevel(png.BestCompression)); err != nil {
+	if err := imaging.Encode(buf, finalImg, imaging.PNG, imaging.PNGCompressionLevel(png.BestCompression)); err != nil {
 		return fmt.Errorf("fail to encode png image - %v", err)
 	}
 
