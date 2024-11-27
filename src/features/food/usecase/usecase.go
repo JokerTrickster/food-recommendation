@@ -402,7 +402,24 @@ func CreateRecommendQuery(entity entity.V1RecommendFoodEntity) string {
 	}
 
 	query = strings.TrimSuffix(query, " AND ")
-	fmt.Println(query)
+	return query
+}
+func CreateV12RecommendQuery(entity entity.V12RecommendFoodEntity) string {
+	var query string = "SELECT * FROM foods WHERE "
+	if entity.Types != "" {
+		query += fmt.Sprintf("type_id = (SELECT id FROM types WHERE name = '%s') AND ", entity.Types)
+	}
+	if entity.Times != "" {
+		query += fmt.Sprintf("time_id = (SELECT id FROM times WHERE name = '%s') AND ", entity.Times)
+	}
+	if entity.Scenarios != "" {
+		query += fmt.Sprintf("scenario_id = (SELECT id FROM scenarios WHERE name = '%s') AND ", entity.Scenarios)
+	}
+	if entity.Themes != "" {
+		query += fmt.Sprintf("theme_id = (SELECT id FROM themes WHERE name = '%s') AND ", entity.Themes)
+	}
+
+	query = strings.TrimSuffix(query, " AND ")
 	return query
 }
 
@@ -460,6 +477,21 @@ func CreateV1RecommendFoodDTO(entity entity.V1RecommendFoodEntity, foodName stri
 func CreateRes1Recommend(food *mysql.Foods, imageUrl string, nutrientDTO *mysql.Nutrients) response.ResV1RecommendFood {
 	res := response.ResV1RecommendFood{}
 	foodRes := response.V1RecommendFood{
+		Name:         food.Name,
+		Image:        imageUrl,
+		Amount:       nutrientDTO.Amount,
+		Kcal:         nutrientDTO.Kcal,
+		Carbohydrate: nutrientDTO.Carbohydrate,
+		Protein:      nutrientDTO.Protein,
+		Fat:          nutrientDTO.Fat,
+	}
+	res.FoodNames = append(res.FoodNames, foodRes)
+	return res
+}
+
+func CreateRes12Recommend(food *mysql.Foods, imageUrl string, nutrientDTO *mysql.Nutrients) response.ResV12RecommendFood {
+	res := response.ResV12RecommendFood{}
+	foodRes := response.V12RecommendFood{
 		Name:         food.Name,
 		Image:        imageUrl,
 		Amount:       nutrientDTO.Amount,

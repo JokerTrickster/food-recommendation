@@ -66,3 +66,10 @@ type IV1RecommendFoodRepository interface {
 	FindOneNutrient(ctx context.Context, foodName string) (*mysql.Nutrients, error)
 	FindOneAndSaveNutrient(ctx context.Context, nutrientDTO *mysql.Nutrients) (*mysql.Nutrients, error)
 }
+
+type IV12RecommendFoodRepository interface {
+	FindOneV12RecommendFood(ctx context.Context, query string) (*mysql.Foods, error)
+	FindOneFoodImage(ctx context.Context, foodID int) (string, error)
+	FindOneNutrient(ctx context.Context, foodName string) (*mysql.Nutrients, error)
+	FindOneAndSaveNutrient(ctx context.Context, nutrientDTO *mysql.Nutrients) (*mysql.Nutrients, error)
+}

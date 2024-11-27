@@ -47,3 +47,7 @@ type CheckImageUploadFoodRepository struct {
 type V1RecommendFoodRepository struct {
 	GormDB *gorm.DB
 }
+
+type V12RecommendFoodRepository struct {
+	GormDB *gorm.DB
+}

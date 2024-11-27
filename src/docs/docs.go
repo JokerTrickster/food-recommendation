@@ -1329,6 +1329,52 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/v1.2/foods/recommend": {
+            "post": {
+                "description": "■ errCode with 400\nPARAM_BAD : 파라미터 오류\nUSER_NOT_FOUND : 유저가 존재하지 않음\n■ errCode with 401\nINVALID_AUTH_CODE : 인증 코드 검증 실패\nTOKEN_BAD : 잘못된 토큰\nINVALID_ACCESS_TOKEN : 잘못된 액세스 토큰\n\n■ errCode with 500\nINTERNAL_SERVER : 내부 로직 처리 실패\nINTERNAL_DB : DB 처리 실패\nGEMINI_INTERNAL_SERVER : Gemini 서버 내부 오류",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "food"
+                ],
+                "summary": "음식 추천 받기 (llm 제거)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "accessToken",
+                        "name": "tkn",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "type",
+                        "name": "type",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ReqV12RecommendFood"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ResV12RecommendFood"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {}
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -1592,6 +1638,31 @@ const docTemplate = `{
             "properties": {
                 "token": {
                     "type": "string"
+                }
+            }
+        },
+        "request.ReqV12RecommendFood": {
+            "type": "object",
+            "properties": {
+                "previousAnswer": {
+                    "type": "string",
+                    "example": "김치찌개 떡볶이 치킨"
+                },
+                "scenarios": {
+                    "type": "string",
+                    "example": "혼밥"
+                },
+                "themes": {
+                    "type": "string",
+                    "example": "스트레스 해소"
+                },
+                "times": {
+                    "type": "string",
+                    "example": "점심"
+                },
+                "types": {
+                    "type": "string",
+                    "example": "한식"
                 }
             }
         },
@@ -2007,6 +2078,17 @@ const docTemplate = `{
                 }
             }
         },
+        "response.ResV12RecommendFood": {
+            "type": "object",
+            "properties": {
+                "foodNames": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.V12RecommendFood"
+                    }
+                }
+            }
+        },
         "response.ResV1RecommendFood": {
             "type": "object",
             "properties": {
@@ -2015,6 +2097,32 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/response.V1RecommendFood"
                     }
+                }
+            }
+        },
+        "response.V12RecommendFood": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "string"
+                },
+                "carbohydrate": {
+                    "type": "number"
+                },
+                "fat": {
+                    "type": "number"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "kcal": {
+                    "type": "number"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "protein": {
+                    "type": "number"
                 }
             }
         },

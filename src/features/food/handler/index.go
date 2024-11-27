@@ -21,4 +21,5 @@ func NewFoodHandler(c *echo.Echo) {
 	NewSaveFoodHandler(c, usecase.NewSaveFoodUseCase(repository.NewSaveFoodRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 	NewCheckImageUploadFoodHandler(c, usecase.NewCheckImageUploadFoodUseCase(repository.NewCheckImageUploadFoodRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 	NewV1RecommendFoodHandler(c, usecase.NewV1RecommendFoodUseCase(repository.NewV1RecommendFoodRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
+	NewV12RecommendFoodHandler(c, usecase.NewV12RecommendFoodUseCase(repository.NewV12RecommendFoodRepository(mysql.GormMysqlDB), mysql.DBTimeOut))
 }
