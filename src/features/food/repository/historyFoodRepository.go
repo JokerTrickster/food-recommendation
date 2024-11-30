@@ -22,8 +22,8 @@ func (g *HistoryFoodRepository) FindOneFood(ctx context.Context, foodID uint) (*
 	return &food, nil
 }
 
-func (g *HistoryFoodRepository) FindAllFoodHistory(ctx context.Context, userID uint) ([]mysql.FoodHistory, error) {
-	foodHistoryList := []mysql.FoodHistory{}
+func (g *HistoryFoodRepository) FindAllFoodHistory(ctx context.Context, userID uint) ([]mysql.FoodHistories, error) {
+	foodHistoryList := []mysql.FoodHistories{}
 	if err := g.GormDB.WithContext(ctx).Where("user_id = ?", userID).Find(&foodHistoryList).Error; err != nil {
 		return nil, utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(_errors.ErrServerError.Error()+err.Error(), userID), utils.ErrFromMysqlDB)
 	}

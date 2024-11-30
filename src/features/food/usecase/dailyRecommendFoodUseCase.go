@@ -30,7 +30,7 @@ func (d *DailyRecommendFoodUseCase) DailyRecommend(c context.Context) (response.
 	res := response.ResDailyRecommendFood{}
 	for _, food := range foods {
 		// 음식 이미지를 가져온다.
-		foodImage, err := d.Repository.FindOneFoodImage(ctx, food.FoodImageID)
+		foodImage, err := d.Repository.FindOneFoodImage(ctx, food.ImageID)
 		if err != nil {
 			return response.ResDailyRecommendFood{}, err
 		}

@@ -23,7 +23,7 @@ func (g *SelectFoodRepository) FindOneFood(ctx context.Context, foodDTO *mysql.F
 	}
 	return food.ID, nil
 }
-func (g *SelectFoodRepository) InsertOneFoodHistory(ctx context.Context, foodHistoryDTO *mysql.FoodHistory) error {
+func (g *SelectFoodRepository) InsertOneFoodHistory(ctx context.Context, foodHistoryDTO *mysql.FoodHistories) error {
 	if err := g.GormDB.WithContext(ctx).Create(&foodHistoryDTO).Error; err != nil {
 		return utils.ErrorMsg(ctx, utils.ErrInternalDB, utils.Trace(), utils.HandleError(_errors.ErrServerError.Error()+err.Error(), foodHistoryDTO), utils.ErrFromMysqlDB)
 	}

@@ -13,11 +13,11 @@ type IRecommendFoodRepository interface {
 
 type ISelectFoodRepository interface {
 	FindOneFood(ctx context.Context, foodDTO *mysql.Foods) (uint, error)
-	InsertOneFoodHistory(ctx context.Context, foodHistoryDTO *mysql.FoodHistory) error
+	InsertOneFoodHistory(ctx context.Context, foodHistoryDTO *mysql.FoodHistories) error
 	IncrementFoodRanking(ctx context.Context, foodName string, score float64) error
 }
 type IHistoryFoodRepository interface {
-	FindAllFoodHistory(ctx context.Context, userID uint) ([]mysql.FoodHistory, error)
+	FindAllFoodHistory(ctx context.Context, userID uint) ([]mysql.FoodHistories, error)
 	FindOneFood(ctx context.Context, foodID uint) (*mysql.Foods, error)
 }
 

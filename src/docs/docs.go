@@ -1795,18 +1795,6 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string"
-                },
-                "scenario": {
-                    "type": "string"
-                },
-                "theme": {
-                    "type": "string"
-                },
-                "time": {
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string"
                 }
             }
         },

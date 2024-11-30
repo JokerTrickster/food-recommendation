@@ -2,7 +2,6 @@ package usecase
 
 import (
 	"context"
-	"fmt"
 	"main/features/food/model/entity"
 	_errors "main/features/food/model/errors"
 	"main/features/food/model/response"
@@ -92,7 +91,6 @@ func (d *V1RecommendFoodUseCase) V1Recommend(c context.Context, e entity.V1Recom
 		if err != nil {
 			return response.ResV1RecommendFood{}, err
 		}
-		fmt.Println(foodName, nutrition)
 
 		foodImageDTO := CreateV1RecommendFoodImageDTO(e, foodName)
 		foodImage, err := d.Repository.FindOneOrCreateFoodImage(ctx, foodImageDTO)
@@ -131,7 +129,7 @@ func (d *V1RecommendFoodUseCase) V1Recommend(c context.Context, e entity.V1Recom
 			return response.ResV1RecommendFood{}, err
 		}
 		//food image ID로 이미지 URL을 가져온다.
-		image, err := d.Repository.FindOneFoodImage(ctx, food.FoodImageID)
+		image, err := d.Repository.FindOneFoodImage(ctx, food.ImageID)
 		if err != nil {
 			return response.ResV1RecommendFood{}, err
 		}

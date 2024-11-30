@@ -30,7 +30,7 @@ func (d *V12RecommendFoodUseCase) V12Recommend(c context.Context, e entity.V12Re
 		return response.ResV12RecommendFood{}, err
 	}
 	//food image ID로 이미지 URL을 가져온다.
-	image, err := d.Repository.FindOneFoodImage(ctx, food.FoodImageID)
+	image, err := d.Repository.FindOneFoodImage(ctx, food.ImageID)
 	if err != nil {
 		return response.ResV12RecommendFood{}, err
 	}

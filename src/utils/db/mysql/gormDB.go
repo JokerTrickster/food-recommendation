@@ -115,22 +115,6 @@ type Users struct {
 	Image    string `json:"image" gorm:"column:image"`
 }
 
-type Foods struct {
-	gorm.Model
-	Name        string `json:"name" gorm:"column:name"`
-	FoodImageID int    `json:"foodImageID" gorm:"column:food_image_id"`
-	ScenarioID  int    `json:"scenarioID" gorm:"column:scenario_id"`
-	TimeID      int    `json:"timeID" gorm:"column:time_id"`
-	TypeID      int    `json:"typeID" gorm:"column:type_id"`
-	ThemeID     int    `json:"themeID" gorm:"column:theme_id"`
-}
-type FoodHistory struct {
-	gorm.Model
-	UserID uint   `json:"userID" gorm:"column:user_id"`
-	FoodID uint   `json:"foodID" gorm:"column:food_id"`
-	Name   string `json:"name" gorm:"column:name"`
-}
-
 type MetaTables struct {
 	gorm.Model
 	TableName        string `json:"tableName" gorm:"column:table_name"`
@@ -198,4 +182,32 @@ type UserTokens struct {
 	gorm.Model
 	UserID uint   `json:"userID" gorm:"column:user_id"`
 	Token  string `json:"token" gorm:"column:token"`
+}
+
+type Foods struct {
+	gorm.Model
+	Name    string `json:"name" gorm:"column:name"`
+	ImageID int    `json:"imageID" gorm:"column:image_id"`
+}
+type CategoryTypes struct {
+	gorm.Model
+	Name string `json:"name" gorm:"column:name"`
+}
+
+type Categories struct {
+	gorm.Model
+	Name   string `json:"name" gorm:"column:name"`
+	TypeID int    `json:"typeID" gorm:"column:type_id"`
+}
+
+type FoodCategories struct {
+	gorm.Model
+	FoodID     int `json:"foodID" gorm:"column:food_id"`
+	CategoryID int `json:"categoryID" gorm:"column:category_id"`
+}
+
+type FoodHistories struct {
+	gorm.Model
+	UserID int `json:"userID" gorm:"column:user_id"`
+	FoodID int `json:"foodID" gorm:"column:food_id"`
 }

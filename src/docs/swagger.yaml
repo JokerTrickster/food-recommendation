@@ -172,6 +172,11 @@ definitions:
       sex:
         type: string
     type: object
+  request.ReqV02GoogleOauth:
+    properties:
+      token:
+        type: string
+    type: object
   request.ReqV12RecommendFood:
     properties:
       previousAnswer:
@@ -206,11 +211,6 @@ definitions:
         type: string
       types:
         example: 한식
-        type: string
-    type: object
-  request.ReqV02GoogleOauth:
-    properties:
-      token:
         type: string
     type: object
   request.ReqValidatePassword:
@@ -280,14 +280,6 @@ definitions:
       created:
         type: string
       name:
-        type: string
-      scenario:
-        type: string
-      theme:
-        type: string
-      time:
-        type: string
-      type:
         type: string
     type: object
   response.MetaData:
@@ -444,6 +436,20 @@ definitions:
       image:
         type: string
     type: object
+  response.ResV12RecommendFood:
+    properties:
+      foodNames:
+        items:
+          $ref: '#/definitions/response.V12RecommendFood'
+        type: array
+    type: object
+  response.ResV1RecommendFood:
+    properties:
+      foodNames:
+        items:
+          $ref: '#/definitions/response.V1RecommendFood'
+        type: array
+    type: object
   response.ResV02GoogleOauth:
     properties:
       accessToken:
@@ -461,20 +467,6 @@ definitions:
         type: string
       userID:
         type: integer
-    type: object
-  response.ResV12RecommendFood:
-    properties:
-      foodNames:
-        items:
-          $ref: '#/definitions/response.V12RecommendFood'
-        type: array
-    type: object
-  response.ResV1RecommendFood:
-    properties:
-      foodNames:
-        items:
-          $ref: '#/definitions/response.V1RecommendFood'
-        type: array
     type: object
   response.V12RecommendFood:
     properties:

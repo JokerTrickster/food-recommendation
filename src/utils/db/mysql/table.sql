@@ -46,16 +46,6 @@ CREATE TABLE user_auths (
 );
 
 
-CREATE TABLE food_images (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL UNIQUE,  -- 음식 이름으로 이미지 참조
-    image VARCHAR(255) DEFAULT 'food_default.png',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    deleted_at TIMESTAMP NULL DEFAULT NULL
-);
-  
-
 -- 메타 데이터 테이블
   CREATE TABLE meta_tables (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -112,47 +102,8 @@ CREATE TABLE themes(
     description VARCHAR(255)    
 );
 
--- 음식 선택했을 때 저장해야 된다. user_id = 1, time_id = 1, type_id = 1, scenario_id = 1, name = '김치찌개'
-CREATE TABLE foods (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    deleted_at TIMESTAMP NULL DEFAULT NULL,
-    name VARCHAR(255) NOT NULL,
-    food_image_id INT,
-    time_id INT,
-    type_id INT,
-    scenario_id INT,
-    theme_id INT,
-    FOREIGN KEY (food_image_id) REFERENCES food_images(id)
-);
 
--- 영양소 테이블 용량, 칼로리, 탄수화물, 단백질, 지방 
-create table nutrients (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    deleted_at TIMESTAMP NULL DEFAULT NULL,
-    food_name varchar(255) UNIQUE,
-    amount varchar(255),
-    kcal DECIMAL(10, 2),
-    carbohydrate DECIMAL(10, 2),
-    protein DECIMAL(10, 2),
-    fat DECIMAL(10, 2)
-);
 
--- 유저에게 추천된 음식을 저장해야 된다.
-CREATE TABLE food_histories (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    deleted_at TIMESTAMP NULL DEFAULT NULL,
-    food_id INT,
-    user_id INT,
-    name varchar(255),
-    FOREIGN KEY (food_id) REFERENCES foods(id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
-);
 
 -- 신고 테이블
 CREATE TABLE reports (
@@ -182,7 +133,6 @@ INSERT INTO scenarios (name, description,image) VALUES ('연인', '연인','scen
 -- themes 테이블에 스트레스 해소, 피로 회복, 기분 전환, 제철 음식, 영양식, 특별한 날 순으로 저장하는 sql 문 만들어줘
 INSERT INTO themes (name, description,image) VALUES ('스트레스 해소', '스트레스 해소','themes/stress.png'), ('해장', '해장','themes/hangover.png'),('피로 회복', '피로 회복','themes/fatigue recovery.png'), ('다이어트', '다이어트','themes/diet.png'), ('제철 음식', '제철 음식','themes/seasonal food.png');
 
-
 CREATE TABLE user_tokens (
     id INT AUTO_INCREMENT PRIMARY KEY,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -191,4 +141,88 @@ CREATE TABLE user_tokens (
     user_id INT,
     token varchar(1000),
     FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+
+
+
+  
+
+-- 영양소 테이블 용량, 칼로리, 탄수화물, 단백질, 지방 
+create table nutrients (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL DEFAULT NULL,
+    food_name varchar(255) UNIQUE,
+    amount varchar(255),
+    kcal DECIMAL(10, 2),
+    carbohydrate DECIMAL(10, 2),
+    protein DECIMAL(10, 2),
+    fat DECIMAL(10, 2)
+);
+
+CREATE TABLE food_images (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE,  -- 음식 이름으로 이미지 참조
+    image VARCHAR(255) DEFAULT 'food_default.png',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL DEFAULT NULL
+);
+
+-- 음식 선택 개선
+
+CREATE TABLE foods (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL DEFAULT NULL,
+    name VARCHAR(255) NOT NULL,
+    image_id INT,
+    FOREIGN KEY (image_id) REFERENCES food_images(id)
+);
+-- INSERT INTO foods (name, food_image_id) VALUES ('김치찌개', NULL);
+
+CREATE TABLE category_types (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL DEFAULT NULL,
+    name VARCHAR(50) NOT NULL UNIQUE COMMENT '카테고리 유형'
+);
+-- INSERT INTO category_types (name) VALUES ('time'), ('type'), ('scenario'), ('theme');
+
+CREATE TABLE categories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL DEFAULT NULL,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    type_id INT NOT NULL,
+    FOREIGN KEY (type_id) REFERENCES category_types(id)
+);
+-- INSERT INTO categories (name, type_id) VALUES ('아침', 1), ('한식', 2);
+
+
+CREATE TABLE food_categories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL DEFAULT NULL,
+    food_id INT NOT NULL,
+    category_id INT NOT NULL,
+    FOREIGN KEY (food_id) REFERENCES foods(id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
+);
+-- INSERT INTO food_categories (food_id, category_id) VALUES (1, 1), -- 김치찌개는 아침 (1, 2), -- 김치찌개는 한식 (1, 3); -- 김치찌개는 가족
+
+CREATE TABLE food_histories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP NULL DEFAULT NULL,
+    user_id INT NOT NULL, -- 선택한 유저 ID
+    food_id INT NOT NULL, -- 선택된 음식 ID
+    FOREIGN KEY (food_id) REFERENCES foods(id) ON DELETE CASCADE
 );
