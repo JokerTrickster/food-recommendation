@@ -301,37 +301,51 @@ func CreateRecommendQuery(entity entity.V1RecommendFoodEntity) string {
 func CreateV12RecommendQuery(entity entity.V12RecommendFoodEntity) string {
 	// Base query
 	query := `
-		SELECT DISTINCT f.name,f.id,f.image_id
-		FROM foods f
-		JOIN food_categories fc ON f.id = fc.food_id
-		JOIN categories c ON fc.category_id = c.id
-		WHERE 1=1`
+		SELECT DISTINCT f.name, f.id, f.image_id
+		FROM foods f`
 
-	// 조건 추가
+	// 조건별로 JOIN 추가
 	if entity.Types != "" {
-		query += " AND c.name = '" + entity.Types + "' AND c.type_id = (SELECT id FROM category_types WHERE name = 'type')"
+		query += `
+		JOIN food_categories fc_type ON f.id = fc_type.food_id
+		JOIN categories c_type ON fc_type.category_id = c_type.id AND c_type.name = '` + entity.Types + `' 
+		AND c_type.type_id = (SELECT id FROM category_types WHERE name = 'type')`
 	}
 
 	if entity.Scenarios != "" {
-		query += " AND c.name = '" + entity.Scenarios + "' AND c.type_id = (SELECT id FROM category_types WHERE name = 'scenario')"
+		query += `
+		JOIN food_categories fc_scenario ON f.id = fc_scenario.food_id
+		JOIN categories c_scenario ON fc_scenario.category_id = c_scenario.id AND c_scenario.name = '` + entity.Scenarios + `' 
+		AND c_scenario.type_id = (SELECT id FROM category_types WHERE name = 'scenario')`
 	}
 
 	if entity.Times != "" {
-		query += " AND c.name = '" + entity.Times + "' AND c.type_id = (SELECT id FROM category_types WHERE name = 'time')"
+		query += `
+		JOIN food_categories fc_time ON f.id = fc_time.food_id
+		JOIN categories c_time ON fc_time.category_id = c_time.id AND c_time.name = '` + entity.Times + `' 
+		AND c_time.type_id = (SELECT id FROM category_types WHERE name = 'time')`
 	}
 
 	if entity.Themes != "" {
-		query += " AND c.name = '" + entity.Themes + "' AND c.type_id = (SELECT id FROM category_types WHERE name = 'theme')"
+		query += `
+		JOIN food_categories fc_theme ON f.id = fc_theme.food_id
+		JOIN categories c_theme ON fc_theme.category_id = c_theme.id AND c_theme.name = '` + entity.Themes + `' 
+		AND c_theme.type_id = (SELECT id FROM category_types WHERE name = 'theme')`
 	}
 
+	// PreviousAnswer 처리
 	if entity.PreviousAnswer != "" {
-		previous := "'" + strings.Join(strings.Split(entity.PreviousAnswer, " "), "','") + "'"
-		query += " AND f.name NOT IN (" + previous + ")"
+		previous := "'" + strings.Join(strings.Split(entity.PreviousAnswer, ","), "','") + "'"
+		query += `
+		WHERE f.name NOT IN (` + previous + `)`
 	}
 
 	// 랜덤 정렬 및 결과 제한
-	query += " ORDER BY RAND() LIMIT 1"
+	query += `
+	ORDER BY RAND()
+	LIMIT 1`
 
+	fmt.Println(query) // 디버그용 출력
 	return query
 }
 

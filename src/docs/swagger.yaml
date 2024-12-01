@@ -172,11 +172,6 @@ definitions:
       sex:
         type: string
     type: object
-  request.ReqV02GoogleOauth:
-    properties:
-      token:
-        type: string
-    type: object
   request.ReqV12RecommendFood:
     properties:
       previousAnswer:
@@ -211,6 +206,11 @@ definitions:
         type: string
       types:
         example: 한식
+        type: string
+    type: object
+  request.ReqV02GoogleOauth:
+    properties:
+      token:
         type: string
     type: object
   request.ReqValidatePassword:
