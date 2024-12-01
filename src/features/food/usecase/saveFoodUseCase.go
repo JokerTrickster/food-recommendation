@@ -25,16 +25,31 @@ func (d *SaveFoodUseCase) Save(c context.Context, req *request.ReqSaveFood) erro
 
 	foods := make([]string, 0)
 	for _, food := range req.Foods {
+		//음식 이미지 저장
 		foodImageDTO := CreateSaveFoodImageDTO(food)
 		foodImage, err := d.Repository.FindOneOrCreateFoodImage(ctx, foodImageDTO)
 		if err != nil {
 			return err
 		}
+		//음식 저장
 		foodDTO := CreateSaveFoodDTO(food, int(foodImage.ID))
-		err = d.Repository.SaveFood(ctx, foodDTO)
+		foodID, err := d.Repository.SaveFood(ctx, foodDTO)
 		if err != nil {
 			return err
 		}
+		//카테고리 ID를 모두 가져온다.
+		categories := CreateCategory(food)
+		categoryIDs, err := d.Repository.FindCategoryIDs(ctx, categories)
+		if err != nil {
+			return err
+		}
+		//음식 카테고리 저장
+		err = d.Repository.SaveFoodCategory(ctx, foodID, categoryIDs)
+		if err != nil {
+			return err
+		}
+
+		//영양성분 저장
 		if food.Amount != "" {
 			nutirentDTO := CreateSaveNutrientDTO(food)
 			err = d.Repository.SaveNutrient(ctx, nutirentDTO)
@@ -43,6 +58,7 @@ func (d *SaveFoodUseCase) Save(c context.Context, req *request.ReqSaveFood) erro
 				continue
 			}
 		}
+		// 카테고리 저장
 		foods = append(foods, food.Name)
 	}
 

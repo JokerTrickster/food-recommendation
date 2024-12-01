@@ -301,7 +301,7 @@ func CreateRecommendQuery(entity entity.V1RecommendFoodEntity) string {
 func CreateV12RecommendQuery(entity entity.V12RecommendFoodEntity) string {
 	// Base query
 	query := `
-		SELECT DISTINCT f.name
+		SELECT DISTINCT f.name,f.id,f.image_id
 		FROM foods f
 		JOIN food_categories fc ON f.id = fc.food_id
 		JOIN categories c ON fc.category_id = c.id
@@ -425,4 +425,13 @@ func ParseFoodResponse(foodResponse []string) (string, *mysql.Nutrients, error) 
 	}
 
 	return foodName, nutrition, nil
+}
+
+func CreateCategory(req request.SaveFood) []string {
+	var category []string
+	category = append(category, req.Types...)
+	category = append(category, req.Times...)
+	category = append(category, req.Scenarios...)
+	category = append(category, req.Themes...)
+	return category
 }

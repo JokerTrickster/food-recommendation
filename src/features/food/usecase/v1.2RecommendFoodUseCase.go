@@ -23,8 +23,6 @@ func (d *V12RecommendFoodUseCase) V12Recommend(c context.Context, e entity.V12Re
 	defer cancel()
 
 	query := CreateV12RecommendQuery(e)
-
-	query += " ORDER BY RAND() LIMIT 1"
 	food, err := d.Repository.FindOneV12RecommendFood(ctx, query)
 	if err != nil {
 		return response.ResV12RecommendFood{}, err

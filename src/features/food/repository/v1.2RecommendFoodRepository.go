@@ -29,7 +29,6 @@ func (d *V12RecommendFoodRepository) FindOneV12RecommendFood(ctx context.Context
 	if result.RowsAffected == 0 {
 		return nil, utils.ErrorMsg(ctx, utils.ErrFoodNotFound, utils.Trace(), "no matching record found", utils.ErrFromClient)
 	}
-
 	return &food, nil // 반환할 때 포인터로 반환
 }
 

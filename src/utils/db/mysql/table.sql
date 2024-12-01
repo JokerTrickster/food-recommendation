@@ -191,7 +191,8 @@ CREATE TABLE category_types (
     deleted_at TIMESTAMP NULL DEFAULT NULL,
     name VARCHAR(50) NOT NULL UNIQUE COMMENT '카테고리 유형'
 );
--- INSERT INTO category_types (name) VALUES ('time'), ('type'), ('scenario'), ('theme');
+INSERT INTO category_types (name) VALUES ('time'), ('type'), ('scenario'), ('theme');
+
 
 CREATE TABLE categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -203,6 +204,42 @@ CREATE TABLE categories (
     FOREIGN KEY (type_id) REFERENCES category_types(id)
 );
 -- INSERT INTO categories (name, type_id) VALUES ('아침', 1), ('한식', 2);
+INSERT INTO categories (name, type_id) VALUES 
+    ('연인', (SELECT id FROM category_types WHERE name = 'scenario')),
+    ('혼밥', (SELECT id FROM category_types WHERE name = 'scenario')),
+    ('가족', (SELECT id FROM category_types WHERE name = 'scenario')),
+    ('회식', (SELECT id FROM category_types WHERE name = 'scenario')),
+    ('친구', (SELECT id FROM category_types WHERE name = 'scenario'));
+    
+    
+INSERT INTO categories (name, type_id) VALUES 
+    ('아침', (SELECT id FROM category_types WHERE name = 'time')),
+    ('점심', (SELECT id FROM category_types WHERE name = 'time')),
+    ('저녁', (SELECT id FROM category_types WHERE name = 'time')),
+    ('간식', (SELECT id FROM category_types WHERE name = 'time')),
+    ('야식', (SELECT id FROM category_types WHERE name = 'time'));
+
+
+INSERT INTO categories (name, type_id) VALUES 
+    ('한식', (SELECT id FROM category_types WHERE name = 'type')),
+    ('중식', (SELECT id FROM category_types WHERE name = 'type')),
+    ('일식', (SELECT id FROM category_types WHERE name = 'type')),
+    ('양식', (SELECT id FROM category_types WHERE name = 'type')),
+    ('분식', (SELECT id FROM category_types WHERE name = 'type')),
+    ('베트남 음식', (SELECT id FROM category_types WHERE name = 'type')),
+    ('인도 음식', (SELECT id FROM category_types WHERE name = 'type')),
+    ('패스트 푸드', (SELECT id FROM category_types WHERE name = 'type')),
+    ('디저트', (SELECT id FROM category_types WHERE name = 'type')),
+    ('퓨전 요리', (SELECT id FROM category_types WHERE name = 'type'));
+
+
+INSERT INTO categories (name, type_id) VALUES 
+    ('스트레스 해소', (SELECT id FROM category_types WHERE name = 'theme')),
+    ('해장', (SELECT id FROM category_types WHERE name = 'theme')),
+    ('피로 회복', (SELECT id FROM category_types WHERE name = 'theme')),
+    ('다이어트', (SELECT id FROM category_types WHERE name = 'theme')),
+    ('제철 음식', (SELECT id FROM category_types WHERE name = 'theme'));
+
 
 
 CREATE TABLE food_categories (

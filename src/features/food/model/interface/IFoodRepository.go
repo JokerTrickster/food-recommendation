@@ -49,9 +49,11 @@ type IDailyRecommendFoodRepository interface {
 }
 
 type ISaveFoodRepository interface {
-	SaveFood(ctx context.Context, foodDTO *mysql.Foods) error
+	SaveFood(ctx context.Context, foodDTO *mysql.Foods) (uint, error)
 	FindOneOrCreateFoodImage(ctx context.Context, foodImageDTO *mysql.FoodImages) (*mysql.FoodImages, error)
 	SaveNutrient(ctx context.Context, nutrientDTO *mysql.Nutrients) error
+	FindCategoryIDs(ctx context.Context, categories []string) ([]uint, error)
+	SaveFoodCategory(ctx context.Context, foodID uint, categoryIDs []uint) error
 }
 
 type ICheckImageUploadFoodRepository interface {

@@ -237,13 +237,21 @@ definitions:
       protein:
         type: number
       scenarios:
-        type: string
+        items:
+          type: string
+        type: array
       themes:
-        type: string
+        items:
+          type: string
+        type: array
       times:
-        type: string
+        items:
+          type: string
+        type: array
       types:
-        type: string
+        items:
+          type: string
+        type: array
     required:
     - name
     type: object
@@ -436,20 +444,6 @@ definitions:
       image:
         type: string
     type: object
-  response.ResV12RecommendFood:
-    properties:
-      foodNames:
-        items:
-          $ref: '#/definitions/response.V12RecommendFood'
-        type: array
-    type: object
-  response.ResV1RecommendFood:
-    properties:
-      foodNames:
-        items:
-          $ref: '#/definitions/response.V1RecommendFood'
-        type: array
-    type: object
   response.ResV02GoogleOauth:
     properties:
       accessToken:
@@ -467,6 +461,20 @@ definitions:
         type: string
       userID:
         type: integer
+    type: object
+  response.ResV12RecommendFood:
+    properties:
+      foodNames:
+        items:
+          $ref: '#/definitions/response.V12RecommendFood'
+        type: array
+    type: object
+  response.ResV1RecommendFood:
+    properties:
+      foodNames:
+        items:
+          $ref: '#/definitions/response.V1RecommendFood'
+        type: array
     type: object
   response.V12RecommendFood:
     properties:
