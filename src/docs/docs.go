@@ -1730,16 +1730,28 @@ const docTemplate = `{
                     "type": "number"
                 },
                 "scenarios": {
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "themes": {
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "times": {
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "types": {
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },
@@ -1794,18 +1806,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "name": {
-                    "type": "string"
-                },
-                "scenario": {
-                    "type": "string"
-                },
-                "theme": {
-                    "type": "string"
-                },
-                "time": {
-                    "type": "string"
-                },
-                "type": {
                     "type": "string"
                 }
             }

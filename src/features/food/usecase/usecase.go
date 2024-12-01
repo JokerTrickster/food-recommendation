@@ -108,92 +108,21 @@ func CreateResMetaData(typeDTO []mysql.Types, timeDTO []mysql.Times, scenarioDTO
 }
 
 func CreateSelectFoodDTO(entity entity.SelectFoodEntity) *mysql.Foods {
-	var err error
-	typeID := 0
-	timeID := 0
-	secnarioID := 0
-	themeID := 0
-
-	if entity.Types != "" {
-		typeID, err = mysql.GetTypeID(entity.Types)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
-	if entity.Times != "" {
-		timeID, err = mysql.GetTimeID(entity.Times)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
-	if entity.Scenarios != "" {
-		secnarioID, err = mysql.GetScenarioID(entity.Scenarios)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
-	if entity.Themes != "" {
-		themeID, err = mysql.GetThemeID(entity.Themes)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
-
 	return &mysql.Foods{
-		TypeID:     typeID,
-		TimeID:     timeID,
-		ScenarioID: secnarioID,
-		ThemeID:    themeID,
-		Name:       entity.Name,
+		Name: entity.Name,
 	}
 }
-func CreateFoodHistoryDTO(foodID, userID uint, name string) *mysql.FoodHistory {
-	return &mysql.FoodHistory{
-		FoodID: foodID,
-		UserID: userID,
-		Name:   name,
+func CreateFoodHistoryDTO(foodID, userID uint, name string) *mysql.FoodHistories {
+	return &mysql.FoodHistories{
+		FoodID: int(foodID),
+		UserID: int(userID),
 	}
 }
 
 func CreateRecommendFoodDTO(entity entity.RecommendFoodEntity, foodName string, foodImageID int) *mysql.Foods {
-	var err error
-	typeID := 0
-	timeID := 0
-	secnarioID := 0
-	themeID := 0
-
-	if entity.Types != "" {
-		typeID, err = mysql.GetTypeID(entity.Types)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
-	if entity.Times != "" {
-		timeID, err = mysql.GetTimeID(entity.Times)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
-	if entity.Scenarios != "" {
-		secnarioID, err = mysql.GetScenarioID(entity.Scenarios)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
-	if entity.Themes != "" {
-		themeID, err = mysql.GetThemeID(entity.Themes)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
-
 	return &mysql.Foods{
-		TypeID:      typeID,
-		TimeID:      timeID,
-		ScenarioID:  secnarioID,
-		ThemeID:     themeID,
-		Name:        foodName,
-		FoodImageID: foodImageID,
+		Name:    foodName,
+		ImageID: foodImageID,
 	}
 
 }
@@ -264,44 +193,9 @@ func CreateSaveFoodImageDTO(food request.SaveFood) *mysql.FoodImages {
 }
 
 func CreateSaveFoodDTO(food request.SaveFood, foodImageID int) *mysql.Foods {
-	var err error
-	typeID := 0
-	timeID := 0
-	secnarioID := 0
-	themeID := 0
-
-	if food.Types != "" {
-		typeID, err = mysql.GetTypeID(food.Types)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
-	if food.Times != "" {
-		timeID, err = mysql.GetTimeID(food.Times)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
-	if food.Scenarios != "" {
-		secnarioID, err = mysql.GetScenarioID(food.Scenarios)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
-	if food.Themes != "" {
-		themeID, err = mysql.GetThemeID(food.Themes)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
-
 	return &mysql.Foods{
-		TypeID:      typeID,
-		TimeID:      timeID,
-		ScenarioID:  secnarioID,
-		ThemeID:     themeID,
-		Name:        food.Name,
-		FoodImageID: foodImageID,
+		Name:    food.Name,
+		ImageID: foodImageID,
 	}
 }
 
@@ -405,21 +299,39 @@ func CreateRecommendQuery(entity entity.V1RecommendFoodEntity) string {
 	return query
 }
 func CreateV12RecommendQuery(entity entity.V12RecommendFoodEntity) string {
-	var query string = "SELECT * FROM foods WHERE "
+	// Base query
+	query := `
+		SELECT DISTINCT f.name,f.id,f.image_id
+		FROM foods f
+		JOIN food_categories fc ON f.id = fc.food_id
+		JOIN categories c ON fc.category_id = c.id
+		WHERE 1=1`
+
+	// 조건 추가
 	if entity.Types != "" {
-		query += fmt.Sprintf("type_id = (SELECT id FROM types WHERE name = '%s') AND ", entity.Types)
-	}
-	if entity.Times != "" {
-		query += fmt.Sprintf("time_id = (SELECT id FROM times WHERE name = '%s') AND ", entity.Times)
-	}
-	if entity.Scenarios != "" {
-		query += fmt.Sprintf("scenario_id = (SELECT id FROM scenarios WHERE name = '%s') AND ", entity.Scenarios)
-	}
-	if entity.Themes != "" {
-		query += fmt.Sprintf("theme_id = (SELECT id FROM themes WHERE name = '%s') AND ", entity.Themes)
+		query += " AND c.name = '" + entity.Types + "' AND c.type_id = (SELECT id FROM category_types WHERE name = 'type')"
 	}
 
-	query = strings.TrimSuffix(query, " AND ")
+	if entity.Scenarios != "" {
+		query += " AND c.name = '" + entity.Scenarios + "' AND c.type_id = (SELECT id FROM category_types WHERE name = 'scenario')"
+	}
+
+	if entity.Times != "" {
+		query += " AND c.name = '" + entity.Times + "' AND c.type_id = (SELECT id FROM category_types WHERE name = 'time')"
+	}
+
+	if entity.Themes != "" {
+		query += " AND c.name = '" + entity.Themes + "' AND c.type_id = (SELECT id FROM category_types WHERE name = 'theme')"
+	}
+
+	if entity.PreviousAnswer != "" {
+		previous := "'" + strings.Join(strings.Split(entity.PreviousAnswer, " "), "','") + "'"
+		query += " AND f.name NOT IN (" + previous + ")"
+	}
+
+	// 랜덤 정렬 및 결과 제한
+	query += " ORDER BY RAND() LIMIT 1"
+
 	return query
 }
 
@@ -432,44 +344,9 @@ func CreateV1RecommendFoodImageDTO(entity entity.V1RecommendFoodEntity, foodName
 }
 
 func CreateV1RecommendFoodDTO(entity entity.V1RecommendFoodEntity, foodName string, foodImageID int) *mysql.Foods {
-	var err error
-	typeID := 0
-	timeID := 0
-	secnarioID := 0
-	themeID := 0
-
-	if entity.Types != "" {
-		typeID, err = mysql.GetTypeID(entity.Types)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
-	if entity.Times != "" {
-		timeID, err = mysql.GetTimeID(entity.Times)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
-	if entity.Scenarios != "" {
-		secnarioID, err = mysql.GetScenarioID(entity.Scenarios)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
-	if entity.Themes != "" {
-		themeID, err = mysql.GetThemeID(entity.Themes)
-		if err != nil {
-			fmt.Println(err)
-		}
-	}
-
 	return &mysql.Foods{
-		TypeID:      typeID,
-		TimeID:      timeID,
-		ScenarioID:  secnarioID,
-		ThemeID:     themeID,
-		Name:        foodName,
-		FoodImageID: foodImageID,
+		Name:    foodName,
+		ImageID: foodImageID,
 	}
 
 }
@@ -548,4 +425,13 @@ func ParseFoodResponse(foodResponse []string) (string, *mysql.Nutrients, error) 
 	}
 
 	return foodName, nutrition, nil
+}
+
+func CreateCategory(req request.SaveFood) []string {
+	var category []string
+	category = append(category, req.Types...)
+	category = append(category, req.Times...)
+	category = append(category, req.Scenarios...)
+	category = append(category, req.Themes...)
+	return category
 }
