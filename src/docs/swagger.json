@@ -1892,6 +1892,9 @@
                 },
                 "sex": {
                     "type": "string"
+                },
+                "userID": {
+                    "type": "integer"
                 }
             }
         },

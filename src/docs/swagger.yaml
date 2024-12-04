@@ -351,6 +351,8 @@ definitions:
         type: boolean
       sex:
         type: string
+      userID:
+        type: integer
     type: object
   response.ResGuest:
     properties:
@@ -444,6 +446,20 @@ definitions:
       image:
         type: string
     type: object
+  response.ResV12RecommendFood:
+    properties:
+      foodNames:
+        items:
+          $ref: '#/definitions/response.V12RecommendFood'
+        type: array
+    type: object
+  response.ResV1RecommendFood:
+    properties:
+      foodNames:
+        items:
+          $ref: '#/definitions/response.V1RecommendFood'
+        type: array
+    type: object
   response.ResV02GoogleOauth:
     properties:
       accessToken:
@@ -461,20 +477,6 @@ definitions:
         type: string
       userID:
         type: integer
-    type: object
-  response.ResV12RecommendFood:
-    properties:
-      foodNames:
-        items:
-          $ref: '#/definitions/response.V12RecommendFood'
-        type: array
-    type: object
-  response.ResV1RecommendFood:
-    properties:
-      foodNames:
-        items:
-          $ref: '#/definitions/response.V1RecommendFood'
-        type: array
     type: object
   response.V12RecommendFood:
     properties:
