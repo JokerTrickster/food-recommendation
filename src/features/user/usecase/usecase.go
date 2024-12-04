@@ -44,11 +44,12 @@ func CreateResGetUser(user *mysql.Users) response.ResGetUser {
 
 	//유저 정보를 가져올 때 사용할 DTO를 생성한다.
 	res := response.ResGetUser{
-		Name:  user.Name,
-		Email: user.Email,
-		Sex:   user.Sex,
-		Birth: user.Birth,
-		Push:  user.Push,
+		Name:   user.Name,
+		Email:  user.Email,
+		Sex:    user.Sex,
+		Birth:  user.Birth,
+		Push:   user.Push,
+		UserID: int(user.ID),
 	}
 	imageUrl, err := aws.ImageGetSignedURL(context.TODO(), user.Image, aws.ImgTypeProfile)
 	if err == nil {

@@ -1903,6 +1903,9 @@ const docTemplate = `{
                 },
                 "sex": {
                     "type": "string"
+                },
+                "userID": {
+                    "type": "integer"
                 }
             }
         },
