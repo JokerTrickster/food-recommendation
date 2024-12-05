@@ -34,7 +34,7 @@ func (d *ImageUploadFoodUseCase) ImageUpload(c context.Context, e entity.ImageUp
 		return err
 	}
 	// s3 이미지 파일 업로드
-	err = _aws.ImageUpload(ctx, e.Image, filename, _aws.ImgTypeFood)
+	err = _aws.FoodImageUpload(ctx, e.Image, filename, _aws.ImgTypeFood)
 	if err != nil {
 		return err
 	}
