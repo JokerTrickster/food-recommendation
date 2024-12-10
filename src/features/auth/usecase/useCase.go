@@ -20,6 +20,7 @@ func CreateGoogleUserDTO(oauthData utils.OAuthData) *mysql.Users {
 		Provider: "google",
 		Birth:    "1990-01-01",
 		Name:     "임시푸드픽",
+		Push:     utils.PtrTrue(),
 	}
 }
 
@@ -52,6 +53,7 @@ func CreateSignupUser(req *request.ReqSignup) mysql.Users {
 		Name:     req.Name,
 		Birth:    req.Birth,
 		Sex:      req.Sex,
+		Push:     utils.PtrTrue(),
 	}
 }
 
