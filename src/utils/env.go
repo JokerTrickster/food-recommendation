@@ -102,3 +102,13 @@ func CtxGenerate(c echo.Context) (context.Context, uint, string) {
 	return ctx, userID, email
 
 }
+
+func PtrTrue() *bool {
+	b := true
+	return &b
+}
+
+func PtrFalse() *bool {
+	b := false
+	return &b
+}
