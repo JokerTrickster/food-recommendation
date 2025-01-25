@@ -11,28 +11,12 @@ ai 를 사용하여 음식 궁합과 사용자 취향에 맞는 음식 추천 �
 
 ## App Screenshot
 
-<div style="display: flex; flex-wrap: nowrap; gap: 10px;">
-  <div style="text-align: center;">
-    <img src="https://github.com/user-attachments/assets/356b68bd-6676-4f46-b67b-ae13341d4565" alt="메인화면" width="150"/>
-    <p>메인화면</p>
-  </div>
-  <div style="text-align: center;">
-    <img src="https://github.com/user-attachments/assets/c668a5aa-4f3b-4746-b19d-0bf42d6aa990" alt="데일리 추천 화면" width="150"/>
-    <p>데일리 추천 화면</p>
-  </div>
-  <div style="text-align: center;">
-    <img src="https://github.com/user-attachments/assets/5a86dc39-14af-44c1-88d0-a70d63e64eec" alt="음식 선택 화면" width="150"/>
-    <p>음식 선택 화면</p>
-  </div>
-  <div style="text-align: center;">
-    <img src="https://github.com/user-attachments/assets/6097df52-9aa9-4925-a9ac-1fb7f4f490ee" alt="음식 궁합 화면" width="150"/>
-    <p>음식 궁합 화면</p>
-  </div>
-  <div style="text-align: center;">
-    <img src="https://github.com/user-attachments/assets/df820499-7dc4-4b3a-a2af-059d966ce36b" alt="음식 랜덤 선택 화면" width="150"/>
-    <p>음식 랜덤 선택 화면</p>
-  </div>
-</div>
+## App Screenshot
+
+| 메인화면 | 데일리 추천 화면 | 음식 선택 화면 | 음식 궁합 화면 | 음식 랜덤 선택 화면 |
+|----------|-----------------|----------------|----------------|---------------------|
+| <img src="https://github.com/user-attachments/assets/356b68bd-6676-4f46-b67b-ae13341d4565" alt="메인화면" width="150"/> | <img src="https://github.com/user-attachments/assets/c668a5aa-4f3b-4746-b19d-0bf42d6aa990" alt="데일리 추천 화면" width="150"/> | <img src="https://github.com/user-attachments/assets/5a86dc39-14af-44c1-88d0-a70d63e64eec" alt="음식 선택 화면" width="150"/> | <img src="https://github.com/user-attachments/assets/6097df52-9aa9-4925-a9ac-1fb7f4f490ee" alt="음식 궁합 화면" width="150"/> | <img src="https://github.com/user-attachments/assets/df820499-7dc4-4b3a-a2af-059d966ce36b" alt="음식 랜덤 선택 화면" width="150"/> |
+
 
 ## MVP Features
 1. 인증 기능
